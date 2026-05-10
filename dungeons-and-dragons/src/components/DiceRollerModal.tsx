@@ -19,36 +19,61 @@ interface DiceRollerModalProps {
   onClose: () => void;
 }
 
-function D20Dice({ rolling, result }: { rolling: boolean; result: number | null }) {
+function D20Dice({
+  rolling,
+  result,
+}: {
+  rolling: boolean;
+  result: number | null;
+}) {
   const groupRef = useRef<THREE.Group>(null);
-  
+
   const { geometry, faces } = useMemo(() => {
     const geo = new THREE.IcosahedronGeometry(1.5, 0);
     geo.computeVertexNormals();
-    
-    const positions = geo.getAttribute('position').array;
+
+    const positions = geo.getAttribute("position").array;
     const faceData = [];
-    
-    const numbers = [20, 2, 14, 4, 17, 8, 10, 12, 16, 6, 1, 19, 3, 13, 5, 18, 9, 11, 15, 7];
-    
+
+    const numbers = [
+      20, 2, 14, 4, 17, 8, 10, 12, 16, 6, 1, 19, 3, 13, 5, 18, 9, 11, 15, 7,
+    ];
+
     for (let i = 0; i < 20; i++) {
-        const idx = i * 9;
-        const v1 = new THREE.Vector3(positions[idx], positions[idx+1], positions[idx+2]);
-        const v2 = new THREE.Vector3(positions[idx+3], positions[idx+4], positions[idx+5]);
-        const v3 = new THREE.Vector3(positions[idx+6], positions[idx+7], positions[idx+8]);
-        
-        const centroid = new THREE.Vector3()
-            .add(v1).add(v2).add(v3).divideScalar(3);
-            
-        faceData.push({
-            id: i,
-            number: numbers[i] || i + 1,
-            position: centroid.clone(),
-            normal: centroid.clone().normalize(),
-            v1, v2, v3
-        });
+      const idx = i * 9;
+      const v1 = new THREE.Vector3(
+        positions[idx],
+        positions[idx + 1],
+        positions[idx + 2],
+      );
+      const v2 = new THREE.Vector3(
+        positions[idx + 3],
+        positions[idx + 4],
+        positions[idx + 5],
+      );
+      const v3 = new THREE.Vector3(
+        positions[idx + 6],
+        positions[idx + 7],
+        positions[idx + 8],
+      );
+
+      const centroid = new THREE.Vector3()
+        .add(v1)
+        .add(v2)
+        .add(v3)
+        .divideScalar(3);
+
+      faceData.push({
+        id: i,
+        number: numbers[i] || i + 1,
+        position: centroid.clone(),
+        normal: centroid.clone().normalize(),
+        v1,
+        v2,
+        v3,
+      });
     }
-    
+
     // We return the INDEXED geo for the mesh/edges to render correctly without seams
     return { geometry: geo, faces: faceData };
   }, []);
@@ -62,16 +87,19 @@ function D20Dice({ rolling, result }: { rolling: boolean; result: number | null 
       spinVelocity.current.set(
         Math.random() * 20 - 10,
         Math.random() * 20 - 10,
-        Math.random() * 20 - 10
+        Math.random() * 20 - 10,
       );
     } else if (result) {
-      const face = faces.find(f => f.number === result);
+      const face = faces.find((f) => f.number === result);
       if (face && groupRef.current) {
         const targetNormal = new THREE.Vector3(0, 0, 1);
-        const q = new THREE.Quaternion().setFromUnitVectors(face.normal, targetNormal);
-        
+        const q = new THREE.Quaternion().setFromUnitVectors(
+          face.normal,
+          targetNormal,
+        );
+
         const randomSpins = new THREE.Quaternion().setFromEuler(
-            new THREE.Euler(0, 0, (Math.random() * 360) * Math.PI / 180)
+          new THREE.Euler(0, 0, (Math.random() * 360 * Math.PI) / 180),
         );
         randomSpins.multiply(q);
         targetQuaternion.current.copy(randomSpins);
@@ -81,7 +109,7 @@ function D20Dice({ rolling, result }: { rolling: boolean; result: number | null 
 
   useFrame((state, delta) => {
     if (!groupRef.current) return;
-    
+
     if (rolling) {
       groupRef.current.rotation.x += spinVelocity.current.x * delta;
       groupRef.current.rotation.y += spinVelocity.current.y * delta;
@@ -100,7 +128,7 @@ function D20Dice({ rolling, result }: { rolling: boolean; result: number | null 
   return (
     <group ref={groupRef}>
       <mesh geometry={geometry}>
-        <meshPhysicalMaterial 
+        <meshPhysicalMaterial
           color="#1F2937"
           metalness={0.9}
           roughness={0.3}
@@ -112,14 +140,18 @@ function D20Dice({ rolling, result }: { rolling: boolean; result: number | null 
       </mesh>
 
       {faces.map((f, i) => {
-        const pos = f.position.clone().add(f.normal.clone().multiplyScalar(0.02));
+        const pos = f.position
+          .clone()
+          .add(f.normal.clone().multiplyScalar(0.02));
         const lookTarget = pos.clone().add(f.normal);
-        
+
         return (
-          <group 
-            key={i} 
-            position={[pos.x, pos.y, pos.z]} 
-            onUpdate={(self) => self.lookAt(lookTarget.x, lookTarget.y, lookTarget.z)}
+          <group
+            key={i}
+            position={[pos.x, pos.y, pos.z]}
+            onUpdate={(self) =>
+              self.lookAt(lookTarget.x, lookTarget.y, lookTarget.z)
+            }
           >
             <Text
               fontSize={0.4}
@@ -148,7 +180,7 @@ export function DiceRollerModal({ isOpen, onClose }: DiceRollerModalProps) {
     setResult(null);
 
     const newResult = Math.floor(Math.random() * 20) + 1;
-    
+
     setTimeout(() => {
       setResult(newResult);
       setRolling(false);
@@ -197,17 +229,27 @@ export function DiceRollerModal({ isOpen, onClose }: DiceRollerModalProps) {
             {/* Sizing Fix: explicit height to ensure Canvas scales up correctly */}
             <div className="w-full relative flex flex-col items-center justify-center h-[350px] mt-4">
               <div className="w-full h-full cursor-pointer" onClick={rollDice}>
-                <Canvas camera={{ position: [0, 0, 5.5], fov: 45 }} style={{ width: "100%", height: "100%" }}>
+                <Canvas
+                  camera={{ position: [0, 0, 5.5], fov: 45 }}
+                  style={{ width: "100%", height: "100%" }}
+                >
                   <ambientLight intensity={1.5} />
                   <directionalLight position={[10, 10, 10]} intensity={2} />
                   <Suspense fallback={null}>
                     <Environment preset="city" />
                     <D20Dice rolling={rolling} result={result} />
                   </Suspense>
-                  <ContactShadows position={[0, -2, 0]} opacity={0.6} scale={10} blur={2} far={4} color="#000000" />
+                  <ContactShadows
+                    position={[0, -2, 0]}
+                    opacity={0.6}
+                    scale={10}
+                    blur={2}
+                    far={4}
+                    color="#000000"
+                  />
                 </Canvas>
               </div>
-              
+
               <div className="absolute bottom-0 left-0 w-full flex items-center justify-center pointer-events-none">
                 {result !== null && !rolling && (
                   <motion.div
@@ -215,7 +257,11 @@ export function DiceRollerModal({ isOpen, onClose }: DiceRollerModalProps) {
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     className="font-['Cinzel'] text-3xl md:text-4xl font-bold text-[#D4AF37] drop-shadow-[0_0_15px_rgba(0,0,0,1)] text-center bg-[#111827]/80 px-6 py-2 rounded-sm backdrop-blur-md border border-[#D4AF37]/30"
                   >
-                    {result === 20 ? 'Critical Success!' : result === 1 ? 'Critical Failure!' : result}
+                    {result === 20
+                      ? "Critical Success!"
+                      : result === 1
+                        ? "Critical Failure!"
+                        : result}
                   </motion.div>
                 )}
                 {rolling && (
@@ -236,7 +282,7 @@ export function DiceRollerModal({ isOpen, onClose }: DiceRollerModalProps) {
                 disabled={rolling}
                 className="px-8 py-3 bg-[#0B0F1A] border border-[#D4AF37]/50 text-[#D4AF37] font-['Cinzel'] uppercase tracking-widest text-sm font-semibold transition-all duration-300 hover:bg-[#D4AF37]/10 hover:shadow-[0_0_15px_rgba(212,175,55,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {rolling ? 'Rolling...' : 'Roll Again'}
+                {rolling ? "Rolling..." : "Roll Again"}
               </button>
             </div>
           </motion.div>

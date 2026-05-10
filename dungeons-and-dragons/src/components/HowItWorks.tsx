@@ -28,14 +28,18 @@ export function HowItWorks() {
   return (
     <section className="py-24 px-6 md:px-12 bg-[#111827] relative z-20 border-y border-[#D4AF37]/20">
       {/* Texture Background */}
-      <div 
+      <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay"
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1759134335060-9ae159bc3e12?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhbmNpZW50JTIwcGFyY2htZW50JTIwdGV4dHVyZXxlbnwxfHx8fDE3NzQ1NDU2OTJ8MA&ixlib=rb-4.1.0&q=80&w=1080')", backgroundSize: "cover" }}
+        style={{
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1759134335060-9ae159bc3e12?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhbmNpZW50JTIwcGFyY2htZW50JTIwdGV4dHVyZXxlbnwxfHx8fDE3NzQ1NDU2OTJ8MA&ixlib=rb-4.1.0&q=80&w=1080')",
+          backgroundSize: "cover",
+        }}
       />
-      
+
       <div className="container mx-auto relative z-10">
         <div className="text-center mb-20">
-          <motion.h2 
+          <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -52,7 +56,7 @@ export function HowItWorks() {
         <div className="relative flex flex-col md:flex-row items-center justify-between max-w-5xl mx-auto gap-12 md:gap-0">
           {/* Connecting Line (Desktop) */}
           <div className="hidden md:block absolute top-[48px] left-[15%] right-[15%] h-[2px] bg-gradient-to-r from-[#D4AF37]/20 via-[#6D28D9]/50 to-[#DC2626]/20 z-0" />
-          
+
           {STEPS.map((step, index) => (
             <motion.div
               key={index}
