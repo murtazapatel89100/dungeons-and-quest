@@ -1,0 +1,8 @@
+[
+  { "name": "Home", "path": "/" },
+  { "name": "Learn", "path": "/learn" },
+  { "name": "Characters", "path": "/characters" },
+  { "name": "Rules", "path": "/rules" },
+  { "name": "Tools", "path": "/tools" },
+  { "name": "Playstyles", "path": "/playstyles" }
+]
