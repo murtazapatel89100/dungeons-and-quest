@@ -4,7 +4,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardTitle,
 } from "@/components/ui/card";
 
@@ -26,6 +25,8 @@ const CHARACTER_PATHS = [
       "Build every detail from scratch, including identity, class, abilities, equipment, and personality.",
     href: "/characters/custom",
     cta: "Start Custom Build",
+    imageUrl:
+      "https://picsum.photos/seed/custom-character-forge/1600/1200",
   },
   {
     title: "Swift Hero Generator",
@@ -33,6 +34,9 @@ const CHARACTER_PATHS = [
       "Create a playable character in seconds with randomized race, class, background, and stats.",
     href: "/characters/quick",
     cta: "Generate Quickly",
+    imageUrl:
+      "https://picsum.photos/seed/swift-hero-generator/1600/1200",
+    showBadge: false,
   },
   {
     title: "Legendary Starter Roster",
@@ -40,13 +44,15 @@ const CHARACTER_PATHS = [
       "Pick from ready-made archetypes you can use immediately or adapt for your campaign.",
     href: "/characters/pregenerated",
     cta: "Browse Pre-Built Heroes",
+    imageUrl:
+      "https://picsum.photos/seed/legendary-starter-roster/1600/1200",
   },
 ] as const;
 
 export default function CharactersPage() {
   return (
     <div className="w-full grow pt-28 md:pt-32 pb-20 px-4 md:px-8 bg-[#0B0F1A] text-[#F9FAFB]">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-8xl">
         <div className="mb-10 text-center">
           <h1 className="font-['Cinzel'] text-3xl md:text-5xl uppercase tracking-widest">
             Character Creation Paths
@@ -57,38 +63,46 @@ export default function CharactersPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {CHARACTER_PATHS.map((path) => (
             <Card
               key={path.href}
-              className="bg-[#111827] border-[#D4AF37]/20 h-full flex flex-col overflow-hidden"
+              className="group h-full overflow-hidden border-[#D4AF37]/20 bg-[#0F172A]/85 shadow-2xl shadow-black/30 transition-transform duration-300 hover:-translate-y-1"
             >
-              <CardContent className="flex-1 relative p-0 h-44 md:h-48">
-                <div className="absolute inset-0 bg-linear-to-br from-[#D4AF37]/25 via-[#111827] to-[#9CA3AF]/10" />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(249,250,251,0.12),transparent_40%),linear-gradient(to_top,rgba(11,15,26,0.96),rgba(11,15,26,0.2)_62%,rgba(11,15,26,0.05))]" />
-                <div className="absolute inset-0 border border-dashed border-[#D4AF37]/30" />
-                <div className="relative z-10 flex h-full flex-col justify-between p-6">
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.35em] text-[#D4AF37] mb-3">
-                      Hero Path
-                    </p>
-                    <CardTitle className="font-['Cinzel'] text-2xl text-[#F9FAFB] max-w-[12ch] leading-tight">
-                      {path.title}
-                    </CardTitle>
+              <CardContent className="relative p-0">
+                <div className="relative h-96 overflow-hidden">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+                    style={{ backgroundImage: `url(${path.imageUrl})` }}
+                  />
+                  <div className="absolute inset-0 bg-linear-to-br from-[#D4AF37]/20 via-[#111827]/35 to-[#0B0F1A]/90" />
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.18),transparent_36%),linear-gradient(to_bottom,rgba(15,23,42,0.05),rgba(11,15,26,0.7)_76%,rgba(11,15,26,0.98))]" />
+                  <div className="absolute inset-0 border border-white/10" />
+                  <div className="absolute inset-4 rounded-3xl border border-white/15 bg-black/30 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+                    <div className="flex h-full flex-col justify-between gap-6 text-left">
+                      <div className="space-y-3 pt-1">
+                        <p className="text-[0.7rem] font-semibold uppercase tracking-[0.35em] text-[#D4AF37]">
+                          Hero Path
+                        </p>
+                        <CardTitle className="min-h-30 max-w-[13ch] font-['Cinzel'] text-3xl leading-tight text-[#F9FAFB]">
+                          {path.title}
+                        </CardTitle>
+                        <CardDescription className="max-w-[34ch] text-base leading-6 text-[#E5E7EB]">
+                          {path.description}
+                        </CardDescription>
+                      </div>
+                      <div>
+                        <Link
+                          className="inline-flex items-center justify-center rounded-full border border-[#D4AF37]/30 bg-[#D4AF37] px-5 py-2.5 text-sm font-semibold text-[#0B0F1A] transition-colors hover:bg-[#E6C76A]"
+                          href={path.href}
+                        >
+                          {path.cta}
+                        </Link>
+                      </div>
+                    </div>
                   </div>
-                  <CardDescription className="text-[#E5E7EB] max-w-[28ch] bg-black/35 backdrop-blur-sm border border-white/10 rounded-lg p-3">
-                    {path.description}
-                  </CardDescription>
                 </div>
               </CardContent>
-              <CardFooter>
-                <Link
-                  className="inline-flex items-center justify-center rounded-md bg-[#D4AF37] px-4 py-2 text-sm font-semibold text-[#0B0F1A] hover:bg-[#E6C76A] transition-colors"
-                  href={path.href}
-                >
-                  {path.cta}
-                </Link>
-              </CardFooter>
             </Card>
           ))}
         </div>
