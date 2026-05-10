@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { CharacterProvider } from "./CharacterStateContext";
 import { GeneratorControls } from "./GeneratorControls";
 import { StepIdentity } from "./StepIdentity";
@@ -40,7 +40,7 @@ function WizardContent() {
       {/* Header and Controls */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 bg-card/40 backdrop-blur-md p-6 rounded-2xl border border-white/5 shadow-2xl">
         <div>
-          <h1 className="text-4xl font-black font-['Cinzel'] tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-neutral-100 to-neutral-400 mb-2">
+          <h1 className="text-4xl font-black font-['Cinzel'] tracking-wider text-transparent bg-clip-text bg-linear-to-r from-neutral-100 to-neutral-400 mb-2">
             Chronicles of the Hero
           </h1>
           <p className="text-muted-foreground">
@@ -54,11 +54,11 @@ function WizardContent() {
 
       {/* Progress Indicator */}
       <div className="relative">
-        <div className="absolute top-1/2 left-0 w-full h-[2px] bg-white/5 -translate-y-1/2 rounded-full" />
+        <div className="absolute top-1/2 left-0 w-full h-0.5 bg-white/5 -translate-y-1/2 rounded-full" />
         <div
-          className="absolute top-1/2 left-0 h-[2px] bg-indigo-500/50 -translate-y-1/2 rounded-full transition-all duration-500 ease-in-out"
+          className="absolute top-1/2 left-0 h-0.5 bg-indigo-500/50 -translate-y-1/2 rounded-full transition-all duration-500 ease-in-out"
           style={{
-            width: `\${(currentStepIndex / (STEPS.length - 1)) * 100}%`,
+            width: `${(currentStepIndex / (STEPS.length - 1)) * 100}%`,
           }}
         />
 
@@ -73,9 +73,9 @@ function WizardContent() {
               >
                 <div
                   className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 backdrop-blur-sm
-                    \${isCompleted ? 'bg-indigo-500/20 border-indigo-500 text-indigo-400' : 
-                      isCurrent ? 'bg-primary border-indigo-400 text-white shadow-[0_0_15px_rgba(99,102,241,0.5)]' : 
-                      'bg-card border-white/10 text-muted-foreground'}`}
+                    ${isCompleted ? 'bg-indigo-500/20 border-indigo-500 text-indigo-400' :
+                      isCurrent ? 'bg-primary border-indigo-400 text-white shadow-[0_0_15px_rgba(99,102,241,0.5)]' :
+                        'bg-card border-white/10 text-muted-foreground'}`}
                 >
                   {isCompleted ? (
                     <CheckCircle2 className="w-5 h-5" />
@@ -86,7 +86,7 @@ function WizardContent() {
                   )}
                 </div>
                 <span
-                  className={`text-xs font-medium text-center \${isCurrent ? 'text-white' : 'text-muted-foreground'}`}
+                  className={`text-xs font-medium text-center ${isCurrent ? 'text-white' : 'text-muted-foreground'}`}
                 >
                   {step.title}
                 </span>
@@ -97,7 +97,7 @@ function WizardContent() {
       </div>
 
       {/* Step Content Area */}
-      <div className="flex-1 bg-card/60 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden relative min-h-[500px]">
+      <div className="flex-1 bg-card/60 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden relative min-h-125">
         <div className="p-6 sm:p-8 h-full">
           <AnimatePresence mode="wait">
             <motion.div

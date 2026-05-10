@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import { useCharacter } from "./CharacterStateContext";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,8 +11,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ALIGNMENTS, DEITIES, BACKGROUNDS } from "@/lib/character-data";
-import { Alignment } from "@/lib/character-types";
+import type { Alignment } from "@/lib/character-types";
+import { ALIGNMENTS, DEITIES, BACKGROUNDS, GENDERS } from "@/lib/character-data";
 
 export function StepIdentity() {
   const { state, updateNestedState, updateState } = useCharacter();
@@ -65,13 +65,23 @@ export function StepIdentity() {
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label className="text-indigo-200">Gender</Label>
-            <Input
+            <Select
               value={state.identity.gender}
-              onChange={(e) =>
-                updateNestedState("identity", { gender: e.target.value })
+              onValueChange={(val) =>
+                updateNestedState("identity", { gender: val })
               }
-              className="bg-black/30 border-white/10 text-white font-['Inter']"
-            />
+            >
+              <SelectTrigger className="bg-black/30 border-white/10 text-white">
+                <SelectValue placeholder="Select your gender" />
+              </SelectTrigger>
+              <SelectContent className="bg-slate-900 border-white/10 text-white">
+                {GENDERS.map((gender) => (
+                  <SelectItem key={gender} value={gender}>
+                    {gender}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="space-y-2">
             <Label className="text-indigo-200">Age</Label>
@@ -140,7 +150,7 @@ export function StepIdentity() {
             <SelectTrigger className="bg-black/30 border-white/10 text-white">
               <SelectValue placeholder="Select your past life" />
             </SelectTrigger>
-            <SelectContent className="bg-slate-900 border-white/10 text-white max-h-[300px]">
+            <SelectContent className="bg-slate-900 border-white/10 text-white max-h-75">
               {BACKGROUNDS.map((bg) => (
                 <SelectItem key={bg} value={bg}>
                   {bg}
@@ -161,7 +171,7 @@ export function StepIdentity() {
             <SelectTrigger className="bg-black/30 border-white/10 text-white">
               <SelectValue placeholder="Do you worship a divine being?" />
             </SelectTrigger>
-            <SelectContent className="bg-slate-900 border-white/10 text-white max-h-[300px]">
+            <SelectContent className="bg-slate-900 border-white/10 text-white max-h-75">
               <SelectItem value="none">None / Agnostic</SelectItem>
               {allDeities.map((d) => (
                 <SelectItem key={d.name} value={d.name}>
