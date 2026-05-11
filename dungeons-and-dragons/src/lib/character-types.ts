@@ -40,6 +40,7 @@ export interface CharacterIdentity {
   alignment: Alignment | "";
   deity: string;
   title: string;
+  imageUrl?: string;
 }
 
 export interface PersonalityTraits {
@@ -51,6 +52,7 @@ export interface PersonalityTraits {
   ideals: string[];
   bonds: string[];
   flaws: string[];
+  backstory?: string;
 }
 
 export interface CharacterState {

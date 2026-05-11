@@ -62,6 +62,33 @@ export function StepIdentity() {
           />
         </div>
 
+        <div className="space-y-2 md:col-span-2">
+          <Label className="text-indigo-200">Portrait URL (Optional)</Label>
+          <Input
+            value={state.identity.imageUrl || ""}
+            onChange={(e) =>
+              updateNestedState("identity", { imageUrl: e.target.value })
+            }
+            placeholder="https://example.com/portrait.jpg"
+            className="bg-black/30 border-white/10 text-white placeholder:text-white/20"
+          />
+          {state.identity.imageUrl && (
+            <div className="mt-4 flex justify-center">
+              <img 
+                src={state.identity.imageUrl} 
+                alt="Portrait Preview" 
+                className="w-32 h-32 rounded-full object-cover border-2 border-indigo-500/50 shadow-lg shadow-indigo-500/20"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+                onLoad={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'block';
+                }}
+              />
+            </div>
+          )}
+        </div>
+
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label className="text-indigo-200">Gender</Label>

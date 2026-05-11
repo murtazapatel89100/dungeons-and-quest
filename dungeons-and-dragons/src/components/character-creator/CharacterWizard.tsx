@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { CharacterProvider } from "./CharacterStateContext";
+import { useRouter } from "next/navigation";
+import { CharacterProvider, useCharacter } from "./CharacterStateContext";
 import { GeneratorControls } from "./GeneratorControls";
 import { StepIdentity } from "./StepIdentity";
 import { StepRaceClass } from "./StepRaceClass";
@@ -22,13 +23,21 @@ const STEPS = [
 
 function WizardContent() {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const router = useRouter();
+  const { state } = useCharacter();
 
   const CurrentStepComponent = STEPS[currentStepIndex].component;
   const isFirstStep = currentStepIndex === 0;
   const isLastStep = currentStepIndex === STEPS.length - 1;
 
   const handleNext = () => {
-    if (!isLastStep) setCurrentStepIndex((prev) => prev + 1);
+    if (!isLastStep) {
+      setCurrentStepIndex((prev) => prev + 1);
+    } else {
+      // Complete character
+      localStorage.setItem("dnd_character_sheet", JSON.stringify(state));
+      router.push("/characters/sheet");
+    }
   };
 
   const handleBack = () => {
@@ -48,7 +57,7 @@ function WizardContent() {
           </p>
         </div>
 
-        {/* Generator Controls (compact or popover depending on design, just mounting here for now) */}
+        {/* Generator Controls */}
         <GeneratorControls />
       </div>
 
