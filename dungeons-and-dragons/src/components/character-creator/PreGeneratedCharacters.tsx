@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,7 +11,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
-import { Eye, Download } from "lucide-react";
+import { Eye, Download, FileText } from "lucide-react";
 import {
     ARMOR,
     BACKGROUND_TRAITS,
@@ -25,6 +26,7 @@ import {
     TOOLS,
     WEAPONS,
 } from "@/lib/character-data";
+import { INITIAL_CHARACTER_STATE, type CharacterState } from "@/lib/character-types";
 
 interface PreGeneratedCharacter {
     id: string;
@@ -592,6 +594,7 @@ function DetailChipList({
 }
 
 export function PreGeneratedCharacters() {
+    const router = useRouter();
     const [selectedCharacterId, setSelectedCharacterId] = useState<string>(
         PREGENERATED_CHARACTERS[0].id,
     );
@@ -608,6 +611,52 @@ export function PreGeneratedCharacters() {
     const abilityModifier = (value: number) => {
         const mod = Math.floor((value - 10) / 2);
         return mod >= 0 ? `+${mod}` : `${mod}`;
+    };
+
+    const handleViewSheet = (character: DetailedPreGeneratedCharacter) => {
+        const stateToSave: CharacterState = {
+            ...INITIAL_CHARACTER_STATE,
+            identity: {
+                name: character.name,
+                gender: character.gender,
+                age: character.age,
+                height: character.height,
+                weight: character.weight,
+                alignment: character.alignment as any,
+                deity: character.deity,
+                title: character.title,
+                imageUrl: `https://picsum.photos/seed/${character.id}/400/400`,
+            },
+            race: character.race,
+            subrace: character.subrace,
+            characterClass: character.characterClass,
+            subclass: character.subclass,
+            background: character.background,
+            abilities: character.abilities,
+            skills: character.skills as any[],
+            savingThrows: character.savingThrows,
+            feats: character.feats,
+            features: character.features,
+            languages: character.languages,
+            proficiencies: {
+                armor: character.loadout.armor,
+                weapons: character.loadout.weapons,
+                tools: character.loadout.tools,
+            },
+            weapons: character.weapons,
+            armor: character.armorList,
+            equipment: character.equipment,
+            tools: character.tools,
+            currency: character.currency,
+            spells: { 0: character.spellsKnown },
+            personality: {
+                ...character.personality,
+                backstory: character.backstory,
+            },
+            meta: character.meta,
+        };
+        localStorage.setItem("dnd_character_sheet", JSON.stringify(stateToSave));
+        router.push("/characters/sheet");
     };
 
     return (
@@ -645,10 +694,14 @@ export function PreGeneratedCharacters() {
                                 }`}
                             onClick={() => setSelectedCharacterId(character.id)}
                         >
-                            <div className="w-full h-40 bg-linear-to-br from-[#D4AF37]/10 to-[#9CA3AF]/5 border-b border-white/10 flex items-center justify-center">
-                                <div className="text-center">
-                                    <p className="text-[#9CA3AF] text-sm">Character Portrait</p>
-                                    <p className="text-[#D4AF37] text-lg font-['Cinzel'] font-bold mt-2">
+                            <div className="w-full h-40 bg-linear-to-br from-[#D4AF37]/10 to-[#9CA3AF]/5 border-b border-white/10 flex items-center justify-center relative overflow-hidden">
+                                <img 
+                                    src={`https://picsum.photos/seed/${character.id}/400/400`} 
+                                    alt={character.name} 
+                                    className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-overlay"
+                                />
+                                <div className="text-center relative z-10 drop-shadow-md">
+                                    <p className="text-[#D4AF37] text-2xl font-['Cinzel'] font-black mt-2 tracking-wider">
                                         {character.name.split(" ")[0]}
                                     </p>
                                 </div>
@@ -723,11 +776,16 @@ export function PreGeneratedCharacters() {
                                             </DialogHeader>
 
                                             <div className="space-y-6 text-[#E5E7EB]">
-                                                <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                                                    <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-3">
-                                                        Quick Identity
-                                                    </h3>
-                                                    <div className="grid grid-cols-2 gap-3 text-sm">
+                                                <div className="bg-white/5 border border-white/10 rounded-lg p-4 flex flex-col sm:flex-row gap-6 items-center sm:items-start">
+                                                    <img 
+                                                        src={`https://picsum.photos/seed/${character.id}/400/400`} 
+                                                        alt={character.name} 
+                                                        className="w-32 h-32 rounded-full object-cover border-2 border-[#D4AF37]/50 shadow-lg shadow-[#D4AF37]/20"
+                                                    />
+                                                    <div className="flex-1 w-full grid grid-cols-2 gap-3 text-sm">
+                                                        <div className="col-span-2 mb-2">
+                                                            <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-1">Quick Identity</h3>
+                                                        </div>
                                                         <p><span className="text-[#9CA3AF]">Title:</span> {character.title}</p>
                                                         <p><span className="text-[#9CA3AF]">Age:</span> {character.age}</p>
                                                         <p><span className="text-[#9CA3AF]">Height:</span> {character.height}</p>
@@ -975,9 +1033,13 @@ export function PreGeneratedCharacters() {
                                     <Button
                                         size="sm"
                                         className="bg-[#D4AF37] hover:bg-[#E6C76A] text-[#0B0F1A] font-semibold flex-1 gap-1"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleViewSheet(character);
+                                        }}
                                     >
-                                        <Download className="w-4 h-4" />
-                                        Choose Hero
+                                        <FileText className="w-4 h-4" />
+                                        View Sheet
                                     </Button>
                                 </div>
                             </CardContent>

@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, type ChangeEvent } from "react";
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Wand2 } from "lucide-react";
+import { Wand2, FileText } from "lucide-react";
 import {
     ALIGNMENTS,
     ARMOR,
@@ -26,6 +27,7 @@ import {
     TOOLS,
     WEAPONS,
 } from "@/lib/character-data";
+import { INITIAL_CHARACTER_STATE, type CharacterState } from "@/lib/character-types";
 
 type AbilityScore = "STR" | "DEX" | "CON" | "INT" | "WIS" | "CHA";
 
@@ -43,6 +45,7 @@ type QuickCharacter = {
     subclass: string;
     background: string;
     alignment: string;
+    imageUrl: string;
     abilities: Record<AbilityScore, number>;
     skills: string[];
     savingThrows: AbilityScore[];
@@ -378,6 +381,9 @@ function generateCharacter(): QuickCharacter {
     };
     const personality = buildPersonality();
     const metaLevel = 1;
+    
+    // Create random image URL using their basic info as seed
+    const seedId = `${identity.race}-${identity.characterClass}-${Date.now()}`.replace(/[^a-zA-Z0-9-]/g, '');
 
     const character: QuickCharacter = {
         name: `${identity.race} ${identity.characterClass}`,
@@ -393,6 +399,7 @@ function generateCharacter(): QuickCharacter {
         subclass: identity.subclass,
         background,
         alignment,
+        imageUrl: `https://picsum.photos/seed/${seedId}/400/400`,
         abilities: {
             STR: rollAbilityScore(),
             DEX: rollAbilityScore(),
@@ -461,6 +468,7 @@ function DetailChipList({
 }
 
 export function QuickCharacterGenerator() {
+    const router = useRouter();
     const [character, setCharacter] = useState<QuickCharacter>(generateCharacter());
     const [name, setName] = useState<string>("");
 
@@ -471,6 +479,50 @@ export function QuickCharacterGenerator() {
     const handleGenerateNew = () => {
         setCharacter(generateCharacter());
         setName("");
+    };
+
+    const handleViewSheet = () => {
+        const finalName = name.trim() || character.name;
+        
+        const stateToSave: CharacterState = {
+            ...INITIAL_CHARACTER_STATE,
+            identity: {
+                name: finalName,
+                gender: character.gender,
+                age: character.age,
+                height: character.height,
+                weight: character.weight,
+                alignment: character.alignment as any,
+                deity: character.deity,
+                title: character.title,
+                imageUrl: character.imageUrl,
+            },
+            race: character.race,
+            subrace: character.subrace,
+            characterClass: character.characterClass,
+            subclass: character.subclass,
+            background: character.background,
+            abilities: character.abilities,
+            skills: character.skills as any[],
+            savingThrows: character.savingThrows,
+            feats: character.feats,
+            features: character.features,
+            languages: character.languages,
+            proficiencies: character.proficiencies,
+            weapons: character.weapons,
+            armor: character.armor,
+            equipment: character.equipment,
+            tools: character.tools,
+            currency: character.currency,
+            spells: { 0: character.spells },
+            personality: {
+                ...character.personality,
+                backstory: character.backstory,
+            },
+            meta: character.meta,
+        };
+        localStorage.setItem("dnd_character_sheet", JSON.stringify(stateToSave));
+        router.push("/characters/sheet");
     };
 
     const displayName = name.trim() || character.name;
@@ -489,15 +541,22 @@ export function QuickCharacterGenerator() {
             </div>
 
             <Card className="bg-[#111827] border-[#D4AF37]/20">
-                <CardHeader className="border-b border-white/10">
-                    <CardTitle className="font-['Cinzel'] text-2xl text-[#F9FAFB]">
-                        {displayName}
-                    </CardTitle>
-                    <p className="text-sm text-[#D4AF37] mt-1">
-                        {character.title} • {character.background} • {character.alignment}
-                    </p>
+                <CardHeader className="border-b border-white/10 flex flex-col md:flex-row gap-6 md:items-center">
+                    <img 
+                        src={character.imageUrl} 
+                        alt={displayName} 
+                        className="w-24 h-24 rounded-full object-cover border-2 border-[#D4AF37]/50 shadow-lg shadow-[#D4AF37]/20"
+                    />
+                    <div>
+                        <CardTitle className="font-['Cinzel'] text-2xl text-[#F9FAFB]">
+                            {displayName}
+                        </CardTitle>
+                        <p className="text-sm text-[#D4AF37] mt-1">
+                            {character.title} • {character.background} • {character.alignment}
+                        </p>
+                    </div>
                 </CardHeader>
-                <CardContent className="space-y-8 text-[#E5E7EB]">
+                <CardContent className="space-y-8 text-[#E5E7EB] pt-6">
                     <div className="bg-white/5 border border-white/10 rounded-xl p-6">
                         <Label className="text-indigo-200 mb-3 block font-semibold">
                             Character Name
@@ -747,16 +806,17 @@ export function QuickCharacterGenerator() {
                     <div className="flex flex-col sm:flex-row gap-4 pt-4 border-t border-white/10">
                         <Button
                             onClick={handleGenerateNew}
-                            className="bg-[#D4AF37] hover:bg-[#E6C76A] text-[#0B0F1A] font-semibold flex items-center justify-center gap-2 flex-1"
+                            className="bg-black/50 hover:bg-black/80 text-white font-semibold flex items-center justify-center gap-2 flex-1 border border-white/10"
                         >
                             <Wand2 className="w-4 h-4" />
                             Generate New Hero
                         </Button>
                         <Button
-                            variant="outline"
-                            className="border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37]/10 flex-1"
+                            onClick={handleViewSheet}
+                            className="bg-[#D4AF37] hover:bg-[#E6C76A] text-[#0B0F1A] font-bold flex items-center justify-center gap-2 flex-1"
                         >
-                            Save Character
+                            <FileText className="w-4 h-4" />
+                            View Character Sheet
                         </Button>
                     </div>
                 </CardContent>
