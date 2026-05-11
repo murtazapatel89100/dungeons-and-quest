@@ -1,33 +1,46 @@
 "use client";
-import React, { useState } from "react";
-import { Dice5, UserCog, Users } from "lucide-react";
+import { Dice5, UserPlus, Gift, Type } from "lucide-react";
 import { motion } from "motion/react";
+import { useState } from "react";
+import Link from "next/link";
 import { DiceRollerModal } from "./DiceRollerModal";
 
 const TOOLS = [
   {
     title: "Dice Roller",
     description:
-      "Roll standard d4 to d100 with advantage/disadvantage toggles.",
+      "Interactive 3D polyhedral dice roller with physics and critical success effects.",
     icon: Dice5,
     cta: "Roll Dice",
     color: "#6D28D9",
+    path: "/tools#dice-roller",
   },
   {
     title: "Character Generator",
     description:
-      "Instantly create level-appropriate NPCs with full stat blocks.",
-    icon: UserCog,
+      "Instantly create fully fleshed-out heroes with backstories, stats, and gear.",
+    icon: UserPlus,
     cta: "Generate",
     color: "#D4AF37",
+    path: "/characters/quick",
   },
   {
-    title: "Encounter Builder",
+    title: "Loot Generator",
     description:
-      "Balance encounters for your party's level and create epic battles.",
-    icon: Users,
-    cta: "Build",
+      "Randomize treasure drops and magical items for your party's encounters.",
+    icon: Gift,
+    cta: "Loot Chest",
     color: "#DC2626",
+    path: "/tools#loot-generator",
+  },
+  {
+    title: "Name Generator",
+    description:
+      "Thousands of name combinations for NPCs, taverns, and ancient artifacts.",
+    icon: Type,
+    cta: "Generate Names",
+    color: "#059669",
+    path: "/tools#name-generator",
   },
 ];
 
@@ -49,15 +62,20 @@ export function ToolHighlights() {
             </p>
           </div>
 
-          <button className="px-6 py-2 border border-[#D4AF37] text-[#D4AF37] font-['Cinzel'] uppercase tracking-wider hover:bg-[#D4AF37]/10 transition-colors duration-300 shadow-[0_0_10px_rgba(212,175,55,0.2)]">
-            View All Tools
-          </button>
+          <Link href="/tools">
+            <button
+              type="button"
+              className="px-6 py-2 border border-[#D4AF37] text-[#D4AF37] font-['Cinzel'] uppercase tracking-wider hover:bg-[#D4AF37]/10 transition-colors duration-300 shadow-[0_0_10px_rgba(212,175,55,0.2)]"
+            >
+              View All Tools
+            </button>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 gap-6">
           {TOOLS.map((tool, index) => (
             <motion.div
-              key={index}
+              key={tool.title}
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-50px" }}
@@ -94,16 +112,24 @@ export function ToolHighlights() {
               </div>
 
               <div className="relative z-10 mt-4 md:mt-0 w-full md:w-auto flex-shrink-0">
-                <button
-                  onClick={() => {
-                    if (tool.title === "Dice Roller") {
-                      setIsDiceModalOpen(true);
-                    }
-                  }}
-                  className="w-full md:w-auto px-8 py-3 bg-[#0B0F1A] border border-[#1F2937] group-hover:border-[#D4AF37] text-[#F9FAFB] group-hover:text-[#D4AF37] font-['Cinzel'] uppercase tracking-widest text-sm font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(212,175,55,0.3)] whitespace-nowrap"
-                >
-                  {tool.cta}
-                </button>
+                {tool.title === "Dice Roller" ? (
+                  <button
+                    type="button"
+                    onClick={() => setIsDiceModalOpen(true)}
+                    className="w-full md:w-auto px-8 py-3 bg-[#0B0F1A] border border-[#1F2937] group-hover:border-[#D4AF37] text-[#F9FAFB] group-hover:text-[#D4AF37] font-['Cinzel'] uppercase tracking-widest text-sm font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(212,175,55,0.3)] whitespace-nowrap"
+                  >
+                    {tool.cta}
+                  </button>
+                ) : (
+                  <Link href={tool.path}>
+                    <button
+                      type="button"
+                      className="w-full md:w-auto px-8 py-3 bg-[#0B0F1A] border border-[#1F2937] group-hover:border-[#D4AF37] text-[#F9FAFB] group-hover:text-[#D4AF37] font-['Cinzel'] uppercase tracking-widest text-sm font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(212,175,55,0.3)] whitespace-nowrap"
+                    >
+                      {tool.cta}
+                    </button>
+                  </Link>
+                )}
               </div>
             </motion.div>
           ))}

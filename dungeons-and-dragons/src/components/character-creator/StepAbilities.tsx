@@ -1,16 +1,14 @@
 "use client";
 
-import React from "react";
-import { useCharacter } from "./CharacterStateContext";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { AbilityStat, SkillName } from "@/lib/character-types";
-import { ABILITIES, SKILLS } from "@/lib/character-data";
+import { Calculator, Dice5 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Dice5, Calculator } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { ABILITIES, SKILLS } from "@/lib/character-data";
+import type { AbilityStat, SkillName } from "@/lib/character-types";
+import { useCharacter } from "./CharacterStateContext";
 
-const STAT_NAMES: Record<AbilityStat, string> = {
+const _STAT_NAMES: Record<AbilityStat, string> = {
   STR: "Strength",
   DEX: "Dexterity",
   CON: "Constitution",
@@ -117,7 +115,7 @@ export function StepAbilities() {
                   max={20}
                   value={score}
                   onChange={(e) => {
-                    const val = parseInt(e.target.value) || 3;
+                    const val = parseInt(e.target.value, 10) || 3;
                     updateNestedState("abilities", { [stat]: val });
                   }}
                   className="w-16 text-center text-2xl font-['Cinzel'] bg-transparent border-0 ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-white !p-0"
@@ -146,24 +144,22 @@ export function StepAbilities() {
             const isProficient = state.skills.includes(skill);
 
             return (
-              <div
+              <button
+                type="button"
                 key={skill}
-                className={`flex items-center space-x-3 p-2 rounded-lg transition-colors cursor-pointer \${isProficient ? 'bg-indigo-500/10' : 'hover:bg-white/5'}`}
+                className={`flex items-center space-x-3 p-2 rounded-lg transition-colors cursor-pointer border-none text-left w-full ${isProficient ? "bg-indigo-500/10" : "bg-transparent hover:bg-white/5"}`}
                 onClick={() => toggleSkill(skill)}
               >
                 <Checkbox
                   id={`skill-\${skill}`}
                   checked={isProficient}
                   onCheckedChange={() => toggleSkill(skill)}
-                  className={`border-white/20 \${isProficient ? 'bg-indigo-500 border-indigo-500 text-white' : ''}`}
+                  className={`border-white/20 pointer-events-none \${isProficient ? 'bg-indigo-500 border-indigo-500 text-white' : ''}`}
                 />
-                <Label
-                  htmlFor={`skill-\${skill}`}
-                  className="cursor-pointer text-indigo-100 flex-1"
-                >
+                <span className="text-indigo-100 flex-1 pointer-events-none">
                   {skill}
-                </Label>
-              </div>
+                </span>
+              </button>
             );
           })}
         </div>

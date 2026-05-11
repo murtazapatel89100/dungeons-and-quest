@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { useCharacter } from "./CharacterStateContext";
+import { Dice5, Settings2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,16 +9,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Settings2, Dice5 } from "lucide-react";
-import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import {
-  RACES,
-  CLASSES_AND_SUBCLASSES,
-  BACKGROUNDS,
   ALIGNMENTS,
+  BACKGROUNDS,
+  CLASSES_AND_SUBCLASSES,
+  RACES,
 } from "@/lib/character-data";
+import type { Alignment } from "@/lib/character-types";
+import { useCharacter } from "./CharacterStateContext";
 
 export function GeneratorControls() {
   const { state, updateNestedState, updateState } = useCharacter();
@@ -52,7 +52,7 @@ export function GeneratorControls() {
     if (!state.generatorLocks.background) {
       updateState({ background: randomChoice(BACKGROUNDS) });
       updateNestedState("identity", {
-        alignment: randomChoice(ALIGNMENTS) as any,
+        alignment: randomChoice(ALIGNMENTS) as Alignment,
       });
     }
 

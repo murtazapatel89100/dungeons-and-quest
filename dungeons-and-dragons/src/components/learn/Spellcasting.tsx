@@ -1,11 +1,18 @@
 "use client";
 
+import {
+  Flame,
+  Hand,
+  Heart,
+  type LucideIcon,
+  Shield,
+  Sparkles,
+} from "lucide-react";
 import { motion } from "motion/react";
 import { learnData } from "@/lib/data/learnData";
-import { Flame, Hand, Heart, Shield, Sparkles } from "lucide-react";
 
 const getSpellIcon = (iconName: string) => {
-  const icons: Record<string, any> = { Flame, Hand, Heart, Shield };
+  const icons: Record<string, LucideIcon> = { Flame, Hand, Heart, Shield };
   const IconComponent = icons[iconName] || Sparkles;
   return <IconComponent className="w-8 h-8" />;
 };

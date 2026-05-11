@@ -1,7 +1,7 @@
 "use client";
 
+import { Crown, Users } from "lucide-react";
 import { motion } from "motion/react";
-import { Book, Crown, Users } from "lucide-react";
 
 export function IntroSection() {
   return (

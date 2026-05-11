@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { BookOpen } from "lucide-react";
 import { motion } from "motion/react";
-import { BookOpen, Link } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function HeroSection() {
   const [mounted, setMounted] = useState(false);
@@ -24,29 +24,30 @@ export function HeroSection() {
       </div>
 
       <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
-        {mounted && [...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full bg-[#D4AF37]/40 blur-[2px]"
-            style={{
-              width: Math.random() * 6 + 2 + "px",
-              height: Math.random() * 6 + 2 + "px",
-              left: Math.random() * 100 + "%",
-              top: Math.random() * 100 + "%",
-            }}
-            animate={{
-              y: [0, -100, -200],
-              x: [0, Math.random() * 50 - 25, Math.random() * 50 - 25],
-              opacity: [0, 0.8, 0],
-            }}
-            transition={{
-              duration: Math.random() * 5 + 5,
-              repeat: Infinity,
-              ease: "linear",
-              delay: Math.random() * 5,
-            }}
-          />
-        ))}
+        {mounted &&
+          [...Array(20)].map((_, i) => (
+            <motion.div
+              key={`particle-${i}`}
+              className="absolute rounded-full bg-[#D4AF37]/40 blur-[2px]"
+              style={{
+                width: `${Math.random() * 6 + 2}px`,
+                height: `${Math.random() * 6 + 2}px`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -100, -200],
+                x: [0, Math.random() * 50 - 25, Math.random() * 50 - 25],
+                opacity: [0, 0.8, 0],
+              }}
+              transition={{
+                duration: Math.random() * 5 + 5,
+                repeat: Infinity,
+                ease: "linear",
+                delay: Math.random() * 5,
+              }}
+            />
+          ))}
       </div>
 
       <div className="relative z-20 text-center px-4 max-w-4xl mx-auto mt-20">

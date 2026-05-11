@@ -25,8 +25,7 @@ const CHARACTER_PATHS = [
       "Build every detail from scratch, including identity, class, abilities, equipment, and personality.",
     href: "/characters/custom",
     cta: "Start Custom Build",
-    imageUrl:
-      "https://picsum.photos/seed/custom-character-forge/1600/1200",
+    imageUrl: "https://picsum.photos/seed/custom-character-forge/1600/1200",
   },
   {
     title: "Swift Hero Generator",
@@ -34,8 +33,7 @@ const CHARACTER_PATHS = [
       "Create a playable character in seconds with randomized race, class, background, and stats.",
     href: "/characters/quick",
     cta: "Generate Quickly",
-    imageUrl:
-      "https://picsum.photos/seed/swift-hero-generator/1600/1200",
+    imageUrl: "https://picsum.photos/seed/swift-hero-generator/1600/1200",
     showBadge: false,
   },
   {
@@ -44,8 +42,7 @@ const CHARACTER_PATHS = [
       "Pick from ready-made archetypes you can use immediately or adapt for your campaign.",
     href: "/characters/pregenerated",
     cta: "Browse Pre-Built Heroes",
-    imageUrl:
-      "https://picsum.photos/seed/legendary-starter-roster/1600/1200",
+    imageUrl: "https://picsum.photos/seed/legendary-starter-roster/1600/1200",
   },
 ] as const;
 

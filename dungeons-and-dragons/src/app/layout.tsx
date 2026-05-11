@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { Navigation } from "@/components/Navigation";
 
 import siteConfig from "../../config/site.json";
 
@@ -12,7 +12,18 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: ["D&D", "Dungeons and Dragons", "TTRPG", "Tabletop", "RPG", "5e", "Character Builder", "Dice Roller", "Dungeon Master", "Player Handbook"],
+  keywords: [
+    "D&D",
+    "Dungeons and Dragons",
+    "TTRPG",
+    "Tabletop",
+    "RPG",
+    "5e",
+    "Character Builder",
+    "Dice Roller",
+    "Dungeon Master",
+    "Player Handbook",
+  ],
   authors: [{ name: "Arcane Scroll Team" }],
   creator: "Arcane Scroll",
   openGraph: {
@@ -47,21 +58,22 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
       <body className="min-h-screen bg-[#0B0F1A] text-[#F9FAFB] font-['Inter'] flex flex-col relative overflow-x-hidden">
-        {/* Global JSON-LD Structured Data */}
+        {/* Structured Data for SEO */}
         <script
           type="application/ld+json"
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data is safe to inject as a string
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              "name": siteConfig.name,
-              "url": siteConfig.url,
-              "description": siteConfig.description,
-              "potentialAction": {
+              name: siteConfig.name,
+              url: siteConfig.url,
+              description: siteConfig.description,
+              potentialAction: {
                 "@type": "SearchAction",
-                "target": `${siteConfig.url}/search?q={search_term_string}`,
-                "query-input": "required name=search_term_string"
-              }
+                target: `${siteConfig.url}/search?q={search_term_string}`,
+                "query-input": "required name=search_term_string",
+              },
             }),
           }}
         />

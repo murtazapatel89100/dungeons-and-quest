@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useMemo } from "react";
-import { useCharacter } from "./CharacterStateContext";
+import { BookOpen, Dice5 } from "lucide-react";
+import { useMemo } from "react";
+import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  PERSONALITY_SUGGESTIONS,
   BACKGROUND_TRAITS,
+  PERSONALITY_SUGGESTIONS,
 } from "@/lib/character-data";
-import { Button } from "@/components/ui/button";
-import { Dice5, BookOpen } from "lucide-react";
+import type { PersonalityTraits } from "@/lib/character-types";
+import { useCharacter } from "./CharacterStateContext";
 
 export function StepDetails() {
   const { state, updateNestedState } = useCharacter();
@@ -17,7 +18,7 @@ export function StepDetails() {
   const handleRandomize = (
     category: string,
     source: "personality" | "background",
-    targetKey: string,
+    targetKey: keyof PersonalityTraits,
   ) => {
     let pool: string[] = [];
     if (source === "personality") {
@@ -32,8 +33,7 @@ export function StepDetails() {
 
     if (pool.length > 0) {
       const randomItem = pool[Math.floor(Math.random() * pool.length)];
-      const currentList: string[] =
-        (state.personality as any)[targetKey] || [];
+      const currentList = (state.personality[targetKey] as string[]) || [];
       if (!currentList.includes(randomItem)) {
         updateNestedState("personality", {
           [targetKey]: [...currentList, randomItem],
@@ -42,8 +42,11 @@ export function StepDetails() {
     }
   };
 
-  const handleTextChange = (targetKey: string, value: string) => {
-    const list = value.split("\\n").filter(Boolean);
+  const handleTextChange = (
+    targetKey: keyof PersonalityTraits,
+    value: string,
+  ) => {
+    const list = value.split("\n").filter(Boolean);
     updateNestedState("personality", { [targetKey]: list });
   };
 
@@ -51,7 +54,7 @@ export function StepDetails() {
     const race = state.race || "adventurer";
     const charClass = state.characterClass || "hero";
     const bg = state.background || "wanderer";
-    
+
     return [
       `Born as a ${race}, I was raised with the typical traditions of my people until an incident forced me to learn the ways of a ${charClass}. My life as a ${bg} taught me to survive the harsh realities of the world. Now, I seek to make a name for myself and uncover the truth behind the mysteries of my past.`,
       `The path of a ${charClass} was never an easy one, especially for a ${race} like me. Coming from a background as a ${bg}, I had to claw my way up, learning the hard lessons of trust and betrayal. I have lost much, but my resolve remains unbroken as I set out on this new journey.`,
@@ -65,10 +68,10 @@ export function StepDetails() {
 
   const renderSection = (
     title: string,
-    dataKey: keyof typeof state.personality,
+    dataKey: keyof PersonalityTraits,
     sourceInfo: { source: "personality" | "background"; category: string },
   ) => {
-    const value = ((state.personality as any)[dataKey] || []).join("\\n");
+    const value = ((state.personality[dataKey] as string[]) || []).join("\n");
     return (
       <div className="space-y-2 bg-black/20 p-4 rounded-xl border border-white/5">
         <div className="flex justify-between items-center mb-1">
@@ -76,6 +79,7 @@ export function StepDetails() {
             {title}
           </Label>
           <Button
+            type="button"
             variant="ghost"
             size="sm"
             className="h-6 px-2 text-indigo-400 hover:text-indigo-300 hover:bg-white/10"
@@ -89,7 +93,7 @@ export function StepDetails() {
         <Textarea
           value={value}
           onChange={(e) => handleTextChange(dataKey, e.target.value)}
-          placeholder={`Enter \${title.toLowerCase()} (one per line)...`}
+          placeholder={`Enter ${title.toLowerCase()} (one per line)...`}
           className="bg-black/40 border-white/10 text-white placeholder:text-white/20 min-h-[80px]"
         />
       </div>
@@ -108,7 +112,6 @@ export function StepDetails() {
       </div>
 
       <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-max">
-        
         {/* Backstory Section - spanning full width */}
         <div className="space-y-4 md:col-span-2 bg-black/20 p-4 rounded-xl border border-indigo-500/20">
           <div className="flex justify-between items-center mb-1">
@@ -116,22 +119,25 @@ export function StepDetails() {
               <BookOpen className="w-5 h-5 text-indigo-400" /> Backstory
             </Label>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
-            {generatedBackstories.map((story, idx) => (
-              <div 
-                key={idx}
+            {generatedBackstories.map((story) => (
+              <button
+                key={story}
+                type="button"
                 onClick={() => selectBackstory(story)}
-                className="text-xs p-3 rounded-lg border border-white/10 bg-black/40 hover:bg-indigo-500/20 hover:border-indigo-500/50 cursor-pointer transition-colors text-white/80 line-clamp-4"
+                className="text-left text-xs p-3 rounded-lg border border-white/10 bg-black/40 hover:bg-indigo-500/20 hover:border-indigo-500/50 cursor-pointer transition-colors text-white/80 line-clamp-4 focus:outline-hidden focus:ring-1 focus:ring-indigo-500"
               >
                 {story}
-              </div>
+              </button>
             ))}
           </div>
 
           <Textarea
             value={state.personality.backstory || ""}
-            onChange={(e) => updateNestedState("personality", { backstory: e.target.value })}
+            onChange={(e) =>
+              updateNestedState("personality", { backstory: e.target.value })
+            }
             placeholder="Write your hero's origins, or click a suggestion above to start..."
             className="bg-black/40 border-white/10 text-white placeholder:text-white/20 min-h-[120px]"
           />
@@ -173,4 +179,3 @@ export function StepDetails() {
     </div>
   );
 }
-

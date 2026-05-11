@@ -1,7 +1,6 @@
 "use client";
-import React from "react";
+import { BookOpen, Compass, Swords, UserPlus } from "lucide-react";
 import { motion } from "motion/react";
-import { BookOpen, UserPlus, Swords } from "lucide-react";
 
 const STEPS = [
   {
@@ -18,6 +17,12 @@ const STEPS = [
   },
   {
     num: "III",
+    title: "Discover Your Playstyle",
+    desc: "Find the path that matches your preferred experience.",
+    icon: Compass,
+  },
+  {
+    num: "IV",
     title: "Start Your Adventure",
     desc: "Gather your party and enter the dungeon.",
     icon: Swords,
@@ -49,22 +54,22 @@ export function HowItWorks() {
           </motion.h2>
           <div className="w-32 h-1 bg-gradient-to-r from-transparent via-[#6D28D9] to-transparent mx-auto opacity-70"></div>
           <p className="font-['Inter'] text-[#9CA3AF] mt-6 max-w-xl mx-auto">
-            Embark on your quest in three simple steps.
+            Embark on your quest in four legendary steps.
           </p>
         </div>
 
-        <div className="relative flex flex-col md:flex-row items-center justify-between max-w-5xl mx-auto gap-12 md:gap-0">
+        <div className="relative flex flex-col md:flex-row items-center justify-between max-w-6xl mx-auto gap-12 md:gap-4">
           {/* Connecting Line (Desktop) */}
-          <div className="hidden md:block absolute top-[48px] left-[15%] right-[15%] h-[2px] bg-gradient-to-r from-[#D4AF37]/20 via-[#6D28D9]/50 to-[#DC2626]/20 z-0" />
+          <div className="hidden md:block absolute top-[48px] left-[10%] right-[10%] h-[2px] bg-gradient-to-r from-[#D4AF37]/20 via-[#6D28D9]/50 to-[#DC2626]/20 z-0" />
 
           {STEPS.map((step, index) => (
             <motion.div
-              key={index}
+              key={step.title}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: index * 0.2, duration: 0.5 }}
-              className="relative z-10 flex flex-col items-center w-full md:w-1/3 group"
+              className="relative z-10 flex flex-col items-center w-full md:w-1/4 group"
             >
               {/* Step Circle */}
               <div className="relative mb-6">

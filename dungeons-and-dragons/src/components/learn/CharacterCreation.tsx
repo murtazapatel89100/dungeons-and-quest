@@ -1,30 +1,30 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { learnData } from "@/lib/data/learnData";
 import {
-  User,
-  Leaf,
-  Mountain,
-  Flame,
-  ShieldAlert,
-  Sword,
-  BookOpen,
-  Scissors,
-  Heart,
-  Music,
   Activity,
+  BookOpen,
   Brain,
   Eye,
-  Zap,
-  Shield,
+  Flame,
+  Heart,
+  Leaf,
+  type LucideIcon,
   MessageCircle,
+  Mountain,
+  Music,
+  Scissors,
+  ShieldAlert,
+  Sword,
+  User,
+  Zap,
 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
+import { learnData } from "@/lib/data/learnData";
 
 // Icon mapping helper
 const getIcon = (iconName: string) => {
-  const icons: Record<string, any> = {
+  const icons: Record<string, LucideIcon> = {
     User,
     Leaf,
     Mountain,
@@ -93,6 +93,7 @@ export function CharacterCreation() {
         <div className="md:w-64 bg-[#0B0F1A] p-6 border-r border-[#1F2937] flex flex-col gap-8">
           <div className="flex flex-row md:flex-col gap-2">
             <button
+              type="button"
               onClick={() => handleTabChange("races")}
               className={`p-3 rounded-lg text-left font-['Cinzel'] transition-all ${
                 activeTab === "races"
@@ -103,6 +104,7 @@ export function CharacterCreation() {
               Races
             </button>
             <button
+              type="button"
               onClick={() => handleTabChange("classes")}
               className={`p-3 rounded-lg text-left font-['Cinzel'] transition-all ${
                 activeTab === "classes"
@@ -113,6 +115,7 @@ export function CharacterCreation() {
               Classes
             </button>
             <button
+              type="button"
               onClick={() => handleTabChange("abilities")}
               className={`p-3 rounded-lg text-left font-['Cinzel'] transition-all ${
                 activeTab === "abilities"
@@ -132,6 +135,7 @@ export function CharacterCreation() {
             {activeTab === "races" &&
               learnData.races.map((race, idx) => (
                 <button
+                  type="button"
                   key={race.name}
                   onClick={() => setSelectedItem(idx)}
                   className={`flex-shrink-0 px-4 py-2 rounded-full border transition-all ${
@@ -146,6 +150,7 @@ export function CharacterCreation() {
             {activeTab === "classes" &&
               learnData.classes.map((cls, idx) => (
                 <button
+                  type="button"
                   key={cls.name}
                   onClick={() => setSelectedItem(idx)}
                   className={`flex-shrink-0 px-4 py-2 rounded-full border transition-all ${
@@ -160,6 +165,7 @@ export function CharacterCreation() {
             {activeTab === "abilities" &&
               abilities.map((ab, idx) => (
                 <button
+                  type="button"
                   key={ab.name}
                   onClick={() => setSelectedItem(idx)}
                   className={`flex-shrink-0 px-4 py-2 rounded-full border transition-all ${
@@ -207,8 +213,8 @@ export function CharacterCreation() {
                       Racial Traits
                     </h4>
                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-[#9CA3AF]">
-                      {learnData.races[selectedItem].traits.map((trait, i) => (
-                        <li key={i} className="flex items-center gap-2">
+                      {learnData.races[selectedItem].traits.map((trait) => (
+                        <li key={trait} className="flex items-center gap-2">
                           <span className="w-1.5 h-1.5 bg-[#6D28D9] rounded-full" />
                           {trait}
                         </li>
@@ -270,8 +276,8 @@ export function CharacterCreation() {
                       </h4>
                       <ul className="space-y-2 text-[#9CA3AF]">
                         {learnData.classes[selectedItem].strengths.map(
-                          (str, i) => (
-                            <li key={i} className="flex items-start gap-2">
+                          (str) => (
+                            <li key={str} className="flex items-start gap-2">
                               <span className="text-green-500 mt-1">✓</span>{" "}
                               {str}
                             </li>
@@ -285,8 +291,8 @@ export function CharacterCreation() {
                       </h4>
                       <ul className="space-y-2 text-[#9CA3AF]">
                         {learnData.classes[selectedItem].weaknesses.map(
-                          (wk, i) => (
-                            <li key={i} className="flex items-start gap-2">
+                          (wk) => (
+                            <li key={wk} className="flex items-start gap-2">
                               <span className="text-red-500 mt-1">✗</span> {wk}
                             </li>
                           ),
@@ -323,7 +329,12 @@ export function CharacterCreation() {
                       <svg
                         className="absolute inset-0 w-full h-full pointer-events-none"
                         viewBox="0 0 100 100"
+                        role="img"
+                        aria-labelledby="decorative-ring-title"
                       >
+                        <title id="decorative-ring-title">
+                          Decorative geometric ring
+                        </title>
                         <circle
                           cx="50"
                           cy="50"

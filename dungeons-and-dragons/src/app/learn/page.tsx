@@ -1,24 +1,25 @@
-import { HeroSection } from "@/components/learn/HeroSection";
-import { JourneyNavigator } from "@/components/learn/JourneyNavigator";
-import { IntroSection } from "@/components/learn/IntroSection";
-import { DiceSystem } from "@/components/learn/DiceSystem";
+import type { Metadata } from "next";
+import { CampaignStructure } from "@/components/learn/CampaignStructure";
 import { CharacterCreation } from "@/components/learn/CharacterCreation";
 import { CombatBasics } from "@/components/learn/CombatBasics";
-import { Spellcasting } from "@/components/learn/Spellcasting";
-import { Roleplaying } from "@/components/learn/Roleplaying";
-import { CampaignStructure } from "@/components/learn/CampaignStructure";
-import { Glossary } from "@/components/learn/Glossary";
+import { DiceSystem } from "@/components/learn/DiceSystem";
 import { ExampleAdventure } from "@/components/learn/ExampleAdventure";
-
-import type { Metadata } from "next";
+import { Glossary } from "@/components/learn/Glossary";
+import { HeroSection } from "@/components/learn/HeroSection";
+import { IntroSection } from "@/components/learn/IntroSection";
+import { JourneyNavigator } from "@/components/learn/JourneyNavigator";
+import { Roleplaying } from "@/components/learn/Roleplaying";
+import { Spellcasting } from "@/components/learn/Spellcasting";
 
 export const metadata: Metadata = {
   title: "Player's Handbook | Learn D&D",
-  description: "Master the basics of Dungeons & Dragons. From character creation to combat and magic, start your journey here.",
+  description:
+    "Master the basics of Dungeons & Dragons. From character creation to combat and magic, start your journey here.",
   openGraph: {
     title: "Player's Handbook | Learn D&D",
-    description: "Master the basics of Dungeons & Dragons. From character creation to combat and magic, start your journey here.",
-  }
+    description:
+      "Master the basics of Dungeons & Dragons. From character creation to combat and magic, start your journey here.",
+  },
 };
 
 export default function LearnPage() {
@@ -28,15 +29,33 @@ export default function LearnPage() {
 
       <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 space-y-32 pb-32">
         <JourneyNavigator />
-        <div id="intro"><IntroSection /></div>
-        <div id="dice"><DiceSystem /></div>
-        <div id="character"><CharacterCreation /></div>
-        <div id="combat"><CombatBasics /></div>
-        <div id="magic"><Spellcasting /></div>
-        <div id="roleplaying"><Roleplaying /></div>
-        <div id="campaigns"><CampaignStructure /></div>
-        <div id="glossary"><Glossary /></div>
-        <div id="adventure"><ExampleAdventure /></div>
+        <div id="intro">
+          <IntroSection />
+        </div>
+        <div id="dice">
+          <DiceSystem />
+        </div>
+        <div id="character">
+          <CharacterCreation />
+        </div>
+        <div id="combat">
+          <CombatBasics />
+        </div>
+        <div id="magic">
+          <Spellcasting />
+        </div>
+        <div id="roleplaying">
+          <Roleplaying />
+        </div>
+        <div id="campaigns">
+          <CampaignStructure />
+        </div>
+        <div id="glossary">
+          <Glossary />
+        </div>
+        <div id="adventure">
+          <ExampleAdventure />
+        </div>
       </div>
     </div>
   );

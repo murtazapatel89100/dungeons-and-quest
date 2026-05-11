@@ -1,8 +1,8 @@
 "use client";
 
+import { ArrowRight, RotateCcw, Sparkles } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { Sparkles, ArrowRight, RotateCcw } from "lucide-react";
 
 type Question = {
   id: string;
@@ -15,30 +15,57 @@ const questions: Question[] = [
     id: "q1",
     question: "Do you enjoy video games and digital RPGs?",
     options: [
-      { label: "Yes, I prefer visual gameplay and let the game do the math.", resultTag: "video-games" },
-      { label: "Sometimes, but I prefer tabletop imagination.", resultTag: "tabletop" },
-      { label: "Not really, I prefer text-based or spoken roleplay.", resultTag: "rp-communities" },
-    ]
+      {
+        label: "Yes, I prefer visual gameplay and let the game do the math.",
+        resultTag: "video-games",
+      },
+      {
+        label: "Sometimes, but I prefer tabletop imagination.",
+        resultTag: "tabletop",
+      },
+      {
+        label: "Not really, I prefer text-based or spoken roleplay.",
+        resultTag: "rp-communities",
+      },
+    ],
   },
   {
     id: "q2",
     question: "What excites you most in a fantasy setting?",
     options: [
-      { label: "Complex tactical combat and optimized builds.", resultTag: "tactical" },
-      { label: "Deep character interactions and dramatic acting.", resultTag: "rp-communities" },
-      { label: "Creating massive worlds and drawing maps.", resultTag: "worldbuilding" },
-      { label: "A healthy mix of combat, exploration, and roleplay.", resultTag: "tabletop" },
-    ]
+      {
+        label: "Complex tactical combat and optimized builds.",
+        resultTag: "tactical",
+      },
+      {
+        label: "Deep character interactions and dramatic acting.",
+        resultTag: "rp-communities",
+      },
+      {
+        label: "Creating massive worlds and drawing maps.",
+        resultTag: "worldbuilding",
+      },
+      {
+        label: "A healthy mix of combat, exploration, and roleplay.",
+        resultTag: "tabletop",
+      },
+    ],
   },
   {
     id: "q3",
     question: "How do you prefer to play?",
     options: [
-      { label: "With a dedicated group of friends for months.", resultTag: "tabletop" },
-      { label: "In massive online communities with hundreds of players.", resultTag: "rp-communities" },
+      {
+        label: "With a dedicated group of friends for months.",
+        resultTag: "tabletop",
+      },
+      {
+        label: "In massive online communities with hundreds of players.",
+        resultTag: "rp-communities",
+      },
       { label: "By myself, exploring at my own pace.", resultTag: "solo" },
-    ]
-  }
+    ],
+  },
 ];
 
 export function PathQuiz() {
@@ -62,15 +89,15 @@ export function PathQuiz() {
   const getTopResult = () => {
     const sorted = Object.entries(scores).sort((a, b) => b[1] - a[1]);
     const topTag = sorted[0]?.[0] || "tabletop";
-    
+
     // Map tag to friendly names
     const names: Record<string, string> = {
       "video-games": "Video Game RPGs (like Baldur's Gate 3)",
-      "tabletop": "Classic Tabletop D&D",
+      tabletop: "Classic Tabletop D&D",
       "rp-communities": "Roleplay Communities",
-      "tactical": "Tactical Combat Campaigns",
-      "worldbuilding": "Lore & Worldbuilding",
-      "solo": "Solo & AI Adventures",
+      tactical: "Tactical Combat Campaigns",
+      worldbuilding: "Lore & Worldbuilding",
+      solo: "Solo & AI Adventures",
     };
 
     return names[topTag];
@@ -83,12 +110,15 @@ export function PathQuiz() {
   };
 
   return (
-    <section id="quiz" className="py-24 bg-[#0B0F1A] relative border-t border-[#1F2937]">
+    <section
+      id="quiz"
+      className="py-24 bg-[#0B0F1A] relative border-t border-[#1F2937]"
+    >
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 pointer-events-none" />
-      
+
       <div className="max-w-4xl mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.5 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
@@ -108,10 +138,12 @@ export function PathQuiz() {
           {/* Progress bar */}
           {!isFinished && (
             <div className="absolute top-0 left-0 w-full h-1 bg-[#1F2937]">
-              <motion.div 
+              <motion.div
                 className="h-full bg-[#D4AF37]"
                 initial={{ width: 0 }}
-                animate={{ width: `${((currentStep) / questions.length) * 100}%` }}
+                animate={{
+                  width: `${(currentStep / questions.length) * 100}%`,
+                }}
                 transition={{ duration: 0.3 }}
               />
             </div>
@@ -133,11 +165,12 @@ export function PathQuiz() {
                 <h3 className="text-2xl md:text-3xl font-['Cinzel'] text-[#F9FAFB] mb-8 leading-tight">
                   {questions[currentStep].question}
                 </h3>
-                
+
                 <div className="space-y-4">
-                  {questions[currentStep].options.map((opt, idx) => (
+                  {questions[currentStep].options.map((opt) => (
                     <button
-                      key={idx}
+                      type="button"
+                      key={opt.label}
                       onClick={() => handleOptionSelect(opt.resultTag)}
                       className="w-full text-left p-6 rounded-xl border border-[#374151] bg-[#0B0F1A]/50 hover:bg-[#1F2937] hover:border-[#D4AF37] transition-all duration-300 text-[#D1D5DB] hover:text-white flex items-center justify-between group"
                     >
@@ -155,17 +188,22 @@ export function PathQuiz() {
                 className="text-center w-full max-w-2xl mx-auto py-8"
               >
                 <div className="w-24 h-24 mx-auto bg-gradient-to-tr from-[#D4AF37] to-[#F59E0B] rounded-full blur-[20px] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20 pointer-events-none" />
-                
-                <h3 className="text-[#9CA3AF] text-lg mb-2 uppercase tracking-widest">The Oracle Decrees:</h3>
+
+                <h3 className="text-[#9CA3AF] text-lg mb-2 uppercase tracking-widest">
+                  The Oracle Decrees:
+                </h3>
                 <h4 className="font-['Cinzel'] text-4xl md:text-5xl text-[#F9FAFB] mb-8">
                   {getTopResult()}
                 </h4>
-                
+
                 <p className="text-[#D1D5DB] mb-12">
-                  Based on your answers, this path aligns perfectly with your interests. Scroll down to see specific recommendations to get started!
+                  Based on your answers, this path aligns perfectly with your
+                  interests. Scroll down to see specific recommendations to get
+                  started!
                 </p>
 
-                <button 
+                <button
+                  type="button"
                   onClick={resetQuiz}
                   className="mx-auto flex items-center gap-2 text-[#9CA3AF] hover:text-[#D4AF37] transition-colors pb-1 border-b border-transparent hover:border-[#D4AF37]"
                 >

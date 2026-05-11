@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { Footprints, Repeat, ShieldAlert, Swords, Zap } from "lucide-react";
 import { motion } from "motion/react";
-import { Swords, Footprints, ShieldAlert, Zap, Repeat } from "lucide-react";
+import { useState } from "react";
 
 const combatSteps = [
   {
@@ -66,7 +66,15 @@ export function CombatBasics() {
               return (
                 <div
                   key={step.id}
-                  className="flex items-center gap-6 cursor-pointer group"
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setActiveStep(idx);
+                    }
+                  }}
+                  className="flex items-center gap-6 cursor-pointer group focus:outline-hidden focus:ring-1 focus:ring-[#DC2626] rounded-xl p-1"
                   onClick={() => setActiveStep(idx)}
                 >
                   <motion.div

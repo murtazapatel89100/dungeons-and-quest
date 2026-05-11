@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { Search, BookMarked } from "lucide-react";
+import { BookMarked, Search } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { useMemo, useState } from "react";
 import { learnData } from "@/lib/data/learnData";
 
 export function Glossary() {
@@ -51,6 +51,7 @@ export function Glossary() {
           <div className="flex overflow-x-auto gap-2 pb-2 md:pb-0 scrollbar-hide shrink-0">
             {categories.map((cat) => (
               <button
+                type="button"
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`px-4 py-2 rounded-lg text-sm transition-colors whitespace-nowrap ${
@@ -78,7 +79,7 @@ export function Glossary() {
                 <p>No terms found matching your query.</p>
               </motion.div>
             ) : (
-              filteredGlossary.map((item, idx) => (
+              filteredGlossary.map((item, _idx) => (
                 <motion.div
                   key={item.term}
                   layout
@@ -108,6 +109,7 @@ export function Glossary() {
 
       {/* Custom Scrollbar CSS for this component scope */}
       <style
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: Injecting internal CSS for custom scrollbar
         dangerouslySetInnerHTML={{
           __html: `
         .custom-scrollbar::-webkit-scrollbar {

@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState } from "react";
-import { useCharacter } from "./CharacterStateContext";
 import { Label } from "@/components/ui/label";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { WEAPONS, ARMOR, EQUIPMENT_PACKS, SPELLS } from "@/lib/character-data";
 import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ARMOR, EQUIPMENT_PACKS, SPELLS, WEAPONS } from "@/lib/character-data";
+import { useCharacter } from "./CharacterStateContext";
 
 export function StepEquipment() {
   const { state, updateState } = useCharacter();
@@ -173,7 +172,7 @@ export function StepEquipment() {
               let numericLevel = parseInt(category.replace("Level", ""), 10);
               if (category === "Cantrips") numericLevel = 0;
 
-              if (isNaN(numericLevel)) return null;
+              if (Number.isNaN(numericLevel)) return null;
 
               return (
                 <div key={category} className="space-y-3">

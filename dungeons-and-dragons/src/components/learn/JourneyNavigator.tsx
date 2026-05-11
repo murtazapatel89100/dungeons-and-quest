@@ -1,26 +1,36 @@
 "use client";
 
-import { motion } from "motion/react";
 import {
+  BookMarked,
   Compass,
   Dices,
-  Users,
-  Swords,
-  Wand2,
-  ScrollText,
-  BookMarked,
+  Map as MapIcon,
   MessageSquare,
-  Map,
+  ScrollText,
+  Swords,
+  Users,
+  Wand2,
 } from "lucide-react";
+import { motion } from "motion/react";
 
 const chapters = [
   { id: "01", title: "What is DnD?", icon: Users, targetId: "intro" },
   { id: "02", title: "Understanding Dice", icon: Dices, targetId: "dice" },
-  { id: "03", title: "Character Creation", icon: Compass, targetId: "character" },
+  {
+    id: "03",
+    title: "Character Creation",
+    icon: Compass,
+    targetId: "character",
+  },
   { id: "04", title: "Combat Basics", icon: Swords, targetId: "combat" },
   { id: "05", title: "Magic & Spells", icon: Wand2, targetId: "magic" },
-  { id: "06", title: "Roleplaying", icon: MessageSquare, targetId: "roleplaying" },
-  { id: "07", title: "Campaigns", icon: Map, targetId: "campaigns" },
+  {
+    id: "06",
+    title: "Roleplaying",
+    icon: MessageSquare,
+    targetId: "roleplaying",
+  },
+  { id: "07", title: "Campaigns", icon: MapIcon, targetId: "campaigns" },
   { id: "08", title: "Glossary", icon: BookMarked, targetId: "glossary" },
   { id: "09", title: "Adventure", icon: ScrollText, targetId: "adventure" },
 ];
@@ -32,10 +42,10 @@ export function JourneyNavigator() {
       const offset = 100; // Offset for fixed navbar
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.scrollY - offset;
-      
+
       window.scrollTo({
         top: offsetPosition,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   };
@@ -60,6 +70,8 @@ export function JourneyNavigator() {
           const Icon = chapter.icon;
           return (
             <motion.div
+              role="button"
+              tabIndex={0}
               key={chapter.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -67,7 +79,13 @@ export function JourneyNavigator() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               whileHover={{ scale: 1.05, y: -5 }}
               onClick={() => scrollToSection(chapter.targetId)}
-              className="relative z-10 flex flex-col items-center group cursor-pointer w-28 md:w-32"
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  scrollToSection(chapter.targetId);
+                }
+              }}
+              className="relative z-10 flex flex-col items-center group cursor-pointer w-28 md:w-32 outline-hidden"
             >
               <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#111827] border-2 border-[#1F2937] group-hover:border-[#D4AF37] shadow-lg flex items-center justify-center mb-4 transition-colors duration-300 relative">
                 {/* Number Badge */}

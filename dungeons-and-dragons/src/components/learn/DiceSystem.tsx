@@ -1,8 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
+import { ContactShadows, Environment } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
 import { Dices } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { Suspense, useState } from "react";
+import { Dice3D, type DiceType } from "../ui/3d/Dice3D";
 
 export function DiceSystem() {
   const [isRolling, setIsRolling] = useState(false);
@@ -59,46 +62,35 @@ export function DiceSystem() {
           {/* Ambient Glow */}
           <div className="absolute inset-0 bg-gradient-to-tr from-[#D4AF37]/5 to-[#6D28D9]/5 pointer-events-none" />
 
-          <h3 className="font-['Cinzel'] text-xl text-[#F9FAFB] mb-8 relative z-10 flex items-center gap-2">
+          <h3 className="font-['Cinzel'] text-xl text-[#F9FAFB] mb-4 relative z-10 flex items-center gap-2">
             <Dices className="text-[#D4AF37]" />
             Test Your Fate
           </h3>
 
-          <div className="relative w-40 h-40 flex items-center justify-center mb-8 perspective-[1000px]">
-            {/* The Die */}
-            <motion.div
-              className="w-24 h-24 bg-[#1F2937] border-2 border-[#D4AF37] shadow-[inset_0_0_20px_rgba(0,0,0,0.8)] flex items-center justify-center relative cursor-pointer"
-              style={{
-                clipPath:
-                  "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
-              }} // Hexagon shape
-              animate={
-                isRolling
-                  ? {
-                      rotate: [0, 360, 720, 1080],
-                      scale: [1, 1.2, 0.9, 1.1, 1],
-                    }
-                  : { rotate: 0, scale: 1 }
-              }
-              transition={{ duration: 1.2, ease: "easeInOut" }}
-              onClick={() => rollDice(20)}
+          <div className="relative w-full h-[250px] flex items-center justify-center mb-4">
+            <Canvas
+              camera={{ position: [0, 0, 5], fov: 40 }}
+              style={{ width: "100%", height: "100%" }}
             >
-              {!isRolling && result !== null && (
-                <motion.span
-                  initial={{ opacity: 0, scale: 0.5 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  className={`font-['Cinzel'] font-bold text-4xl z-10 ${
-                    result === 20
-                      ? "text-[#D4AF37] drop-shadow-[0_0_10px_rgba(212,175,55,1)]"
-                      : result === 1
-                        ? "text-[#DC2626] drop-shadow-[0_0_10px_rgba(220,38,38,1)]"
-                        : "text-white"
-                  }`}
-                >
-                  {result}
-                </motion.span>
-              )}
-            </motion.div>
+              <ambientLight intensity={1.5} />
+              <directionalLight position={[10, 10, 10]} intensity={2} />
+              <Suspense fallback={null}>
+                <Environment preset="city" />
+                <Dice3D
+                  sides={diceType as DiceType}
+                  rolling={isRolling}
+                  result={result}
+                />
+              </Suspense>
+              <ContactShadows
+                position={[0, -2, 0]}
+                opacity={0.6}
+                scale={10}
+                blur={2}
+                far={4}
+                color="#000000"
+              />
+            </Canvas>
 
             {/* Glowing effect on result */}
             <AnimatePresence>
@@ -107,7 +99,7 @@ export function DiceSystem() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1.5 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-[#D4AF37] blur-[40px] opacity-30 rounded-full z-0 pointer-events-none"
+                  className="absolute inset-0 bg-[#D4AF37] blur-[60px] opacity-20 rounded-full z-0 pointer-events-none"
                 />
               )}
               {result === 1 && !isRolling && (
@@ -115,15 +107,32 @@ export function DiceSystem() {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1.5 }}
                   exit={{ opacity: 0 }}
-                  className="absolute inset-0 bg-[#DC2626] blur-[40px] opacity-30 rounded-full z-0 pointer-events-none"
+                  className="absolute inset-0 bg-[#DC2626] blur-[60px] opacity-20 rounded-full z-0 pointer-events-none"
                 />
               )}
             </AnimatePresence>
           </div>
 
+          <div className="h-10 flex items-center justify-center mb-6">
+            {result !== null && !isRolling && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="font-['Cinzel'] text-2xl font-bold text-[#D4AF37]"
+              >
+                {result === 20
+                  ? "CRITICAL!"
+                  : result === 1
+                    ? "FUMBLE!"
+                    : `Result: ${result}`}
+              </motion.div>
+            )}
+          </div>
+
           {/* Controls */}
           <div className="flex flex-wrap justify-center gap-3 relative z-10">
             <button
+              type="button"
               onClick={() => rollDice(20)}
               disabled={isRolling}
               className="px-6 py-2 bg-[#D4AF37]/10 border border-[#D4AF37]/50 text-[#D4AF37] rounded hover:bg-[#D4AF37]/20 transition-colors font-['Cinzel'] tracking-wider disabled:opacity-50"
@@ -131,6 +140,7 @@ export function DiceSystem() {
               Roll d20
             </button>
             <button
+              type="button"
               onClick={() => rollDice(6)}
               disabled={isRolling}
               className="px-6 py-2 bg-[#1F2937] border border-[#374151] text-[#9CA3AF] rounded hover:border-[#9CA3AF] transition-colors font-['Cinzel'] disabled:opacity-50"

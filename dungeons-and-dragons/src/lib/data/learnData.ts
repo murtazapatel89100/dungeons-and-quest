@@ -1,5 +1,3 @@
-import { ReactNode } from "react";
-
 export interface Race {
   name: string;
   tagline: string;

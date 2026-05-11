@@ -1,13 +1,13 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const SLIDES = [
   {
     id: 1,
-    image:
-      "https://images.unsplash.com/photo-1724355198376-05df48bd251a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYXJrJTIwZmFudGFzeSUyMGRyYWdvbiUyMGNhc3RsZXxlbnwxfHx8fDE3NzQ1NDU2ODB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "/images/homepage/banner/hero-adventure.png",
     title: "Begin Your Adventure",
     subtitle:
       "Learn the fundamentals of Dungeons & Dragons and step into a world of imagination",
@@ -16,8 +16,7 @@ const SLIDES = [
   },
   {
     id: 2,
-    image:
-      "https://images.unsplash.com/photo-1627732922021-e73df99d192e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpZXZhbCUyMHdhcnJpb3IlMjBmYW50YXN5JTIwc3dvcmR8ZW58MXx8fHwxNzc0NTQ1Njg0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "/images/homepage/banner/hero-character.png",
     title: "Forge Your Character",
     subtitle: "Create unique heroes with races, classes, and abilities",
     cta: "Build Your Character",
@@ -25,8 +24,7 @@ const SLIDES = [
   },
   {
     id: 3,
-    image:
-      "https://images.unsplash.com/photo-1634409884980-a30da0b2b010?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYWdpYyUyMHNwZWxsJTIwd2l6YXJkJTIwZmFudGFzeXxlbnwxfHx8fDE3NzQ1NDU2ODh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    image: "/images/homepage/banner/hero-rules.png",
     title: "Master the Rules",
     subtitle: "Understand combat, spells, and gameplay mechanics",
     cta: "Explore Rules",
@@ -34,18 +32,31 @@ const SLIDES = [
   },
   {
     id: 4,
-    image:
-      "https://images.unsplash.com/photo-1593718069814-7f870c700c6c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmYW50YXN5JTIwbWFnaWNhbCUyMGl0ZW1zJTIwdG9vbHN8ZW58MXx8fHwxNzc0NTQ2MTQyfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+    image: "/images/homepage/banner/hero-tools.png",
     title: "Arcane Instruments",
     subtitle:
       "Equip yourself with powerful tools to manage campaigns, track initiative, and generate encounters",
     cta: "Discover Tools",
     path: "/tools",
   },
+  {
+    id: 5,
+    image: "/images/homepage/banner/hero-playstyle.png",
+
+    title: "Choose Your Adventure",
+
+    subtitle:
+      "From tabletop campaigns and cinematic RPGs to immersive roleplay communities, discover the style of fantasy adventure that fits you best.",
+
+    cta: "Explore Playstyles",
+
+    path: "/playstyles",
+  },
 ];
 
 export function HeroCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -103,12 +114,11 @@ export function HeroCarousel() {
               transition={{ delay: 0.7, duration: 0.8 }}
               className="relative group"
             >
-              <div className="absolute -inset-1 bg-gradient-to-r from-[#D4AF37] to-[#6D28D9] rounded-sm blur opacity-50 group-hover:opacity-100 transition duration-500"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#D4AF37] to-[#6D28D9] rounded-sm blur opacity-50 group-hover:opacity-100 transition duration-500" />
               <button
+                type="button"
                 className="relative px-8 py-4 bg-[#111827] border border-[#D4AF37]/50 text-[#D4AF37] font-['Cinzel'] uppercase text-lg tracking-widest font-bold hover:bg-[#D4AF37]/20 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)]"
-                onClick={() =>
-                  (window.location.href = SLIDES[currentIndex].path)
-                }
+                onClick={() => router.push(SLIDES[currentIndex].path)}
               >
                 {SLIDES[currentIndex].cta}
               </button>
@@ -120,6 +130,7 @@ export function HeroCarousel() {
       {/* Navigation Controls */}
       <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-6 z-20">
         <button
+          type="button"
           onClick={prevSlide}
           className="p-2 border border-[#D4AF37]/30 text-[#D4AF37] hover:bg-[#D4AF37]/20 hover:border-[#D4AF37] transition-all rounded-sm backdrop-blur-sm"
         >
@@ -127,9 +138,10 @@ export function HeroCarousel() {
         </button>
 
         <div className="flex gap-3">
-          {SLIDES.map((_, idx) => (
+          {SLIDES.map((slide, idx) => (
             <button
-              key={idx}
+              type="button"
+              key={slide.id}
               onClick={() => setCurrentIndex(idx)}
               className={`w-3 h-3 rotate-45 border transition-all duration-300 ${
                 idx === currentIndex
@@ -141,6 +153,7 @@ export function HeroCarousel() {
         </div>
 
         <button
+          type="button"
           onClick={nextSlide}
           className="p-2 border border-[#D4AF37]/30 text-[#D4AF37] hover:bg-[#D4AF37]/20 hover:border-[#D4AF37] transition-all rounded-sm backdrop-blur-sm"
         >

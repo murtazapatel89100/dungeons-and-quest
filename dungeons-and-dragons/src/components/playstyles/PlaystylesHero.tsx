@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "motion/react";
 import { Compass } from "lucide-react";
+import { motion } from "motion/react";
 
 export function PlaystylesHero() {
   return (
@@ -11,13 +11,14 @@ export function PlaystylesHero() {
         <div
           className="absolute inset-0 opacity-40 mix-blend-overlay"
           style={{
-            backgroundImage: "url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2694&auto=format&fit=crop')",
+            backgroundImage:
+              "url('https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2694&auto=format&fit=crop')",
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F1A]/80 via-[#0B0F1A]/60 to-[#0B0F1A] z-10" />
-        
+
         {/* Magical Orbs/Portals */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#2563EB]/20 rounded-full blur-[100px] mix-blend-screen" />
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#D4AF37]/20 rounded-full blur-[100px] mix-blend-screen" />
@@ -52,7 +53,9 @@ export function PlaystylesHero() {
           transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
           className="text-xl md:text-2xl text-[#D1D5DB] max-w-3xl mx-auto mb-12 font-light leading-relaxed"
         >
-          From tabletop storytelling to cinematic RPGs, discover the path that fits your style. The world of Dungeons & Dragons is vast—how will you explore it?
+          From tabletop storytelling to cinematic RPGs, discover the path that
+          fits your style. The world of Dungeons & Dragons is vast—how will you
+          explore it?
         </motion.p>
 
         <motion.div
@@ -61,10 +64,26 @@ export function PlaystylesHero() {
           transition={{ duration: 1, ease: "easeOut", delay: 0.7 }}
           className="flex flex-col sm:flex-row gap-6 justify-center"
         >
-          <button onClick={() => document.getElementById("experiences")?.scrollIntoView({ behavior: "smooth" })} className="px-8 py-4 bg-gradient-to-r from-[#D4AF37] to-[#F59E0B] hover:from-[#FBBF24] hover:to-[#D4AF37] text-[#0B0F1A] font-['Cinzel'] font-bold text-lg rounded-lg transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(212,175,55,0.4)]">
+          <button
+            type="button"
+            onClick={() =>
+              document
+                .getElementById("experience-paths")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="px-8 py-4 bg-gradient-to-r from-[#D4AF37] to-[#F59E0B] hover:from-[#FBBF24] hover:to-[#D4AF37] text-[#0B0F1A] font-['Cinzel'] font-bold text-lg rounded-lg transition-all duration-300 transform hover:scale-105 shadow-[0_0_20px_rgba(212,175,55,0.4)]"
+          >
             Explore Paths
           </button>
-          <button onClick={() => document.getElementById("quiz")?.scrollIntoView({ behavior: "smooth" })} className="px-8 py-4 bg-[#111827]/80 hover:bg-[#1F2937] backdrop-blur-md border border-[#374151] hover:border-[#D4AF37]/50 text-[#F9FAFB] font-['Cinzel'] font-bold text-lg rounded-lg transition-all duration-300 transform hover:scale-105">
+          <button
+            type="button"
+            onClick={() =>
+              document
+                .getElementById("quiz")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+            className="px-8 py-4 bg-[#111827]/80 hover:bg-[#1F2937] backdrop-blur-md border border-[#374151] hover:border-[#D4AF37]/50 text-[#F9FAFB] font-['Cinzel'] font-bold text-lg rounded-lg transition-all duration-300 transform hover:scale-105"
+          >
             Find Your Playstyle
           </button>
         </motion.div>

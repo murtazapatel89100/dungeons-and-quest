@@ -52,7 +52,12 @@ export const experienceData = {
       themeColor: "#D4AF37", // Gold
       bgGradient: "from-[#D4AF37]/20 to-[#0B0F1A]",
       iconType: "Dices",
-      bestFor: ["Social players", "Creative thinkers", "Storytellers", "Long-form campaign lovers"],
+      bestFor: [
+        "Social players",
+        "Creative thinkers",
+        "Storytellers",
+        "Long-form campaign lovers",
+      ],
       topics: [
         "Physical or digital dice",
         "Character sheets",
@@ -62,7 +67,11 @@ export const experienceData = {
       ],
       description:
         "Gather around a table (or a virtual one) with friends. One person runs the world, while the rest play the heroes. It's an engine for infinite imagination where you can try literally anything.",
-      examples: ["In-Person Homebrew", "Roll20 Campaigns", "D&D Adventurers League"],
+      examples: [
+        "In-Person Homebrew",
+        "Roll20 Campaigns",
+        "D&D Adventurers League",
+      ],
     },
     {
       id: "rp-communities",
@@ -71,7 +80,12 @@ export const experienceData = {
       themeColor: "#6D28D9", // Arcane Purple
       bgGradient: "from-[#6D28D9]/20 to-[#0B0F1A]",
       iconType: "Drama",
-      bestFor: ["Writers", "Actors", "Storytellers", "Character-focused players"],
+      bestFor: [
+        "Writers",
+        "Actors",
+        "Storytellers",
+        "Character-focused players",
+      ],
       topics: [
         "Discord RP servers",
         "Text roleplay",
@@ -81,7 +95,11 @@ export const experienceData = {
       ],
       description:
         "Skip the heavy combat math and focus entirely on acting, writing, and becoming your character. These communities build massive, living worlds where hundreds of characters interact daily.",
-      examples: ["West Marches Servers", "Discord Text RP", "Voice Acting Groups"],
+      examples: [
+        "West Marches Servers",
+        "Discord Text RP",
+        "Voice Acting Groups",
+      ],
     },
     {
       id: "tactical",
@@ -90,7 +108,12 @@ export const experienceData = {
       themeColor: "#DC2626", // Crimson
       bgGradient: "from-[#DC2626]/20 to-[#0B0F1A]",
       iconType: "Swords",
-      bestFor: ["Strategy gamers", "Min-maxers", "Combat enthusiasts", "Wargamers"],
+      bestFor: [
+        "Strategy gamers",
+        "Min-maxers",
+        "Combat enthusiasts",
+        "Wargamers",
+      ],
       topics: [
         "Difficult encounters",
         "Optimized builds",
@@ -100,7 +123,11 @@ export const experienceData = {
       ],
       description:
         "Treat D&D like a complex game of chess. Focus on creating the most powerful character possible and conquering impossible odds through clever use of grid positioning, spells, and teamwork.",
-      examples: ["Mega-Dungeons", "Arena Combat Servers", "Meatgrinder Campaigns"],
+      examples: [
+        "Mega-Dungeons",
+        "Arena Combat Servers",
+        "Meatgrinder Campaigns",
+      ],
     },
     {
       id: "worldbuilding",
@@ -109,7 +136,12 @@ export const experienceData = {
       themeColor: "#10B981", // Emerald
       bgGradient: "from-[#10B981]/20 to-[#0B0F1A]",
       iconType: "Globe",
-      bestFor: ["Writers", "Artists", "Fantasy creators", "Aspiring Dungeon Masters"],
+      bestFor: [
+        "Writers",
+        "Artists",
+        "Fantasy creators",
+        "Aspiring Dungeon Masters",
+      ],
       topics: [
         "Fantasy world creation",
         "Map design",
@@ -128,7 +160,12 @@ export const experienceData = {
       themeColor: "#8B5CF6", // Violet
       bgGradient: "from-[#8B5CF6]/20 to-[#0B0F1A]",
       iconType: "Sparkles",
-      bestFor: ["Introverts", "Solo players", "Experimental players", "Casual adventurers"],
+      bestFor: [
+        "Introverts",
+        "Solo players",
+        "Experimental players",
+        "Casual adventurers",
+      ],
       topics: [
         "Solo campaign modules",
         "AI Dungeon Masters",
@@ -138,7 +175,11 @@ export const experienceData = {
       ],
       description:
         "Don't have a group? No problem. Modern tools, AI, and beautifully crafted solo-adventure books allow you to experience D&D completely independently, writing your own story as you go.",
-      examples: ["AI-Assisted Campaigns", "Choose-Your-Own-Adventure Books", "Solo Oracle Systems"],
+      examples: [
+        "AI-Assisted Campaigns",
+        "Choose-Your-Own-Adventure Books",
+        "Solo Oracle Systems",
+      ],
     },
   ] as Experience[],
 
@@ -189,24 +230,36 @@ export const experienceData = {
     {
       category: "Learn",
       links: [
-        { name: "Basic Rules (D&D Beyond)", url: "https://www.dndbeyond.com/sources/basic-rules" },
-        { name: "System Reference Document", url: "https://dnd.wizards.com/resources/systems-reference-document" },
-      ]
+        {
+          name: "Basic Rules (D&D Beyond)",
+          url: "https://www.dndbeyond.com/sources/basic-rules",
+        },
+        {
+          name: "System Reference Document",
+          url: "https://dnd.wizards.com/resources/systems-reference-document",
+        },
+      ],
     },
     {
       category: "Play",
       links: [
         { name: "Roll20 Virtual Tabletop", url: "https://roll20.net/" },
         { name: "D&D Beyond", url: "https://www.dndbeyond.com/" },
-        { name: "StartPlaying (Find a Group)", url: "https://startplaying.games/" },
-      ]
+        {
+          name: "StartPlaying (Find a Group)",
+          url: "https://startplaying.games/",
+        },
+      ],
     },
     {
       category: "Create",
       links: [
         { name: "Inkarnate (Map Making)", url: "https://inkarnate.com/" },
-        { name: "World Anvil (Worldbuilding)", url: "https://www.worldanvil.com/" },
-      ]
-    }
-  ]
+        {
+          name: "World Anvil (Worldbuilding)",
+          url: "https://www.worldanvil.com/",
+        },
+      ],
+    },
+  ],
 };

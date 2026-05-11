@@ -1,16 +1,17 @@
 "use client";
 
-import { motion } from "motion/react";
 import { Scroll } from "lucide-react";
+import { motion } from "motion/react";
 
 export function RulesHero() {
   return (
     <section className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden">
       {/* Background Image with Overlay */}
-      <div 
+      <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?q=80&w=2574&auto=format&fit=crop')",
+          backgroundImage:
+            "url('https://images.unsplash.com/photo-1605806616949-1e87b487cb2a?q=80&w=2574&auto=format&fit=crop')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -30,8 +31,8 @@ export function RulesHero() {
             <Scroll className="w-12 h-12 text-[#10B981] relative z-10" />
           </div>
         </motion.div>
-        
-        <motion.h1 
+
+        <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
@@ -43,13 +44,14 @@ export function RulesHero() {
           </span>
         </motion.h1>
 
-        <motion.p 
+        <motion.p
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
           className="text-xl md:text-2xl text-[#9CA3AF] max-w-2xl mx-auto mb-10 font-light"
         >
-          A reference guide to the core mechanics, conditions, and environmental rules that govern the world.
+          A reference guide to the core mechanics, conditions, and environmental
+          rules that govern the world.
         </motion.p>
       </div>
 

@@ -1,17 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
 import { CharacterProvider, useCharacter } from "./CharacterStateContext";
 import { GeneratorControls } from "./GeneratorControls";
+import { StepAbilities } from "./StepAbilities";
+import { StepDetails } from "./StepDetails";
+import { StepEquipment } from "./StepEquipment";
 import { StepIdentity } from "./StepIdentity";
 import { StepRaceClass } from "./StepRaceClass";
-import { StepAbilities } from "./StepAbilities";
-import { StepEquipment } from "./StepEquipment";
-import { StepDetails } from "./StepDetails";
-import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "motion/react";
-import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 
 const STEPS = [
   { id: "identity", title: "Identity", component: StepIdentity },
@@ -82,9 +82,13 @@ function WizardContent() {
               >
                 <div
                   className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 backdrop-blur-sm
-                    ${isCompleted ? 'bg-indigo-500/20 border-indigo-500 text-indigo-400' :
-                      isCurrent ? 'bg-primary border-indigo-400 text-white shadow-[0_0_15px_rgba(99,102,241,0.5)]' :
-                        'bg-card border-white/10 text-muted-foreground'}`}
+                    ${
+                      isCompleted
+                        ? "bg-indigo-500/20 border-indigo-500 text-indigo-400"
+                        : isCurrent
+                          ? "bg-primary border-indigo-400 text-white shadow-[0_0_15px_rgba(99,102,241,0.5)]"
+                          : "bg-card border-white/10 text-muted-foreground"
+                    }`}
                 >
                   {isCompleted ? (
                     <CheckCircle2 className="w-5 h-5" />
@@ -95,7 +99,7 @@ function WizardContent() {
                   )}
                 </div>
                 <span
-                  className={`text-xs font-medium text-center ${isCurrent ? 'text-white' : 'text-muted-foreground'}`}
+                  className={`text-xs font-medium text-center ${isCurrent ? "text-white" : "text-muted-foreground"}`}
                 >
                   {step.title}
                 </span>

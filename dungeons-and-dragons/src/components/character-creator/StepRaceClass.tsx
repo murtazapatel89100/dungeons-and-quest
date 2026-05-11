@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
-import { useCharacter } from "./CharacterStateContext";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -10,8 +9,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { RACES, CLASSES_AND_SUBCLASSES } from "@/lib/character-data";
-import { Input } from "@/components/ui/input";
+import { CLASSES_AND_SUBCLASSES, RACES } from "@/lib/character-data";
+import { useCharacter } from "./CharacterStateContext";
 
 export function StepRaceClass() {
   const { state, updateState, updateNestedState } = useCharacter();
@@ -142,7 +141,7 @@ export function StepRaceClass() {
             value={state.meta.level}
             onChange={(e) =>
               updateNestedState("meta", {
-                level: parseInt(e.target.value) || 1,
+                level: parseInt(e.target.value, 10) || 1,
               })
             }
             className="bg-black/30 border-white/10 text-white font-['Cinzel'] text-xl"
@@ -155,7 +154,9 @@ export function StepRaceClass() {
             min={0}
             value={state.meta.xp}
             onChange={(e) =>
-              updateNestedState("meta", { xp: parseInt(e.target.value) || 0 })
+              updateNestedState("meta", {
+                xp: parseInt(e.target.value, 10) || 0,
+              })
             }
             className="bg-black/30 border-white/10 text-white"
           />

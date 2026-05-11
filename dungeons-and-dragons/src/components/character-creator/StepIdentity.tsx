@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import { useCharacter } from "./CharacterStateContext";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -11,8 +10,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  ALIGNMENTS,
+  BACKGROUNDS,
+  DEITIES,
+  GENDERS,
+} from "@/lib/character-data";
 import type { Alignment } from "@/lib/character-types";
-import { ALIGNMENTS, DEITIES, BACKGROUNDS, GENDERS } from "@/lib/character-data";
+import { useCharacter } from "./CharacterStateContext";
 
 export function StepIdentity() {
   const { state, updateNestedState, updateState } = useCharacter();
@@ -74,15 +79,16 @@ export function StepIdentity() {
           />
           {state.identity.imageUrl && (
             <div className="mt-4 flex justify-center">
-              <img 
-                src={state.identity.imageUrl} 
-                alt="Portrait Preview" 
+              {/* biome-ignore lint/performance/noImgElement: Portrait preview from external URL */}
+              <img
+                src={state.identity.imageUrl}
+                alt="Portrait Preview"
                 className="w-32 h-32 rounded-full object-cover border-2 border-indigo-500/50 shadow-lg shadow-indigo-500/20"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
+                  (e.target as HTMLImageElement).style.display = "none";
                 }}
                 onLoad={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'block';
+                  (e.target as HTMLImageElement).style.display = "block";
                 }}
               />
             </div>

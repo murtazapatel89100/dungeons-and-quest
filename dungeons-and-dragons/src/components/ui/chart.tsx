@@ -128,7 +128,13 @@ function ChartTooltipContent({
   labelKey?: string;
   label?: React.ReactNode;
   labelFormatter?: (value: any, payload: any[]) => React.ReactNode;
-  formatter?: (value: any, name: any, item: any, index: number, payload: any) => React.ReactNode;
+  formatter?: (
+    value: any,
+    name: any,
+    item: any,
+    index: number,
+    payload: any,
+  ) => React.ReactNode;
   color?: string;
   labelClassName?: string;
 }) {
@@ -352,9 +358,9 @@ function getPayloadConfigFromPayload(
 
 export {
   ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
   ChartStyle,
+  ChartTooltip,
+  ChartTooltipContent,
 };

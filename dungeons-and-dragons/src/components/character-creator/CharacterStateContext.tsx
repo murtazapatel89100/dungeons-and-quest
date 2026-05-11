@@ -1,7 +1,10 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
-import { CharacterState, INITIAL_CHARACTER_STATE } from "@/lib/character-types";
+import { createContext, type ReactNode, useContext, useState } from "react";
+import {
+  type CharacterState,
+  INITIAL_CHARACTER_STATE,
+} from "@/lib/character-types";
 
 interface CharacterContextType {
   state: CharacterState;

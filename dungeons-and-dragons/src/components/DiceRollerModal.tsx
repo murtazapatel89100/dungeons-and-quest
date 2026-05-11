@@ -1,173 +1,14 @@
 "use client";
-import React, { useState, useRef, useMemo, useEffect, Suspense } from "react";
+import { ContactShadows, Environment } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
 import { X } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Text, Environment, ContactShadows, Edges } from "@react-three/drei";
-import * as THREE from "three";
-
-if (typeof window !== "undefined") {
-  const originalWarn = console.warn;
-  console.warn = (...args) => {
-    if (typeof args[0] === "string" && args[0].includes("THREE.Clock")) return;
-    originalWarn(...args);
-  };
-}
+import { AnimatePresence, motion } from "motion/react";
+import { Suspense, useState } from "react";
+import { Dice3D } from "./ui/3d/Dice3D";
 
 interface DiceRollerModalProps {
   isOpen: boolean;
   onClose: () => void;
-}
-
-function D20Dice({
-  rolling,
-  result,
-}: {
-  rolling: boolean;
-  result: number | null;
-}) {
-  const groupRef = useRef<THREE.Group>(null);
-
-  const { geometry, faces } = useMemo(() => {
-    const geo = new THREE.IcosahedronGeometry(1.5, 0);
-    geo.computeVertexNormals();
-
-    const positions = geo.getAttribute("position").array;
-    const faceData = [];
-
-    const numbers = [
-      20, 2, 14, 4, 17, 8, 10, 12, 16, 6, 1, 19, 3, 13, 5, 18, 9, 11, 15, 7,
-    ];
-
-    for (let i = 0; i < 20; i++) {
-      const idx = i * 9;
-      const v1 = new THREE.Vector3(
-        positions[idx],
-        positions[idx + 1],
-        positions[idx + 2],
-      );
-      const v2 = new THREE.Vector3(
-        positions[idx + 3],
-        positions[idx + 4],
-        positions[idx + 5],
-      );
-      const v3 = new THREE.Vector3(
-        positions[idx + 6],
-        positions[idx + 7],
-        positions[idx + 8],
-      );
-
-      const centroid = new THREE.Vector3()
-        .add(v1)
-        .add(v2)
-        .add(v3)
-        .divideScalar(3);
-
-      faceData.push({
-        id: i,
-        number: numbers[i] || i + 1,
-        position: centroid.clone(),
-        normal: centroid.clone().normalize(),
-        v1,
-        v2,
-        v3,
-      });
-    }
-
-    // We return the INDEXED geo for the mesh/edges to render correctly without seams
-    return { geometry: geo, faces: faceData };
-  }, []);
-
-  const targetQuaternion = useRef(new THREE.Quaternion());
-  const currentQuaternion = useRef(new THREE.Quaternion());
-  const spinVelocity = useRef(new THREE.Vector3());
-
-  useEffect(() => {
-    if (rolling) {
-      spinVelocity.current.set(
-        Math.random() * 20 - 10,
-        Math.random() * 20 - 10,
-        Math.random() * 20 - 10,
-      );
-    } else if (result) {
-      const face = faces.find((f) => f.number === result);
-      if (face && groupRef.current) {
-        const targetNormal = new THREE.Vector3(0, 0, 1);
-        const q = new THREE.Quaternion().setFromUnitVectors(
-          face.normal,
-          targetNormal,
-        );
-
-        const randomSpins = new THREE.Quaternion().setFromEuler(
-          new THREE.Euler(0, 0, (Math.random() * 360 * Math.PI) / 180),
-        );
-        randomSpins.multiply(q);
-        targetQuaternion.current.copy(randomSpins);
-      }
-    }
-  }, [rolling, result, faces]);
-
-  useFrame((state, delta) => {
-    if (!groupRef.current) return;
-
-    if (rolling) {
-      groupRef.current.rotation.x += spinVelocity.current.x * delta;
-      groupRef.current.rotation.y += spinVelocity.current.y * delta;
-      groupRef.current.rotation.z += spinVelocity.current.z * delta;
-      currentQuaternion.current.copy(groupRef.current.quaternion);
-    } else if (result) {
-      currentQuaternion.current.slerp(targetQuaternion.current, 0.05);
-      groupRef.current.quaternion.copy(currentQuaternion.current);
-    } else {
-      groupRef.current.rotation.x += 0.005;
-      groupRef.current.rotation.y += 0.01;
-      currentQuaternion.current.copy(groupRef.current.quaternion);
-    }
-  });
-
-  return (
-    <group ref={groupRef}>
-      <mesh geometry={geometry}>
-        <meshPhysicalMaterial
-          color="#1F2937"
-          metalness={0.9}
-          roughness={0.3}
-          envMapIntensity={2}
-          clearcoat={0.8}
-          clearcoatRoughness={0.2}
-        />
-        <Edges threshold={15} color="#D4AF37" />
-      </mesh>
-
-      {faces.map((f, i) => {
-        const pos = f.position
-          .clone()
-          .add(f.normal.clone().multiplyScalar(0.02));
-        const lookTarget = pos.clone().add(f.normal);
-
-        return (
-          <group
-            key={i}
-            position={[pos.x, pos.y, pos.z]}
-            onUpdate={(self) =>
-              self.lookAt(lookTarget.x, lookTarget.y, lookTarget.z)
-            }
-          >
-            <Text
-              fontSize={0.4}
-              color={result === f.number ? "#D4AF37" : "#F9FAFB"}
-              anchorX="center"
-              anchorY="middle"
-              material-toneMapped={false}
-            >
-              {f.number}
-              {f.number === 6 || f.number === 9 ? "." : ""}
-            </Text>
-          </group>
-        );
-      })}
-    </group>
-  );
 }
 
 export function DiceRollerModal({ isOpen, onClose }: DiceRollerModalProps) {
@@ -211,6 +52,7 @@ export function DiceRollerModal({ isOpen, onClose }: DiceRollerModalProps) {
             <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#D4AF37]"></div>
 
             <button
+              type="button"
               onClick={onClose}
               className="absolute top-4 right-4 text-[#9CA3AF] hover:text-[#D4AF37] z-10 transition-colors"
             >
@@ -228,7 +70,11 @@ export function DiceRollerModal({ isOpen, onClose }: DiceRollerModalProps) {
 
             {/* Sizing Fix: explicit height to ensure Canvas scales up correctly */}
             <div className="w-full relative flex flex-col items-center justify-center h-[350px] mt-4">
-              <div className="w-full h-full cursor-pointer" onClick={rollDice}>
+              <button
+                type="button"
+                className="w-full h-full cursor-pointer outline-hidden bg-transparent border-none p-0 block appearance-none"
+                onClick={rollDice}
+              >
                 <Canvas
                   camera={{ position: [0, 0, 5.5], fov: 45 }}
                   style={{ width: "100%", height: "100%" }}
@@ -237,7 +83,7 @@ export function DiceRollerModal({ isOpen, onClose }: DiceRollerModalProps) {
                   <directionalLight position={[10, 10, 10]} intensity={2} />
                   <Suspense fallback={null}>
                     <Environment preset="city" />
-                    <D20Dice rolling={rolling} result={result} />
+                    <Dice3D sides={20} rolling={rolling} result={result} />
                   </Suspense>
                   <ContactShadows
                     position={[0, -2, 0]}
@@ -248,7 +94,7 @@ export function DiceRollerModal({ isOpen, onClose }: DiceRollerModalProps) {
                     color="#000000"
                   />
                 </Canvas>
-              </div>
+              </button>
 
               <div className="absolute bottom-0 left-0 w-full flex items-center justify-center pointer-events-none">
                 {result !== null && !rolling && (
@@ -278,6 +124,7 @@ export function DiceRollerModal({ isOpen, onClose }: DiceRollerModalProps) {
 
             <div className="mt-8 flex justify-center relative z-10 w-full">
               <button
+                type="button"
                 onClick={rollDice}
                 disabled={rolling}
                 className="px-8 py-3 bg-[#0B0F1A] border border-[#D4AF37]/50 text-[#D4AF37] font-['Cinzel'] uppercase tracking-widest text-sm font-semibold transition-all duration-300 hover:bg-[#D4AF37]/10 hover:shadow-[0_0_15px_rgba(212,175,55,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"

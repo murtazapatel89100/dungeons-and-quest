@@ -1,6 +1,5 @@
-import React from "react";
-import Link from "next/link";
 import { Dice5 } from "lucide-react";
+import Link from "next/link";
 
 import siteConfig from "../../config/site.json";
 
@@ -62,30 +61,30 @@ export function Footer() {
           <h4 className="font-['Cinzel'] uppercase text-[#D4AF37] tracking-widest text-sm mb-4">
             Connect
           </h4>
-          <ul className="flex flex-col gap-3">
+          <ul className="space-y-2">
             <li>
-              <a
-                href="#"
+              <Link
+                href="/privacy"
                 className="text-[#9CA3AF] hover:text-[#F9FAFB] text-sm transition-colors"
               >
-                Discord Tavern
-              </a>
+                Privacy Policy
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                href="/terms"
                 className="text-[#9CA3AF] hover:text-[#F9FAFB] text-sm transition-colors"
               >
-                GitHub Repository
-              </a>
+                Terms of Service
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                href="/cookies"
                 className="text-[#9CA3AF] hover:text-[#F9FAFB] text-sm transition-colors"
               >
-                Twitter Scrolls
-              </a>
+                Cookie Settings
+              </Link>
             </li>
           </ul>
         </div>
@@ -93,7 +92,8 @@ export function Footer() {
 
       <div className="container mx-auto mt-12 pt-6 border-t border-[#111827] text-center">
         <p className="text-[#9CA3AF]/60 text-xs">
-          © {new Date().getFullYear()} {siteConfig.name}. Not affiliated with Wizards of the Coast.
+          © {new Date().getFullYear()} {siteConfig.name}. Not affiliated with
+          Wizards of the Coast.
         </p>
       </div>
     </footer>

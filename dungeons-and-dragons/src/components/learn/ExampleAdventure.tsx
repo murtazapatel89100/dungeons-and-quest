@@ -1,8 +1,8 @@
 "use client";
 
+import { Dices, RotateCcw, Sword } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { Sword, RotateCcw, Dices } from "lucide-react";
 import { learnData } from "@/lib/data/learnData";
 
 export function ExampleAdventure() {
@@ -64,6 +64,7 @@ export function ExampleAdventure() {
             </div>
             {currentNode !== "start" && (
               <button
+                type="button"
                 onClick={resetAdventure}
                 className="text-[#9CA3AF] hover:text-[#F9FAFB] flex items-center gap-2 text-sm transition-colors"
               >
@@ -130,9 +131,10 @@ export function ExampleAdventure() {
                   </div>
 
                   <div className="grid gap-3">
-                    {node.choices.map((choice, idx) => (
+                    {node.choices.map((choice) => (
                       <button
-                        key={idx}
+                        type="button"
+                        key={choice.text}
                         onClick={() =>
                           handleChoice(choice.nextId, choice.statCheck)
                         }

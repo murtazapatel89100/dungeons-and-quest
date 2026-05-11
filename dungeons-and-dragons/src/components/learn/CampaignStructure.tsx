@@ -1,7 +1,7 @@
 "use client";
 
+import { Clock, Map as MapIcon, Target, Users } from "lucide-react";
 import { motion } from "motion/react";
-import { Map, Clock, Users, Target } from "lucide-react";
 
 export function CampaignStructure() {
   return (
@@ -30,7 +30,7 @@ export function CampaignStructure() {
           >
             <div className="bg-[#111827] border-2 border-[#10B981]/50 p-6 rounded-xl shadow-[0_0_30px_rgba(16,185,129,0.1)] flex items-start gap-6">
               <div className="p-4 bg-[#10B981]/20 rounded-full shrink-0">
-                <Map className="w-8 h-8 text-[#10B981]" />
+                <MapIcon className="w-8 h-8 text-[#10B981]" />
               </div>
               <div>
                 <h3 className="font-['Cinzel'] text-2xl text-[#F9FAFB] mb-2">

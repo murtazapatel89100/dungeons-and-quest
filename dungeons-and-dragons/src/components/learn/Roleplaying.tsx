@@ -1,8 +1,8 @@
 "use client";
 
+import { Drama, MessageSquare, Theater } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { MessageSquare, Drama, Theater } from "lucide-react";
 
 export function Roleplaying() {
   const [selectedAction, setSelectedAction] = useState<number | null>(null);
@@ -129,7 +129,8 @@ export function Roleplaying() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {actions.map((action) => (
             <button
-              key={action.id}
+              type="button"
+              key={action.label}
               onClick={() => setSelectedAction(action.id)}
               className={`p-3 rounded border bg-[#111827] transition-all duration-300 font-['Cinzel'] ${
                 selectedAction === action.id
