@@ -260,8 +260,8 @@ export function Dice3D({
               anchorX="center"
               anchorY="middle"
               material-toneMapped={false}
-              depthTest={true}
-              depthOffset={-2}
+              material-depthTest={true}
+              material-depthOffset={-2}
             >
               {f.number}
               {(f.number === 6 || f.number === 9) && sides > 6 && sides < 100
