@@ -33,7 +33,7 @@ export function Dice3D({
         numbers = [1, 2, 3, 4];
         break;
       case 6:
-        geo = new THREE.BoxGeometry(1.8, 1.8, 1.8);
+        geo = new THREE.BoxGeometry(1.5, 1.5, 1.5);
         numbers = [1, 6, 2, 5, 3, 4]; // Standard d6 mapping
         break;
       case 8:
@@ -84,11 +84,17 @@ export function Dice3D({
         new THREE.Vector3(0, 0, -1),
       ];
       for (let i = 0; i < 6; i++) {
+        const normal = faceNormals[i].clone();
+        const quaternion = new THREE.Quaternion().setFromUnitVectors(
+          new THREE.Vector3(0, 0, 1),
+          normal,
+        );
         faceData.push({
           id: i,
           number: numbers[i],
-          position: faceNormals[i].clone().multiplyScalar(0.9),
-          normal: faceNormals[i].clone(),
+          position: normal.clone().multiplyScalar(0.75),
+          normal: normal,
+          quaternion: quaternion,
         });
       }
     } else if (sides === 12) {
@@ -107,11 +113,16 @@ export function Dice3D({
 
         if (!seenNormals.some((n) => n.angleTo(normal) < 0.1)) {
           seenNormals.push(normal);
+          const quaternion = new THREE.Quaternion().setFromUnitVectors(
+            new THREE.Vector3(0, 0, 1),
+            normal,
+          );
           faceData.push({
             id: seenNormals.length - 1,
             number: numbers[seenNormals.length - 1] || seenNormals.length,
             position: normal.clone().multiplyScalar(1.4),
-            normal: normal.clone(),
+            normal: normal,
+            quaternion: quaternion,
           });
         }
       }
@@ -143,11 +154,18 @@ export function Dice3D({
           .add(v3)
           .divideScalar(3);
 
+        const normal = centroid.clone().normalize();
+        const quaternion = new THREE.Quaternion().setFromUnitVectors(
+          new THREE.Vector3(0, 0, 1),
+          normal,
+        );
+
         faceData.push({
           id: i,
           number: numbers[i] ?? i + 1,
           position: centroid.clone(),
-          normal: centroid.clone().normalize(),
+          normal: normal,
+          quaternion: quaternion,
         });
       }
     }
@@ -220,28 +238,30 @@ export function Dice3D({
 
       {faces.map((f) => {
         // Offset to prevent text from sinking into the face
-        const offset = sides >= 100 ? 0.08 : sides > 20 ? 0.1 : 0.06;
+        const offset = sides >= 100 ? 0.1 : sides > 20 ? 0.12 : 0.15;
         const pos = f.position
           .clone()
           .add(f.normal.clone().multiplyScalar(offset));
-        const lookTarget = pos.clone().add(f.normal);
 
         return (
           <group
             key={`${f.number}-${f.id}`}
             position={[pos.x, pos.y, pos.z]}
-            onUpdate={(self) =>
-              self.lookAt(lookTarget.x, lookTarget.y, lookTarget.z)
-            }
+            quaternion={[
+              f.quaternion.x,
+              f.quaternion.y,
+              f.quaternion.z,
+              f.quaternion.w,
+            ]}
           >
             <Text
-              fontSize={sides >= 100 ? 0.22 : sides >= 20 ? 0.4 : 0.6}
+              fontSize={sides >= 100 ? 0.22 : sides >= 20 ? 0.4 : 0.5}
               color={result === f.number ? edgeColor : "#F9FAFB"}
               anchorX="center"
               anchorY="middle"
               material-toneMapped={false}
-              // Depth test ensures numbers on the back side are hidden by the die
               depthTest={true}
+              depthOffset={-2}
             >
               {f.number}
               {(f.number === 6 || f.number === 9) && sides > 6 && sides < 100

@@ -8,8 +8,8 @@ import siteConfig from "../../config/site.json";
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Dungeons & Dragons Codex",
-    template: `%s | Dungeons & Dragons Codex`,
+    default: "Dice & Codex",
+    template: `%s | Dice & Codex`,
   },
   description: siteConfig.description,
   keywords: [
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     "Dice Roller",
     "Dungeon Master",
     "Player Handbook",
-    "D&D Codex",
+    "Dice & Codex",
   ],
   authors: [{ name: "Arcane Scroll Team" }],
   creator: "Arcane Scroll",
@@ -31,15 +31,15 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: siteConfig.url,
-    title: "Dungeons & Dragons Codex",
+    title: "Dice & Codex",
     description: siteConfig.description,
-    siteName: "Dungeons & Dragons Codex",
+    siteName: "Dice & Codex",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Dungeons & Dragons Codex - The Ultimate TTRPG Companion",
+        alt: "Dice & Codex - The Ultimate TTRPG Companion",
       },
     ],
   },

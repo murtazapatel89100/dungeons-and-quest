@@ -2,13 +2,21 @@ import type { Metadata } from "next";
 import { CharacterWizard } from "@/components/character-creator/CharacterWizard";
 
 export const metadata: Metadata = {
-  title: "Custom Character Forge",
+  title: "Custom Character Forge | Dice & Codex",
   description:
-    "Build a fully custom Dungeons & Dragons hero with complete control over every character detail.",
+    "Build a fully custom tabletop RPG hero with complete control over every character detail using the Dice & Codex wizard.",
   openGraph: {
-    title: "Custom Character Forge",
+    title: "Custom Character Forge | Dice & Codex",
     description:
-      "Build a fully custom Dungeons & Dragons hero with complete control over every character detail.",
+      "Build a fully custom character with complete control over every detail.",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Dice & Codex Custom Forge",
+      },
+    ],
   },
 };
 

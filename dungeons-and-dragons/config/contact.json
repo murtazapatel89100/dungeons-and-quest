@@ -1,0 +1,10 @@
+{
+  "email": "contact@diceandcodex.example.com",
+  "github": "https://github.com/diceandcodex",
+  "discord": "https://discord.gg/diceandcodex",
+  "collaboration": {
+    "title": "Join the Codex",
+    "description": "We are always looking for passionate TTRPG enthusiasts, developers, and writers to help us expand our tools and guides.",
+    "email": "collab@diceandcodex.example.com"
+  }
+}

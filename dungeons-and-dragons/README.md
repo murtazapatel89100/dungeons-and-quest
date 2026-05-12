@@ -1,6 +1,6 @@
-# Dungeons & Dragons Codex
+# Dice & Codex
 
-An App Router-based Dungeons & Dragons companion site with a dark fantasy presentation, route-specific landing pages, an interactive character builder, rules content, and Dungeon Master tools.
+An App Router-based TTRPG companion site with a dark fantasy presentation, route-specific landing pages, an interactive character builder, rules content, and Dungeon Master tools.
 
 ## What’s Included
 

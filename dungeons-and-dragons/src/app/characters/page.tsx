@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { CharactersHero } from "@/components/character-creator/CharactersHero";
 import {
   Card,
   CardContent,
@@ -8,13 +9,27 @@ import {
 } from "@/components/ui/card";
 
 export const metadata: Metadata = {
-  title: "Character Builder Hub",
+  title: "Character Builder Hub | Dice & Codex",
   description:
-    "Choose how you want to build your next hero: full custom creation, one-click quick build, or pre-built character templates.",
+    "Choose how you want to build your next hero: full custom creation, one-click quick build, or pre-built character templates with the Dice & Codex generator.",
   openGraph: {
-    title: "Character Builder Hub",
+    title: "Character Builder Hub | Dice & Codex",
     description:
       "Choose how you want to build your next hero: full custom creation, one-click quick build, or pre-built character templates.",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Dice & Codex Character Builder",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Character Builder Hub | Dice & Codex",
+    description: "Build your next hero with our interactive character tools.",
+    images: ["/og-image.jpg"],
   },
 };
 
@@ -48,18 +63,10 @@ const CHARACTER_PATHS = [
 
 export default function CharactersPage() {
   return (
-    <div className="w-full grow pt-28 md:pt-32 pb-20 px-4 md:px-8 bg-[#0B0F1A] text-[#F9FAFB]">
-      <div className="mx-auto max-w-8xl">
-        <div className="mb-10 text-center">
-          <h1 className="font-['Cinzel'] text-3xl md:text-5xl uppercase tracking-widest">
-            Character Creation Paths
-          </h1>
-          <p className="mt-4 text-[#9CA3AF] max-w-3xl mx-auto">
-            Select your preferred creation flow to begin your next Dungeons &
-            Dragons adventure.
-          </p>
-        </div>
+    <div className="w-full grow bg-[#0B0F1A] text-[#F9FAFB]">
+      <CharactersHero />
 
+      <div id="creation-paths" className="mx-auto max-w-8xl px-4 md:px-8 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {CHARACTER_PATHS.map((path) => (
             <Card

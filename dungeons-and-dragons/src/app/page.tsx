@@ -5,7 +5,7 @@ import { HowItWorks } from "@/components/HowItWorks";
 import { ToolHighlights } from "@/components/ToolHighlights";
 
 export const metadata: Metadata = {
-  title: "Dungeons & Dragons Codex | Your Ultimate D&D Companion",
+  title: "Dice & Codex | Your Ultimate D&D Companion",
   description:
     "Master your D&D adventures with character builders, rule guides, and interactive tools designed for both players and DMs.",
 };

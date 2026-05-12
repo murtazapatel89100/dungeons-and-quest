@@ -14,8 +14,7 @@ export function HeroSection() {
       <div
         className="absolute inset-0 z-0"
         style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1519074069444-1ba4fff66d16?q=80&w=2574&auto=format&fit=crop')",
+          backgroundImage: "url('/images/homepage/banner/hero-adventure.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}

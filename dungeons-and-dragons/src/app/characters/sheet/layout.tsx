@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Character Sheet | Dungeons & Dragons Codex",
+  title: "Character Sheet | Dice & Codex",
   description: "View and manage your hero's attributes, skills, and equipment.",
 };
 

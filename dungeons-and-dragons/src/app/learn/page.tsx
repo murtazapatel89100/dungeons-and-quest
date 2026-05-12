@@ -12,13 +12,28 @@ import { Roleplaying } from "@/components/learn/Roleplaying";
 import { Spellcasting } from "@/components/learn/Spellcasting";
 
 export const metadata: Metadata = {
-  title: "Player's Handbook | Learn D&D",
+  title: "Player's Handbook | Learn Tabletop RPGs",
   description:
-    "Master the basics of Dungeons & Dragons. From character creation to combat and magic, start your journey here.",
+    "Master the basics of fantasy roleplaying. From character creation to combat and magic, start your journey with the Dice & Codex guide.",
   openGraph: {
-    title: "Player's Handbook | Learn D&D",
+    title: "Player's Handbook | Learn Tabletop RPGs",
     description:
-      "Master the basics of Dungeons & Dragons. From character creation to combat and magic, start your journey here.",
+      "Master the basics of fantasy roleplaying. From character creation to combat and magic, start your journey with the Dice & Codex guide.",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Dice & Codex Player's Handbook",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Player's Handbook | Learn Tabletop RPGs",
+    description:
+      "Master the basics of fantasy roleplaying with the Dice & Codex guide.",
+    images: ["/og-image.jpg"],
   },
 };
 

@@ -5,13 +5,28 @@ import { NameGenerator } from "@/components/tools/NameGenerator";
 import { ToolsHero } from "@/components/tools/ToolsHero";
 
 export const metadata: Metadata = {
-  title: "DM Utilities & Generators",
+  title: "DM Utilities & Generators | Dice & Codex",
   description:
     "Interactive tools for Dungeon Masters: an advanced polyhedral dice roller, randomized loot generator, and instant NPC/Tavern name generators.",
   openGraph: {
-    title: "DM Utilities & Generators",
+    title: "DM Utilities & Generators | Dice & Codex",
     description:
       "Interactive tools for Dungeon Masters: an advanced polyhedral dice roller, randomized loot generator, and instant NPC/Tavern name generators.",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Dice & Codex DM Tools",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "DM Utilities & Generators | Dice & Codex",
+    description:
+      "Interactive dice rollers, loot generators, and name generators for your next session.",
+    images: ["/og-image.jpg"],
   },
 };
 
@@ -25,7 +40,7 @@ export default function ToolsPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "SoftwareApplication",
-            name: "Arcane Scroll DM Tools",
+            name: "Dice & Codex DM Tools",
             operatingSystem: "Any",
             applicationCategory: "UtilitiesApplication",
             description:

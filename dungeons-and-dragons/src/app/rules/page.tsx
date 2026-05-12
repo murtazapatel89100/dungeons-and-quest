@@ -8,11 +8,26 @@ import { RulesHero } from "@/components/rules/RulesHero";
 export const metadata: Metadata = {
   title: "Dungeon Master Guide | Core Mechanics",
   description:
-    "Advanced rules, status conditions, combat mechanics, and environmental hazards for running epic D&D campaigns.",
+    "Advanced rules, status conditions, combat mechanics, and environmental hazards for running epic fantasy campaigns with Dice & Codex.",
   openGraph: {
     title: "Dungeon Master Guide | Core Mechanics",
     description:
-      "Advanced rules, status conditions, combat mechanics, and environmental hazards for running epic D&D campaigns.",
+      "Advanced rules, status conditions, combat mechanics, and environmental hazards for running epic fantasy campaigns.",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Dice & Codex DM Guide",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dungeon Master Guide | Core Mechanics",
+    description:
+      "Advanced rules and mechanics for running epic fantasy campaigns.",
+    images: ["/og-image.jpg"],
   },
 };
 
