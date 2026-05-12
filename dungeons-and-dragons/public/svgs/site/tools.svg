@@ -1,0 +1,79 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 128 128"
+  fill="none"
+>
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff4c7" />
+      <stop offset="50%" stop-color="#d4a53a" />
+      <stop offset="100%" stop-color="#8b6218" />
+    </linearGradient>
+
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#24170f" />
+      <stop offset="100%" stop-color="#120b07" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect
+    x="12"
+    y="12"
+    width="104"
+    height="104"
+    rx="18"
+    fill="url(#bg)"
+    stroke="url(#gold)"
+    stroke-width="4"
+  />
+
+  <!-- Gear -->
+  <circle
+    cx="48"
+    cy="48"
+    r="16"
+    stroke="url(#gold)"
+    stroke-width="4"
+  />
+
+  <circle
+    cx="48"
+    cy="48"
+    r="5"
+    fill="url(#gold)"
+  />
+
+  <!-- Gear Teeth -->
+  <rect x="45" y="22" width="6" height="10" rx="2" fill="url(#gold)" />
+  <rect x="45" y="64" width="6" height="10" rx="2" fill="url(#gold)" />
+  <rect x="22" y="45" width="10" height="6" rx="2" fill="url(#gold)" />
+  <rect x="64" y="45" width="10" height="6" rx="2" fill="url(#gold)" />
+
+  <!-- Magic Wand -->
+  <path
+    d="M76 82L102 56"
+    stroke="url(#gold)"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+
+  <!-- Wand Tip -->
+  <path
+    d="M104 44L107 51L114 54L107 57L104 64L101 57L94 54L101 51Z"
+    fill="url(#gold)"
+  />
+
+  <!-- Small Spark -->
+  <circle cx="86" cy="42" r="3" fill="url(#gold)" opacity="0.8" />
+  <circle cx="94" cy="34" r="2" fill="url(#gold)" opacity="0.7" />
+
+  <!-- Bottom Decorative Line -->
+  <path
+    d="M30 98H98"
+    stroke="url(#gold)"
+    stroke-width="3"
+    stroke-linecap="round"
+    opacity="0.5"
+  />
+</svg>

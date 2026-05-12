@@ -1,0 +1,61 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 128 128"
+  fill="none"
+>
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff4c2" />
+      <stop offset="50%" stop-color="#d4a73a" />
+      <stop offset="100%" stop-color="#8f6518" />
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Circle -->
+  <circle
+    cx="64"
+    cy="64"
+    r="54"
+    stroke="url(#gold)"
+    stroke-width="6"
+    fill="#120d08"
+  />
+
+  <!-- Head -->
+  <circle
+    cx="64"
+    cy="42"
+    r="14"
+    fill="url(#gold)"
+  />
+
+  <!-- Body -->
+  <path
+    d="M40 94C40 78 50 68 64 68C78 68 88 78 88 94"
+    stroke="url(#gold)"
+    stroke-width="8"
+    stroke-linecap="round"
+  />
+
+  <!-- Sword -->
+  <path
+    d="M92 28L102 18"
+    stroke="url(#gold)"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+
+  <path
+    d="M98 16L108 26"
+    stroke="url(#gold)"
+    stroke-width="5"
+    stroke-linecap="round"
+  />
+
+  <!-- Spark -->
+  <path
+    d="M28 28L32 36L40 40L32 44L28 52L24 44L16 40L24 36Z"
+    fill="url(#gold)"
+    opacity="0.9"
+  />
+</svg>

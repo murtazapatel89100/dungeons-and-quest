@@ -1,0 +1,107 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 128 128"
+  fill="none"
+>
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff4c7" />
+      <stop offset="50%" stop-color="#d4a53a" />
+      <stop offset="100%" stop-color="#8b6218" />
+    </linearGradient>
+
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#24170f" />
+      <stop offset="100%" stop-color="#120b07" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <circle
+    cx="64"
+    cy="64"
+    r="54"
+    fill="url(#bg)"
+    stroke="url(#gold)"
+    stroke-width="4"
+  />
+
+  <!-- D20 Shape -->
+  <polygon
+    points="64,18 100,42 86,94 42,94 28,42"
+    fill="none"
+    stroke="url(#gold)"
+    stroke-width="4"
+    stroke-linejoin="round"
+  />
+
+  <!-- Inner Lines -->
+  <line
+    x1="64"
+    y1="18"
+    x2="42"
+    y2="94"
+    stroke="url(#gold)"
+    stroke-width="2"
+    opacity="0.7"
+  />
+
+  <line
+    x1="64"
+    y1="18"
+    x2="86"
+    y2="94"
+    stroke="url(#gold)"
+    stroke-width="2"
+    opacity="0.7"
+  />
+
+  <line
+    x1="28"
+    y1="42"
+    x2="100"
+    y2="42"
+    stroke="url(#gold)"
+    stroke-width="2"
+    opacity="0.7"
+  />
+
+  <line
+    x1="42"
+    y1="94"
+    x2="100"
+    y2="42"
+    stroke="url(#gold)"
+    stroke-width="2"
+    opacity="0.7"
+  />
+
+  <line
+    x1="86"
+    y1="94"
+    x2="28"
+    y2="42"
+    stroke="url(#gold)"
+    stroke-width="2"
+    opacity="0.7"
+  />
+
+  <!-- Number -->
+  <text
+    x="64"
+    y="67"
+    text-anchor="middle"
+    fill="url(#gold)"
+    font-size="20"
+    font-family="serif"
+    font-weight="bold"
+  >
+    20
+  </text>
+
+  <!-- Decorative Dots -->
+  <circle cx="40" cy="28" r="2" fill="url(#gold)" opacity="0.8" />
+  <circle cx="92" cy="30" r="2" fill="url(#gold)" opacity="0.8" />
+  <circle cx="32" cy="84" r="2" fill="url(#gold)" opacity="0.8" />
+  <circle cx="96" cy="84" r="2" fill="url(#gold)" opacity="0.8" />
+</svg>

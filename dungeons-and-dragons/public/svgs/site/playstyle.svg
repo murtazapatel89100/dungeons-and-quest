@@ -1,0 +1,82 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 128 128"
+  fill="none"
+>
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff3c4" />
+      <stop offset="50%" stop-color="#d6a63a" />
+      <stop offset="100%" stop-color="#8a6117" />
+    </linearGradient>
+
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#24160f" />
+      <stop offset="100%" stop-color="#120b07" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <circle
+    cx="64"
+    cy="64"
+    r="54"
+    fill="url(#bg)"
+    stroke="url(#gold)"
+    stroke-width="4"
+  />
+
+  <!-- Compass Outer -->
+  <circle
+    cx="64"
+    cy="64"
+    r="28"
+    stroke="url(#gold)"
+    stroke-width="3"
+    opacity="0.9"
+  />
+
+  <!-- Compass Inner -->
+  <circle
+    cx="64"
+    cy="64"
+    r="8"
+    fill="url(#gold)"
+  />
+
+  <!-- Compass Points -->
+  <path
+    d="M64 24L70 50L64 46L58 50Z"
+    fill="url(#gold)"
+  />
+
+  <path
+    d="M104 64L78 70L82 64L78 58Z"
+    fill="url(#gold)"
+  />
+
+  <path
+    d="M64 104L58 78L64 82L70 78Z"
+    fill="url(#gold)"
+  />
+
+  <path
+    d="M24 64L50 58L46 64L50 70Z"
+    fill="url(#gold)"
+  />
+
+  <!-- Center Pointer -->
+  <path
+    d="M64 44L72 64L64 84L56 64Z"
+    fill="none"
+    stroke="url(#gold)"
+    stroke-width="3"
+    stroke-linejoin="round"
+  />
+
+  <!-- Decorative Stars -->
+  <circle cx="38" cy="38" r="2" fill="url(#gold)" opacity="0.8" />
+  <circle cx="90" cy="34" r="2" fill="url(#gold)" opacity="0.8" />
+  <circle cx="92" cy="92" r="2" fill="url(#gold)" opacity="0.8" />
+  <circle cx="36" cy="90" r="2" fill="url(#gold)" opacity="0.8" />
+</svg>

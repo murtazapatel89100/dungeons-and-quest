@@ -1,0 +1,137 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 128 128"
+  fill="none"
+>
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff3c4" />
+      <stop offset="50%" stop-color="#d6a63a" />
+      <stop offset="100%" stop-color="#8a6117" />
+    </linearGradient>
+
+    <linearGradient id="paper" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a1b12" />
+      <stop offset="100%" stop-color="#140d08" />
+    </linearGradient>
+  </defs>
+
+  <!-- Book -->
+  <rect
+    x="20"
+    y="18"
+    width="88"
+    height="92"
+    rx="10"
+    fill="url(#paper)"
+    stroke="url(#gold)"
+    stroke-width="4"
+  />
+
+  <!-- Spine -->
+  <line
+    x1="64"
+    y1="18"
+    x2="64"
+    y2="110"
+    stroke="url(#gold)"
+    stroke-width="3"
+    opacity="0.7"
+  />
+
+  <!-- Left Page Lines -->
+  <line
+    x1="30"
+    y1="40"
+    x2="54"
+    y2="40"
+    stroke="url(#gold)"
+    stroke-width="3"
+    stroke-linecap="round"
+    opacity="0.85"
+  />
+
+  <line
+    x1="30"
+    y1="54"
+    x2="50"
+    y2="54"
+    stroke="url(#gold)"
+    stroke-width="3"
+    stroke-linecap="round"
+    opacity="0.65"
+  />
+
+  <line
+    x1="30"
+    y1="68"
+    x2="52"
+    y2="68"
+    stroke="url(#gold)"
+    stroke-width="3"
+    stroke-linecap="round"
+    opacity="0.65"
+  />
+
+  <!-- Right Page Lines -->
+  <line
+    x1="74"
+    y1="40"
+    x2="98"
+    y2="40"
+    stroke="url(#gold)"
+    stroke-width="3"
+    stroke-linecap="round"
+    opacity="0.85"
+  />
+
+  <line
+    x1="78"
+    y1="54"
+    x2="98"
+    y2="54"
+    stroke="url(#gold)"
+    stroke-width="3"
+    stroke-linecap="round"
+    opacity="0.65"
+  />
+
+  <line
+    x1="76"
+    y1="68"
+    x2="98"
+    y2="68"
+    stroke="url(#gold)"
+    stroke-width="3"
+    stroke-linecap="round"
+    opacity="0.65"
+  />
+
+  <!-- D20 -->
+  <polygon
+    points="64,78 76,88 72,102 56,102 52,88"
+    fill="none"
+    stroke="url(#gold)"
+    stroke-width="3"
+  />
+
+  <line
+    x1="64"
+    y1="78"
+    x2="64"
+    y2="102"
+    stroke="url(#gold)"
+    stroke-width="2"
+    opacity="0.7"
+  />
+
+  <line
+    x1="52"
+    y1="88"
+    x2="76"
+    y2="88"
+    stroke="url(#gold)"
+    stroke-width="2"
+    opacity="0.7"
+  />
+</svg>

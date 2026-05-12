@@ -1,0 +1,137 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 512 512"
+  fill="none"
+>
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff6cc" />
+      <stop offset="20%" stop-color="#f6d878" />
+      <stop offset="50%" stop-color="#d4a73a" />
+      <stop offset="80%" stop-color="#ffdf8b" />
+      <stop offset="100%" stop-color="#9b6a16" />
+    </linearGradient>
+
+    <linearGradient id="coverGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3b2412" />
+      <stop offset="100%" stop-color="#1b1008" />
+    </linearGradient>
+
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur" />
+      <feMerge>
+        <feMergeNode in="coloredBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="512" height="512" rx="32" fill="#0b0a09" />
+
+  <!-- Glow -->
+  <rect
+    x="110"
+    y="90"
+    width="292"
+    height="332"
+    rx="22"
+    fill="url(#goldGradient)"
+    opacity="0.15"
+    filter="url(#glow)"
+  />
+
+  <!-- Book -->
+  <g>
+    <!-- Back Cover -->
+    <rect
+      x="120"
+      y="100"
+      width="272"
+      height="312"
+      rx="18"
+      fill="url(#coverGradient)"
+      stroke="url(#goldGradient)"
+      stroke-width="8"
+    />
+
+    <!-- Spine -->
+    <rect
+      x="232"
+      y="100"
+      width="48"
+      height="312"
+      fill="#2a180c"
+      stroke="url(#goldGradient)"
+      stroke-width="4"
+    />
+
+    <!-- Left Page Border -->
+    <rect
+      x="138"
+      y="118"
+      width="96"
+      height="276"
+      rx="10"
+      stroke="url(#goldGradient)"
+      stroke-width="5"
+      opacity="0.9"
+    />
+
+    <!-- Right Page Border -->
+    <rect
+      x="278"
+      y="118"
+      width="96"
+      height="276"
+      rx="10"
+      stroke="url(#goldGradient)"
+      stroke-width="5"
+      opacity="0.9"
+    />
+
+    <!-- Arcane Symbol -->
+    <circle
+      cx="256"
+      cy="256"
+      r="52"
+      stroke="url(#goldGradient)"
+      stroke-width="6"
+      fill="none"
+    />
+
+    <path
+      d="M256 208 L270 246 L312 256 L270 266 L256 304 L242 266 L200 256 L242 246 Z"
+      fill="url(#goldGradient)"
+    />
+
+    <!-- Corner Decorations -->
+    <path
+      d="M145 125 Q160 145 180 130"
+      stroke="url(#goldGradient)"
+      stroke-width="4"
+      fill="none"
+    />
+
+    <path
+      d="M367 125 Q352 145 332 130"
+      stroke="url(#goldGradient)"
+      stroke-width="4"
+      fill="none"
+    />
+
+    <path
+      d="M145 387 Q160 367 180 382"
+      stroke="url(#goldGradient)"
+      stroke-width="4"
+      fill="none"
+    />
+
+    <path
+      d="M367 387 Q352 367 332 382"
+      stroke="url(#goldGradient)"
+      stroke-width="4"
+      fill="none"
+    />
+  </g>
+</svg>
