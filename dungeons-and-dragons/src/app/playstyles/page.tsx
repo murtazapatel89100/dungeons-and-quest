@@ -6,12 +6,13 @@ import { PlaystylesHero } from "@/components/playstyles/PlaystylesHero";
 import { RecommendationsAndResources } from "@/components/playstyles/RecommendationsAndResources";
 
 export const metadata: Metadata = {
-  title: "Choose Your Adventure | Playstyles",
+  title: "Choosing Your Playstyle | Adventure Archetypes",
   description:
-    "Discover the many ways to experience Dungeons & Dragons, from classic tabletop to cinematic video games and roleplay communities.",
+    "Discover the many ways to experience Dungeons & Dragons: from high-fantasy epic combat to deep narrative roleplaying. Find the style that fits your group.",
   openGraph: {
-    title: "Choose Your Adventure | D&D Playstyles",
-    description: "Discover the many ways to experience Dungeons & Dragons.",
+    title: "Choosing Your Playstyle | Adventure Archetypes",
+    description:
+      "Discover the many ways to experience Dungeons & Dragons, from classic tabletop to cinematic roleplay communities.",
   },
 };
 
