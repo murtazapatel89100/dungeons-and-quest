@@ -17,6 +17,11 @@ import type {
   SkillName,
 } from "@/lib/character-types";
 
+// Note: Metadata cannot be exported from a Client Component.
+// For dynamic metadata based on character state, a different approach would be needed.
+// However, we can provide a default via a layout or by converting this to a server component wrapper.
+// Given the existing project structure, we will keep it as is or add it if the user confirms the strategy.
+
 const SKILL_STAT_MAP: Record<string, AbilityStat> = {
   Acrobatics: "DEX",
   "Animal Handling": "WIS",
@@ -110,44 +115,80 @@ export default function CharacterSheetPage() {
       </div>
 
       <div className="max-w-[1400px] mx-auto relative z-10 p-4 sm:p-6 space-y-6">
-        {/* Header / Navbar */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-[#1a1d24]/80 backdrop-blur-md p-4 rounded-xl border border-white/5 shadow-lg gap-4">
-          <div className="flex items-center gap-4">
-            <Button
-              variant="ghost"
-              onClick={() => router.push("/characters/custom")}
-              className="text-indigo-400 hover:text-indigo-300 hover:bg-white/5"
-            >
-              <ChevronLeft className="w-5 h-5 mr-1" /> Back
-            </Button>
-            <div className="flex items-center gap-4">
-              {character.identity.imageUrl ? (
-                /* biome-ignore lint/performance/noImgElement: Using img for character portrait as it is dynamic and external */
-                <img
-                  src={character.identity.imageUrl}
-                  alt="Portrait"
-                  className="w-12 h-12 rounded-lg object-cover border border-white/10"
-                />
-              ) : (
-                <div className="w-12 h-12 rounded-lg bg-[#2a2d35] flex items-center justify-center border border-white/10">
-                  <Sword className="w-6 h-6 text-slate-500" />
-                </div>
-              )}
-              <div>
-                <h1 className="text-xl sm:text-2xl font-bold text-white font-['Cinzel'] leading-none">
-                  {character.identity.name || "Unnamed Hero"}
-                </h1>
-                <p className="text-xs text-indigo-300 font-medium">
-                  {character.race} {character.characterClass}{" "}
-                  {character.meta.level} • {character.background} •{" "}
-                  {character.identity.alignment}
-                </p>
-              </div>
-            </div>
-          </div>
-          <Button className="bg-indigo-600 hover:bg-indigo-500 text-white w-full sm:w-auto">
+        {/* Action Controls - Hidden in PDF */}
+        <div className="flex justify-between items-center gap-4 no-print-actions">
+          <Button
+            variant="ghost"
+            onClick={() => router.push("/characters/custom")}
+            className="text-indigo-400 hover:text-indigo-300 hover:bg-white/5"
+          >
+            <ChevronLeft className="w-5 h-5 mr-1" /> Back
+          </Button>
+          <Button 
+            className="bg-indigo-600 hover:bg-indigo-500 text-white"
+            onClick={async () => {
+              try {
+                const res = await fetch('/api/export-pdf', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(character)
+                });
+                
+                if (!res.ok) throw new Error('Failed to generate PDF');
+                
+                const blob = await res.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${character.identity.name || 'character'}-sheet.pdf`;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+              } catch (error) {
+                console.error('PDF export error:', error);
+                alert('Failed to generate PDF. Please try again.');
+              }
+            }}
+          >
             <Download className="w-4 h-4 mr-2" /> Export PDF
           </Button>
+        </div>
+
+        {/* Character Identity Header - Captured in PDF */}
+        <div className="bg-[#1a1d24]/90 backdrop-blur-md p-6 rounded-xl border border-white/5 shadow-xl flex flex-col sm:flex-row items-center sm:items-end gap-6 character-identity-section">
+          <div className="relative group">
+            {character.identity.imageUrl ? (
+              /* biome-ignore lint/performance/noImgElement: Using img for character portrait as it is dynamic and external */
+              <img
+                src={character.identity.imageUrl}
+                alt="Portrait"
+                className="w-32 h-32 rounded-xl object-cover border-2 border-indigo-500/30 shadow-[0_0_20px_rgba(99,102,241,0.2)]"
+              />
+            ) : (
+              <div className="w-32 h-32 rounded-xl bg-[#2a2d35] flex items-center justify-center border-2 border-indigo-500/30 shadow-inner">
+                <Sword className="w-12 h-12 text-slate-600" />
+              </div>
+            )}
+            <div className="absolute -bottom-2 -right-2 bg-indigo-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg border border-indigo-400">
+              Lvl {character.meta.level}
+            </div>
+          </div>
+
+          <div className="flex-1 text-center sm:text-left space-y-2">
+            <h1 className="text-3xl sm:text-5xl font-black text-white font-['Cinzel'] tracking-tight drop-shadow-sm">
+              {character.identity.name || "Unnamed Hero"}
+            </h1>
+            <div className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-1 text-indigo-300 font-medium">
+              <span className="flex items-center gap-1.5 uppercase text-xs tracking-widest">
+                <Sparkles className="w-3 h-3" /> {character.race} {character.characterClass}
+              </span>
+              <span className="hidden sm:inline text-white/20">•</span>
+              <span className="uppercase text-xs tracking-widest">{character.background}</span>
+              <span className="hidden sm:inline text-white/20">•</span>
+              <span className="uppercase text-xs tracking-widest">{character.identity.alignment}</span>
+            </div>
+          </div>
         </div>
 
         <div className="flex flex-col xl:flex-row gap-6">
