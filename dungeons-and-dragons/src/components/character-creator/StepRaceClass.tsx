@@ -10,6 +10,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CLASSES_AND_SUBCLASSES, RACES } from "@/lib/character-data";
+import {
+  buildCharacterDefaults,
+  getRecommendedClassesForRace,
+} from "@/lib/character-rules";
 import { useCharacter } from "./CharacterStateContext";
 
 export function StepRaceClass() {
@@ -23,6 +27,7 @@ export function StepRaceClass() {
         state.characterClass as keyof typeof CLASSES_AND_SUBCLASSES
       ] || []
     : [];
+  const recommendedClasses = getRecommendedClassesForRace(state.race);
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -39,7 +44,15 @@ export function StepRaceClass() {
             <Select
               value={state.race}
               onValueChange={(val) => {
-                updateState({ race: val, subrace: "" }); // reset subrace on race change
+                updateState({
+                  race: val,
+                  subrace: "",
+                  ...buildCharacterDefaults({
+                    race: val,
+                    characterClass: state.characterClass,
+                    background: state.background,
+                  }),
+                });
               }}
             >
               <SelectTrigger className="bg-black/40 border-white/10 text-white">
@@ -91,23 +104,41 @@ export function StepRaceClass() {
             <Select
               value={state.characterClass}
               onValueChange={(val) => {
-                updateState({ characterClass: val, subclass: "" }); // reset subclass on class change
+                updateState({
+                  characterClass: val,
+                  subclass: "",
+                  ...buildCharacterDefaults({
+                    race: state.race,
+                    characterClass: val,
+                    background: state.background,
+                  }),
+                });
               }}
             >
               <SelectTrigger className="bg-black/40 border-white/10 text-white">
                 <SelectValue placeholder="Select Class" />
               </SelectTrigger>
               <SelectContent className="bg-slate-900 border-white/10 text-white max-h-[300px]">
-                {Object.keys(CLASSES_AND_SUBCLASSES).map((cls) => (
-                  <SelectItem key={cls} value={cls}>
-                    {cls}
-                  </SelectItem>
-                ))}
+                {Object.keys(CLASSES_AND_SUBCLASSES).map((cls) => {
+                  const isRecommended = recommendedClasses.includes(cls);
+
+                  return (
+                    <SelectItem key={cls} value={cls}>
+                      {cls}
+                      {isRecommended ? " (recommended)" : ""}
+                    </SelectItem>
+                  );
+                })}
               </SelectContent>
             </Select>
+            {recommendedClasses.length > 0 && (
+              <p className="text-xs text-rose-100/70">
+                Recommended for {state.race}: {recommendedClasses.join(", ")}
+              </p>
+            )}
           </div>
 
-          {currentClassTypes.length > 0 && (
+          {state.meta.level >= 2 && currentClassTypes.length > 0 && (
             <div className="space-y-2 animate-in fade-in zoom-in-95 duration-300">
               <Label className="text-rose-200">Subclass / Domain / Path</Label>
               <Select
@@ -139,11 +170,15 @@ export function StepRaceClass() {
             min={1}
             max={20}
             value={state.meta.level}
-            onChange={(e) =>
+            onChange={(e) => {
+              const newLevel = parseInt(e.target.value, 10) || 1;
               updateNestedState("meta", {
-                level: parseInt(e.target.value, 10) || 1,
-              })
-            }
+                level: newLevel,
+              });
+              if (newLevel < 2) {
+                updateState({ subclass: "" });
+              }
+            }}
             className="bg-black/30 border-white/10 text-white font-['Cinzel'] text-xl"
           />
         </div>

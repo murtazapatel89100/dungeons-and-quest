@@ -4,15 +4,39 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ARMOR, EQUIPMENT_PACKS, SPELLS, WEAPONS } from "@/lib/character-data";
+import {
+  getAvailableArmor,
+  getAvailablePacks,
+  getAvailableSpells,
+  getAvailableWeapons,
+  isSpellcaster,
+} from "@/lib/character-rules";
 import { useCharacter } from "./CharacterStateContext";
 
 export function StepEquipment() {
   const { state, updateState } = useCharacter();
+  const availableWeapons = getAvailableWeapons(
+    state.race,
+    state.characterClass,
+  );
+  const availableArmor = getAvailableArmor(state.race, state.characterClass);
+  const availablePacks = getAvailablePacks(state.characterClass);
+  const availableSpells = getAvailableSpells(state.characterClass);
+  const canCastSpells = isSpellcaster(state.characterClass);
 
   const toggleArrayItem = (
     key: "weapons" | "armor" | "equipment",
     item: string,
   ) => {
+    const isAvailable =
+      key === "weapons"
+        ? availableWeapons.includes(item)
+        : key === "armor"
+          ? availableArmor.includes(item)
+          : availablePacks.includes(item);
+
+    if (!isAvailable) return;
+
     const arr = state[key] as string[];
     if (arr.includes(item)) {
       updateState({ [key]: arr.filter((i) => i !== item) });
@@ -22,6 +46,8 @@ export function StepEquipment() {
   };
 
   const toggleSpell = (level: number, spell: string) => {
+    if (!(availableSpells[level] ?? []).includes(spell)) return;
+
     const currentSpells = state.spells[level] || [];
     if (currentSpells.includes(spell)) {
       updateState({
@@ -87,21 +113,37 @@ export function StepEquipment() {
                   {category} Weapons
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {items.map((item) => (
-                    <div
-                      key={item}
-                      className="flex items-center justify-between p-3 rounded-lg bg-black/20 border border-white/5 hover:bg-white/5 transition-colors"
-                    >
-                      <Label className="text-indigo-100 cursor-pointer flex-1">
-                        {item}
-                      </Label>
-                      <Switch
-                        checked={state.weapons.includes(item)}
-                        onCheckedChange={() => toggleArrayItem("weapons", item)}
-                        className="data-[state=checked]:bg-indigo-500"
-                      />
-                    </div>
-                  ))}
+                  {items.map((item) => {
+                    const isAvailable = availableWeapons.includes(item);
+
+                    return (
+                      <div
+                        key={item}
+                        className={`flex items-center justify-between p-3 rounded-lg border transition-colors ${
+                          isAvailable
+                            ? "bg-black/20 border-white/5 hover:bg-white/5"
+                            : "bg-black/20 border-white/5 opacity-45"
+                        }`}
+                      >
+                        <Label className="text-indigo-100 cursor-pointer flex-1">
+                          {item}
+                          {!isAvailable && (
+                            <span className="ml-2 text-[0.65rem] uppercase tracking-wide text-white/40">
+                              Unavailable
+                            </span>
+                          )}
+                        </Label>
+                        <Switch
+                          checked={state.weapons.includes(item)}
+                          disabled={!isAvailable}
+                          onCheckedChange={() =>
+                            toggleArrayItem("weapons", item)
+                          }
+                          className="data-[state=checked]:bg-indigo-500"
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             ))}
@@ -114,21 +156,35 @@ export function StepEquipment() {
                   {category} Armor
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {items.map((item) => (
-                    <div
-                      key={item}
-                      className="flex items-center justify-between p-3 rounded-lg bg-black/20 border border-white/5 hover:bg-white/5 transition-colors"
-                    >
-                      <Label className="text-indigo-100 cursor-pointer flex-1">
-                        {item}
-                      </Label>
-                      <Switch
-                        checked={state.armor.includes(item)}
-                        onCheckedChange={() => toggleArrayItem("armor", item)}
-                        className="data-[state=checked]:bg-indigo-500"
-                      />
-                    </div>
-                  ))}
+                  {items.map((item) => {
+                    const isAvailable = availableArmor.includes(item);
+
+                    return (
+                      <div
+                        key={item}
+                        className={`flex items-center justify-between p-3 rounded-lg border transition-colors ${
+                          isAvailable
+                            ? "bg-black/20 border-white/5 hover:bg-white/5"
+                            : "bg-black/20 border-white/5 opacity-45"
+                        }`}
+                      >
+                        <Label className="text-indigo-100 cursor-pointer flex-1">
+                          {item}
+                          {!isAvailable && (
+                            <span className="ml-2 text-[0.65rem] uppercase tracking-wide text-white/40">
+                              Unavailable
+                            </span>
+                          )}
+                        </Label>
+                        <Switch
+                          checked={state.armor.includes(item)}
+                          disabled={!isAvailable}
+                          onCheckedChange={() => toggleArrayItem("armor", item)}
+                          className="data-[state=checked]:bg-indigo-500"
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             ))}
@@ -140,21 +196,37 @@ export function StepEquipment() {
                 Starting Kits
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {EQUIPMENT_PACKS.map((item) => (
-                  <div
-                    key={item}
-                    className="flex items-center justify-between p-3 rounded-lg bg-black/20 border border-white/5 hover:bg-white/5 transition-colors"
-                  >
-                    <Label className="text-indigo-100 cursor-pointer flex-1">
-                      {item}
-                    </Label>
-                    <Switch
-                      checked={state.equipment.includes(item)}
-                      onCheckedChange={() => toggleArrayItem("equipment", item)}
-                      className="data-[state=checked]:bg-indigo-500"
-                    />
-                  </div>
-                ))}
+                {EQUIPMENT_PACKS.map((item) => {
+                  const isAvailable = availablePacks.includes(item);
+
+                  return (
+                    <div
+                      key={item}
+                      className={`flex items-center justify-between p-3 rounded-lg border transition-colors ${
+                        isAvailable
+                          ? "bg-black/20 border-white/5 hover:bg-white/5"
+                          : "bg-black/20 border-white/5 opacity-45"
+                      }`}
+                    >
+                      <Label className="text-indigo-100 cursor-pointer flex-1">
+                        {item}
+                        {!isAvailable && (
+                          <span className="ml-2 text-[0.65rem] uppercase tracking-wide text-white/40">
+                            Unavailable
+                          </span>
+                        )}
+                      </Label>
+                      <Switch
+                        checked={state.equipment.includes(item)}
+                        disabled={!isAvailable}
+                        onCheckedChange={() =>
+                          toggleArrayItem("equipment", item)
+                        }
+                        className="data-[state=checked]:bg-indigo-500"
+                      />
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </TabsContent>
@@ -164,6 +236,8 @@ export function StepEquipment() {
               <p className="text-sm text-indigo-200">
                 Select spells corresponding to your class spellcasting
                 capabilities.
+                {!canCastSpells &&
+                  " This class has no default spellcasting at level 1."}
               </p>
             </div>
 
@@ -179,28 +253,44 @@ export function StepEquipment() {
                   <h4 className="text-lg font-semibold text-fuchsia-300 border-b border-fuchsia-500/20 pb-2">
                     {category === "Cantrips"
                       ? "Cantrips"
-                      : `Level \${numericLevel} Spells`}
+                      : `Level ${numericLevel} Spells`}
                   </h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {items.map((spell) => (
-                      <div
-                        key={spell}
-                        className="flex items-center justify-between p-3 rounded-lg bg-black/20 border border-white/5 hover:bg-fuchsia-900/20 hover:border-fuchsia-500/30 transition-colors"
-                      >
-                        <Label className="text-indigo-100 cursor-pointer flex-1">
-                          {spell}
-                        </Label>
-                        <Switch
-                          checked={(state.spells[numericLevel] || []).includes(
-                            spell,
-                          )}
-                          onCheckedChange={() =>
-                            toggleSpell(numericLevel, spell)
-                          }
-                          className="data-[state=checked]:bg-fuchsia-600"
-                        />
-                      </div>
-                    ))}
+                    {items.map((spell) => {
+                      const isAvailable = (
+                        availableSpells[numericLevel] ?? []
+                      ).includes(spell);
+
+                      return (
+                        <div
+                          key={spell}
+                          className={`flex items-center justify-between p-3 rounded-lg border transition-colors ${
+                            isAvailable
+                              ? "bg-black/20 border-white/5 hover:bg-fuchsia-900/20 hover:border-fuchsia-500/30"
+                              : "bg-black/20 border-white/5 opacity-45"
+                          }`}
+                        >
+                          <Label className="text-indigo-100 cursor-pointer flex-1">
+                            {spell}
+                            {!isAvailable && (
+                              <span className="ml-2 text-[0.65rem] uppercase tracking-wide text-white/40">
+                                Unavailable
+                              </span>
+                            )}
+                          </Label>
+                          <Switch
+                            checked={(
+                              state.spells[numericLevel] || []
+                            ).includes(spell)}
+                            disabled={!isAvailable}
+                            onCheckedChange={() =>
+                              toggleSpell(numericLevel, spell)
+                            }
+                            className="data-[state=checked]:bg-fuchsia-600"
+                          />
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               );

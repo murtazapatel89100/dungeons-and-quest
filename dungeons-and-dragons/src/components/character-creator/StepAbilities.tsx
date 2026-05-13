@@ -5,6 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { ABILITIES, SKILLS } from "@/lib/character-data";
+import {
+  buildDefaultAbilities,
+  getAvailableSkills,
+} from "@/lib/character-rules";
 import type { AbilityStat, SkillName } from "@/lib/character-types";
 import { useCharacter } from "./CharacterStateContext";
 
@@ -22,7 +26,7 @@ export function StepAbilities() {
 
   const getModifier = (score: number) => {
     const mod = Math.floor((score - 10) / 2);
-    return mod >= 0 ? `+\${mod}` : `\${mod}`;
+    return mod >= 0 ? `+${mod}` : `${mod}`;
   };
 
   const handleRollStats = () => {
@@ -48,9 +52,8 @@ export function StepAbilities() {
   };
 
   const setStandardArray = () => {
-    // 15, 14, 13, 12, 10, 8
     updateState({
-      abilities: { STR: 15, DEX: 14, CON: 13, INT: 12, WIS: 10, CHA: 8 },
+      abilities: buildDefaultAbilities(state.race, state.characterClass),
     });
   };
 
@@ -60,6 +63,10 @@ export function StepAbilities() {
       : [...state.skills, skill];
     updateState({ skills: newSkills });
   };
+  const availableSkills = getAvailableSkills(
+    state.characterClass,
+    state.background,
+  );
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -142,23 +149,39 @@ export function StepAbilities() {
           {SKILLS.map((skillRaw) => {
             const skill = skillRaw as SkillName;
             const isProficient = state.skills.includes(skill);
+            const isAvailable = availableSkills.includes(skill);
 
             return (
               <button
                 type="button"
                 key={skill}
-                className={`flex items-center space-x-3 p-2 rounded-lg transition-colors cursor-pointer border-none text-left w-full ${isProficient ? "bg-indigo-500/10" : "bg-transparent hover:bg-white/5"}`}
-                onClick={() => toggleSkill(skill)}
+                className={`flex items-center space-x-3 p-2 rounded-lg transition-colors border-none text-left w-full ${
+                  isAvailable
+                    ? isProficient
+                      ? "bg-indigo-500/10 cursor-pointer"
+                      : "bg-transparent hover:bg-white/5 cursor-pointer"
+                    : "bg-black/20 opacity-45 cursor-not-allowed"
+                }`}
+                onClick={() => {
+                  if (isAvailable) toggleSkill(skill);
+                }}
+                disabled={!isAvailable}
               >
                 <Checkbox
-                  id={`skill-\${skill}`}
+                  id={`skill-${skill}`}
                   checked={isProficient}
+                  disabled={!isAvailable}
                   onCheckedChange={() => toggleSkill(skill)}
-                  className={`border-white/20 pointer-events-none \${isProficient ? 'bg-indigo-500 border-indigo-500 text-white' : ''}`}
+                  className={`border-white/20 pointer-events-none ${isProficient ? "bg-indigo-500 border-indigo-500 text-white" : ""}`}
                 />
                 <span className="text-indigo-100 flex-1 pointer-events-none">
                   {skill}
                 </span>
+                {!isAvailable && (
+                  <span className="text-[0.65rem] uppercase tracking-wide text-white/40">
+                    Unavailable
+                  </span>
+                )}
               </button>
             );
           })}

@@ -16,6 +16,7 @@ import {
   DEITIES,
   GENDERS,
 } from "@/lib/character-data";
+import { buildCharacterDefaults } from "@/lib/character-rules";
 import type { Alignment } from "@/lib/character-types";
 import { useCharacter } from "./CharacterStateContext";
 
@@ -178,7 +179,16 @@ export function StepIdentity() {
           <Label className="text-indigo-200">Background</Label>
           <Select
             value={state.background}
-            onValueChange={(val) => updateState({ background: val })}
+            onValueChange={(val) =>
+              updateState({
+                background: val,
+                ...buildCharacterDefaults({
+                  race: state.race,
+                  characterClass: state.characterClass,
+                  background: val,
+                }),
+              })
+            }
           >
             <SelectTrigger className="bg-black/30 border-white/10 text-white">
               <SelectValue placeholder="Select your past life" />
