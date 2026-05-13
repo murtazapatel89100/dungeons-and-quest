@@ -40,7 +40,7 @@ const CHARACTER_PATHS = [
       "Build every detail from scratch, including identity, class, abilities, equipment, and personality.",
     href: "/characters/custom",
     cta: "Start Custom Build",
-    imageUrl: "https://picsum.photos/seed/custom-character-forge/1600/1200",
+    imageUrl: "/images/character/forge.png",
   },
   {
     title: "Swift Hero Generator",
@@ -48,7 +48,7 @@ const CHARACTER_PATHS = [
       "Create a playable character in seconds with randomized race, class, background, and stats.",
     href: "/characters/quick",
     cta: "Generate Quickly",
-    imageUrl: "https://picsum.photos/seed/swift-hero-generator/1600/1200",
+    imageUrl: "/images/character/quick.png",
     showBadge: false,
   },
   {
@@ -57,7 +57,7 @@ const CHARACTER_PATHS = [
       "Pick from ready-made archetypes you can use immediately or adapt for your campaign.",
     href: "/characters/pregenerated",
     cta: "Browse Pre-Built Heroes",
-    imageUrl: "https://picsum.photos/seed/legendary-starter-roster/1600/1200",
+    imageUrl: "/images/character/pregen.png",
   },
 ] as const;
 
@@ -82,7 +82,7 @@ export default function CharactersPage() {
                   <div className="absolute inset-0 bg-linear-to-br from-[#D4AF37]/20 via-[#111827]/35 to-[#0B0F1A]/90" />
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.18),transparent_36%),linear-gradient(to_bottom,rgba(15,23,42,0.05),rgba(11,15,26,0.7)_76%,rgba(11,15,26,0.98))]" />
                   <div className="absolute inset-0 border border-white/10" />
-                  <div className="absolute inset-4 rounded-3xl border border-white/15 bg-black/30 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+                  <div className="absolute inset-4 rounded-3xl border border-white/15 bg-black/30 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
                     <div className="flex h-full flex-col justify-between gap-6 text-left">
                       <div className="space-y-3 pt-1">
                         <p className="text-[0.7rem] font-semibold uppercase tracking-[0.35em] text-[#D4AF37]">
