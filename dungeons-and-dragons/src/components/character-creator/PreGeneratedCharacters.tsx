@@ -13,19 +13,16 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
-  ARMOR,
   BACKGROUND_TRAITS,
   DEITIES,
-  EQUIPMENT_PACKS,
   FEATS,
-  FEATURES_TRAITS,
-  LANGUAGES,
   PERSONALITY_SUGGESTIONS,
-  SKILLS,
-  SPELLS,
-  TOOLS,
-  WEAPONS,
 } from "@/lib/character-data";
+import {
+  buildCharacterDefaults,
+  getAvailableSpells,
+  getClassRule,
+} from "@/lib/character-rules";
 import {
   type Alignment,
   type CharacterState,
@@ -299,161 +296,6 @@ const PREGENERATED_CHARACTERS: PreGeneratedCharacter[] = [
   },
 ];
 
-const CLASS_SKILL_POOLS: Record<string, string[]> = {
-  Barbarian: ["Athletics", "Survival", "Intimidation"],
-  Bard: ["Performance", "Persuasion", "Deception", "Insight"],
-  Cleric: ["Insight", "Medicine", "Religion"],
-  Druid: ["Nature", "Animal Handling", "Survival", "Insight"],
-  Fighter: ["Athletics", "Intimidation", "Perception"],
-  Monk: ["Acrobatics", "Stealth", "Insight"],
-  Paladin: ["Athletics", "Persuasion", "Insight"],
-  Ranger: ["Survival", "Perception", "Nature", "Stealth"],
-  Rogue: ["Stealth", "Sleight of Hand", "Deception", "Acrobatics"],
-  Sorcerer: ["Arcana", "Deception", "Persuasion"],
-  Warlock: ["Arcana", "Deception", "Intimidation"],
-  Wizard: ["Arcana", "History", "Insight"],
-};
-
-const BACKGROUND_SKILL_POOLS: Record<string, string[]> = {
-  Acolyte: ["Insight", "Religion"],
-  Charlatan: ["Deception", "Sleight of Hand"],
-  Criminal: ["Deception", "Stealth"],
-  Entertainer: ["Performance", "Acrobatics"],
-  "Folk Hero": ["Animal Handling", "Survival"],
-  "Guild Artisan": ["Insight", "Persuasion"],
-  Hermit: ["Medicine", "Religion"],
-  Noble: ["History", "Persuasion"],
-  Outlander: ["Athletics", "Survival"],
-  Sage: ["Arcana", "History"],
-  Sailor: ["Athletics", "Perception"],
-  Soldier: ["Athletics", "Intimidation"],
-  Urchin: ["Sleight of Hand", "Stealth"],
-};
-
-const BACKGROUND_TOOL_POOLS: Record<string, string[]> = {
-  Charlatan: ["Disguise Kit", "Forgery Kit"],
-  Criminal: ["Thieves' Tools"],
-  Entertainer: ["Disguise Kit"],
-  "Guild Artisan": ["Alchemist Supplies", "Forgery Kit"],
-  Hermit: ["Herbalism Kit"],
-  Noble: ["Forgery Kit"],
-  Sailor: ["Forgery Kit"],
-  Soldier: ["Gaming Set"],
-  Urchin: ["Thieves' Tools"],
-};
-
-const CLASS_SAVES: Record<string, [AbilityScore, AbilityScore]> = {
-  Barbarian: ["STR", "CON"],
-  Bard: ["DEX", "CHA"],
-  Cleric: ["WIS", "CHA"],
-  Druid: ["INT", "WIS"],
-  Fighter: ["STR", "CON"],
-  Monk: ["STR", "DEX"],
-  Paladin: ["WIS", "CHA"],
-  Ranger: ["STR", "DEX"],
-  Rogue: ["DEX", "INT"],
-  Sorcerer: ["CON", "CHA"],
-  Warlock: ["WIS", "CHA"],
-  Wizard: ["INT", "WIS"],
-};
-
-const CLASS_ARMOR_POOLS: Record<string, string[]> = {
-  Barbarian: ARMOR.Medium,
-  Bard: ARMOR.Light,
-  Cleric: ARMOR.Heavy,
-  Druid: ARMOR.Medium,
-  Fighter: [...ARMOR.Medium, ...ARMOR.Heavy],
-  Monk: [],
-  Paladin: ARMOR.Heavy,
-  Ranger: ARMOR.Medium,
-  Rogue: ARMOR.Light,
-  Sorcerer: [],
-  Warlock: ARMOR.Light,
-  Wizard: [],
-};
-
-const CLASS_WEAPON_POOLS: Record<string, string[]> = {
-  Barbarian: [...WEAPONS.Martial, ...WEAPONS.Simple],
-  Bard: [...WEAPONS.Simple, "Rapier", "Shortsword"],
-  Cleric: [...WEAPONS.Simple, "Mace", "Warhammer"],
-  Druid: [...WEAPONS.Simple, "Sickle", "Quarterstaff"],
-  Fighter: [...WEAPONS.Martial, ...WEAPONS.Simple],
-  Monk: ["Quarterstaff", "Shortsword", "Dart"],
-  Paladin: [...WEAPONS.Martial, ...WEAPONS.Simple],
-  Ranger: [...WEAPONS.Ranged, "Shortsword", "Rapier"],
-  Rogue: ["Rapier", "Shortsword", ...WEAPONS.Ranged],
-  Sorcerer: [...WEAPONS.Simple, "Dagger", "Quarterstaff"],
-  Warlock: [...WEAPONS.Simple, "Dagger", "Quarterstaff"],
-  Wizard: [...WEAPONS.Simple, "Dagger", "Quarterstaff"],
-};
-
-const CLASS_FEATURES: Record<string, string[]> = {
-  Barbarian: ["Rage", "Unarmored Defense"],
-  Bard: ["Bardic Inspiration", "Jack of All Trades"],
-  Cleric: ["Spellcasting", "Divine Domain"],
-  Druid: ["Spellcasting", "Wild Shape"],
-  Fighter: ["Second Wind", "Action Surge"],
-  Monk: ["Martial Arts", "Ki"],
-  Paladin: ["Divine Sense", "Lay on Hands"],
-  Ranger: ["Favored Foe", "Natural Explorer"],
-  Rogue: ["Sneak Attack", "Expertise"],
-  Sorcerer: ["Spellcasting", "Sorcery Points"],
-  Warlock: ["Eldritch Invocations", "Pact Magic"],
-  Wizard: ["Spellcasting", "Arcane Recovery"],
-};
-
-const RACE_FEATURES: Record<string, string[]> = {
-  Human: ["Adaptable", "Versatile"],
-  Elf: ["Darkvision", "Fey Ancestry"],
-  Dwarf: ["Darkvision", "Dwarven Resilience"],
-  Halfling: ["Lucky", "Brave"],
-  Dragonborn: ["Draconic Ancestry", "Breath Weapon"],
-  Gnome: ["Gnome Cunning", "Tinker"],
-  "Half-Elf": ["Darkvision", "Fey Ancestry"],
-  "Half-Orc": ["Relentless Endurance", "Savage Attacks"],
-  Tiefling: ["Hellish Resistance", "Infernal Legacy"],
-  Aasimar: ["Celestial Resistance", "Healing Hands"],
-  Genasi: ["Elemental Gift"],
-  Goliath: ["Stone's Endurance"],
-  Firbolg: ["Hidden Step", "Powerful Build"],
-  Tabaxi: ["Cat's Claw", "Feline Agility"],
-  Kenku: ["Mimicry"],
-  Lizardfolk: ["Bite", "Hunter's Lore"],
-  Triton: ["Amphibious", "Control Air and Water"],
-  "Yuan-ti Pureblood": ["Magic Resistance", "Poison Immunity"],
-  Goblin: ["Nimble Escape"],
-  Hobgoblin: ["Martial Training"],
-  Bugbear: ["Long-Limbed", "Surprise Attack"],
-  Orc: ["Aggressive", "Powerful Build"],
-  Kobold: ["Pack Tactics", "Grovel, Cower, and Beg"],
-};
-
-const SPELLCASTING_CLASSES = new Set([
-  "Bard",
-  "Cleric",
-  "Druid",
-  "Paladin",
-  "Ranger",
-  "Sorcerer",
-  "Warlock",
-  "Wizard",
-]);
-
-const HIT_DICE: Record<string, string> = {
-  Barbarian: "1d12",
-  Bard: "1d8",
-  Cleric: "1d8",
-  Druid: "1d8",
-  Fighter: "1d10",
-  Monk: "1d8",
-  Paladin: "1d10",
-  Ranger: "1d10",
-  Rogue: "1d8",
-  Sorcerer: "1d6",
-  Warlock: "1d8",
-  Wizard: "1d6",
-};
-
 function chooseMany<T>(items: readonly T[], count: number): T[] {
   const pool = [...items];
   const selected: T[] = [];
@@ -496,44 +338,19 @@ function buildPersonality() {
 function generateDetailedCharacter(
   character: PreGeneratedCharacter,
 ): DetailedPreGeneratedCharacter {
-  const skills = chooseMany(
-    [
-      ...CLASS_SKILL_POOLS[character.characterClass],
-      ...BACKGROUND_SKILL_POOLS[character.background],
-      ...SKILLS,
-    ],
-    4,
-  );
-  const savingThrows = CLASS_SAVES[character.characterClass];
+  const defaults = buildCharacterDefaults({
+    race: character.race,
+    characterClass: character.characterClass,
+    background: character.background,
+  });
   const feats = chooseMany(FEATS, 1);
-  const features = chooseMany(
-    [
-      ...(RACE_FEATURES[character.race] ?? []),
-      ...(CLASS_FEATURES[character.characterClass] ?? []),
-      ...FEATURES_TRAITS,
-    ],
-    4,
-  );
-  const languages = chooseMany(
-    ["Common", ...LANGUAGES.filter((language) => language !== "Common")],
-    3,
-  );
-  const armorList = chooseMany(
-    CLASS_ARMOR_POOLS[character.characterClass] ?? [],
-    2,
-  );
-  const weapons = chooseMany(
-    CLASS_WEAPON_POOLS[character.characterClass] ?? WEAPONS.Simple,
-    3,
-  );
-  const tools = chooseMany(
-    [...(BACKGROUND_TOOL_POOLS[character.background] ?? []), ...TOOLS],
-    2,
-  );
-  const equipment = [pickRandom(EQUIPMENT_PACKS), ...chooseMany(TOOLS, 2)];
-  const spellsKnown = SPELLCASTING_CLASSES.has(character.characterClass)
-    ? chooseMany([...SPELLS.Cantrips, ...SPELLS.Level1, ...SPELLS.Level2], 5)
-    : [];
+  const spellPool = Object.values(
+    getAvailableSpells(character.characterClass),
+  ).flat();
+  const spellsKnown =
+    character.spells && character.spells.length > 0
+      ? character.spells.filter((spell) => spellPool.includes(spell))
+      : chooseMany(spellPool, Math.min(5, spellPool.length));
   const deity = character.alignment.includes("Good")
     ? pickRandom(DEITIES.Good)
     : character.alignment.includes("Evil")
@@ -556,20 +373,20 @@ function generateDetailedCharacter(
     height: formatHeight(54 + Math.floor(Math.random() * 18)),
     weight: `${90 + Math.floor(Math.random() * 120)} lbs`,
     deity,
-    skills,
-    savingThrows,
+    skills: defaults.skills ?? [],
+    savingThrows: defaults.savingThrows ?? [],
     feats,
-    features,
-    languages,
+    features: defaults.features ?? [],
+    languages: defaults.languages ?? ["Common"],
     loadout: {
-      armor: armorList,
-      weapons,
-      tools,
+      armor: defaults.armor ?? [],
+      weapons: defaults.weapons ?? [],
+      tools: defaults.tools ?? [],
     },
-    weapons,
-    armorList,
-    equipment,
-    tools,
+    weapons: defaults.weapons ?? [],
+    armorList: defaults.armor ?? [],
+    equipment: defaults.equipment ?? [],
+    tools: defaults.tools ?? [],
     currency: {
       cp: Math.floor(Math.random() * 15),
       sp: Math.floor(Math.random() * 40),
@@ -587,7 +404,7 @@ function generateDetailedCharacter(
       level: 1,
       xp: 0,
       inspiration: false,
-      hitDice: HIT_DICE[character.characterClass] ?? "1d8",
+      hitDice: defaults.meta?.hitDice ?? "1d8",
       proficiencyBonus: 2,
     },
     hitPoints: Math.max(1, 8 + Math.floor((character.abilities.CON - 10) / 2)),
@@ -627,16 +444,47 @@ export function PreGeneratedCharacters() {
   const [selectedCharacterId, setSelectedCharacterId] = useState<string>(
     PREGENERATED_CHARACTERS[0].id,
   );
+  const [characterLevels, setCharacterLevels] = useState<Record<string, number>>(
+    Object.fromEntries(PREGENERATED_CHARACTERS.map(c => [c.id, 1]))
+  );
 
   const detailedCharacters = useMemo(
     () => PREGENERATED_CHARACTERS.map(generateDetailedCharacter),
     [],
   );
 
+  const getLevelAdjustedCharacter = (baseChar: DetailedPreGeneratedCharacter) => {
+    const level = characterLevels[baseChar.id] || 1;
+    if (level === 1) {
+      return {
+        ...baseChar,
+        subclass: "None",
+        meta: { ...baseChar.meta, level: 1, xp: 0 }
+      };
+    }
+
+    // Level 2 adjustments
+    const classRule = getClassRule(baseChar.characterClass);
+    const primaryStats = classRule?.abilityPriority.slice(0, 2) || [];
+    
+    const adjustedAbilities = { ...baseChar.abilities };
+    for (const stat in adjustedAbilities) {
+      const key = stat as AbilityScore;
+      adjustedAbilities[key] += primaryStats.includes(key) ? 2 : 1;
+    }
+
+    return {
+      ...baseChar,
+      abilities: adjustedAbilities,
+      meta: { ...baseChar.meta, level: 2, xp: 300 },
+      hitPoints: baseChar.hitPoints + 8 + Math.floor((adjustedAbilities.CON - 10) / 2) // Rough level 2 HP
+    };
+  };
+
   const selectedCharacter =
-    detailedCharacters.find(
+    getLevelAdjustedCharacter(detailedCharacters.find(
       (character) => character.id === selectedCharacterId,
-    ) ?? detailedCharacters[0];
+    ) ?? detailedCharacters[0]);
 
   const abilityModifier = (value: number) => {
     const mod = Math.floor((value - 10) / 2);
@@ -644,48 +492,47 @@ export function PreGeneratedCharacters() {
   };
 
   const handleViewSheet = (character: DetailedPreGeneratedCharacter) => {
+    const levelAdjusted = getLevelAdjustedCharacter(character);
     const stateToSave: CharacterState = {
       ...INITIAL_CHARACTER_STATE,
       identity: {
-        name: character.name,
-        gender: character.gender,
-        age: character.age,
-        height: character.height,
-        weight: character.weight,
-        // alignment casting
-        alignment: character.alignment as Alignment,
-        deity: character.deity,
-        title: character.title,
-        imageUrl: `https://picsum.photos/seed/${character.id}/400/400`,
+        name: levelAdjusted.name,
+        gender: levelAdjusted.gender,
+        age: levelAdjusted.age,
+        height: levelAdjusted.height,
+        weight: levelAdjusted.weight,
+        alignment: levelAdjusted.alignment as Alignment,
+        deity: levelAdjusted.deity,
+        title: levelAdjusted.title,
+        imageUrl: `https://picsum.photos/seed/${levelAdjusted.id}/400/400`,
       },
-      race: character.race,
-      subrace: character.subrace,
-      characterClass: character.characterClass,
-      subclass: character.subclass,
-      background: character.background,
-      abilities: character.abilities,
-      // skills casting
-      skills: character.skills as SkillName[],
-      savingThrows: character.savingThrows,
-      feats: character.feats,
-      features: character.features,
-      languages: character.languages,
+      race: levelAdjusted.race,
+      subrace: levelAdjusted.subrace,
+      characterClass: levelAdjusted.characterClass,
+      subclass: levelAdjusted.subclass,
+      background: levelAdjusted.background,
+      abilities: levelAdjusted.abilities,
+      skills: levelAdjusted.skills as SkillName[],
+      savingThrows: levelAdjusted.savingThrows,
+      feats: levelAdjusted.feats,
+      features: levelAdjusted.features,
+      languages: levelAdjusted.languages,
       proficiencies: {
-        armor: character.loadout.armor,
-        weapons: character.loadout.weapons,
-        tools: character.loadout.tools,
+        armor: levelAdjusted.loadout.armor,
+        weapons: levelAdjusted.loadout.weapons,
+        tools: levelAdjusted.loadout.tools,
       },
-      weapons: character.weapons,
-      armor: character.armorList,
-      equipment: character.equipment,
-      tools: character.tools,
-      currency: character.currency,
-      spells: { 0: character.spellsKnown },
+      weapons: levelAdjusted.weapons,
+      armor: levelAdjusted.armorList,
+      equipment: levelAdjusted.equipment,
+      tools: levelAdjusted.tools,
+      currency: levelAdjusted.currency,
+      spells: { 0: levelAdjusted.spellsKnown },
       personality: {
-        ...character.personality,
-        backstory: character.backstory,
+        ...levelAdjusted.personality,
+        backstory: levelAdjusted.backstory,
       },
-      meta: character.meta,
+      meta: levelAdjusted.meta,
     };
     localStorage.setItem("dnd_character_sheet", JSON.stringify(stateToSave));
     router.push("/characters/sheet");
@@ -707,8 +554,11 @@ export function PreGeneratedCharacters() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {detailedCharacters.map((character) => {
+        {detailedCharacters.map((baseCharacter) => {
+          const character = getLevelAdjustedCharacter(baseCharacter);
           const isSelected = selectedCharacterId === character.id;
+          const currentLevel = characterLevels[character.id] || 1;
+          
           const featureChips = character.features
             .slice(0, 3)
             .reduce<Array<{ key: string; label: string }>>((chips, feature) => {
@@ -754,17 +604,43 @@ export function PreGeneratedCharacters() {
               </div>
 
               <CardHeader className="pb-3">
-                <CardTitle className="font-['Cinzel'] text-xl text-[#F9FAFB]">
-                  {character.name}
-                </CardTitle>
-                <p className="text-xs text-[#D4AF37] font-semibold mt-1">
-                  {character.gender} {character.race}
-                </p>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <CardTitle className="font-['Cinzel'] text-xl text-[#F9FAFB]">
+                      {character.name}
+                    </CardTitle>
+                    <p className="text-xs text-[#D4AF37] font-semibold mt-1">
+                      {character.gender} {character.race}
+                    </p>
+                  </div>
+                  <div className="flex gap-1">
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCharacterLevels(prev => ({ ...prev, [character.id]: 1 }));
+                      }}
+                      className={`px-2 py-1 text-[10px] font-bold rounded border ${currentLevel === 1 ? 'bg-[#D4AF37] text-[#0B0F1A] border-[#D4AF37]' : 'bg-black/40 text-[#9CA3AF] border-white/10'}`}
+                    >
+                      L1
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setCharacterLevels(prev => ({ ...prev, [character.id]: 2 }));
+                      }}
+                      className={`px-2 py-1 text-[10px] font-bold rounded border ${currentLevel === 2 ? 'bg-[#D4AF37] text-[#0B0F1A] border-[#D4AF37]' : 'bg-black/40 text-[#9CA3AF] border-white/10'}`}
+                    >
+                      L2
+                    </button>
+                  </div>
+                </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
                   <p className="text-sm font-semibold text-[#F9FAFB]">
-                    {character.characterClass} ({character.subclass})
+                    {character.characterClass} {character.subclass !== "None" ? `(${character.subclass})` : ""}
                   </p>
                   <p className="text-xs text-[#9CA3AF]">
                     {character.archetype}
@@ -785,10 +661,10 @@ export function PreGeneratedCharacters() {
                   </div>
                   <div className="rounded-md border border-white/10 bg-black/20 px-3 py-2">
                     <p className="text-[#9CA3AF] uppercase tracking-wide">
-                      Weapon
+                      Stats (L{currentLevel})
                     </p>
                     <p className="mt-1 text-[#D4AF37]">
-                      {character.signature_weapon}
+                      STR {character.abilities.STR}, DEX {character.abilities.DEX}...
                     </p>
                   </div>
                   <div className="rounded-md border border-white/10 bg-black/20 px-3 py-2">
@@ -837,7 +713,7 @@ export function PreGeneratedCharacters() {
                     <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-[#111827] border-[#D4AF37]/20">
                       <DialogHeader>
                         <DialogTitle className="font-['Cinzel'] text-2xl text-[#D4AF37]">
-                          {character.name}
+                          {character.name} (Level {currentLevel})
                         </DialogTitle>
                       </DialogHeader>
 

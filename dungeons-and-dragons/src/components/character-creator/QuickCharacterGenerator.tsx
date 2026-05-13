@@ -9,24 +9,21 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   ALIGNMENTS,
-  ARMOR,
   BACKGROUND_TRAITS,
   BACKGROUNDS,
   CLASSES_AND_SUBCLASSES,
   DEITIES,
-  EQUIPMENT_PACKS,
   FEATS,
-  FEATURES_TRAITS,
-  GEAR,
   GENDERS,
-  LANGUAGES,
   PERSONALITY_SUGGESTIONS,
   RACES,
-  SKILLS,
-  SPELLS,
-  TOOLS,
-  WEAPONS,
 } from "@/lib/character-data";
+import {
+  buildCharacterDefaults,
+  getAvailableSpells,
+  getClassRule,
+  getRecommendedClassesForRace,
+} from "@/lib/character-rules";
 import {
   type Alignment,
   type CharacterState,
@@ -94,161 +91,6 @@ type QuickCharacter = {
   backstory: string;
 };
 
-const CLASS_SKILL_POOLS: Record<string, string[]> = {
-  Barbarian: ["Athletics", "Survival", "Intimidation"],
-  Bard: ["Performance", "Persuasion", "Deception", "Insight"],
-  Cleric: ["Insight", "Medicine", "Religion"],
-  Druid: ["Nature", "Animal Handling", "Survival", "Insight"],
-  Fighter: ["Athletics", "Intimidation", "Perception"],
-  Monk: ["Acrobatics", "Stealth", "Insight"],
-  Paladin: ["Athletics", "Persuasion", "Insight"],
-  Ranger: ["Survival", "Perception", "Nature", "Stealth"],
-  Rogue: ["Stealth", "Sleight of Hand", "Deception", "Acrobatics"],
-  Sorcerer: ["Arcana", "Deception", "Persuasion"],
-  Warlock: ["Arcana", "Deception", "Intimidation"],
-  Wizard: ["Arcana", "History", "Insight"],
-};
-
-const BACKGROUND_SKILL_POOLS: Record<string, string[]> = {
-  Acolyte: ["Insight", "Religion"],
-  Charlatan: ["Deception", "Sleight of Hand"],
-  Criminal: ["Deception", "Stealth"],
-  Entertainer: ["Performance", "Acrobatics"],
-  "Folk Hero": ["Animal Handling", "Survival"],
-  "Guild Artisan": ["Insight", "Persuasion"],
-  Hermit: ["Medicine", "Religion"],
-  Noble: ["History", "Persuasion"],
-  Outlander: ["Athletics", "Survival"],
-  Sage: ["Arcana", "History"],
-  Sailor: ["Athletics", "Perception"],
-  Soldier: ["Athletics", "Intimidation"],
-  Urchin: ["Sleight of Hand", "Stealth"],
-};
-
-const BACKGROUND_TOOL_POOLS: Record<string, string[]> = {
-  Charlatan: ["Disguise Kit", "Forgery Kit"],
-  Criminal: ["Thieves' Tools"],
-  Entertainer: ["Disguise Kit"],
-  "Guild Artisan": ["Alchemist Supplies", "Forgery Kit"],
-  Hermit: ["Herbalism Kit"],
-  Noble: ["Forgery Kit"],
-  Sailor: ["Forgery Kit"],
-  Soldier: ["Gaming Set"],
-  Urchin: ["Thieves' Tools"],
-};
-
-const CLASS_SAVES: Record<string, [AbilityScore, AbilityScore]> = {
-  Barbarian: ["STR", "CON"],
-  Bard: ["DEX", "CHA"],
-  Cleric: ["WIS", "CHA"],
-  Druid: ["INT", "WIS"],
-  Fighter: ["STR", "CON"],
-  Monk: ["STR", "DEX"],
-  Paladin: ["WIS", "CHA"],
-  Ranger: ["STR", "DEX"],
-  Rogue: ["DEX", "INT"],
-  Sorcerer: ["CON", "CHA"],
-  Warlock: ["WIS", "CHA"],
-  Wizard: ["INT", "WIS"],
-};
-
-const CLASS_ARMOR_POOLS: Record<string, string[]> = {
-  Barbarian: ARMOR.Medium,
-  Bard: ARMOR.Light,
-  Cleric: ARMOR.Heavy,
-  Druid: ARMOR.Medium,
-  Fighter: [...ARMOR.Medium, ...ARMOR.Heavy],
-  Monk: [],
-  Paladin: ARMOR.Heavy,
-  Ranger: ARMOR.Medium,
-  Rogue: ARMOR.Light,
-  Sorcerer: [],
-  Warlock: ARMOR.Light,
-  Wizard: [],
-};
-
-const CLASS_WEAPON_POOLS: Record<string, string[]> = {
-  Barbarian: [...WEAPONS.Martial, ...WEAPONS.Simple],
-  Bard: [...WEAPONS.Simple, "Rapier", "Shortsword"],
-  Cleric: [...WEAPONS.Simple, "Mace", "Warhammer"],
-  Druid: [...WEAPONS.Simple, "Sickle", "Quarterstaff"],
-  Fighter: [...WEAPONS.Martial, ...WEAPONS.Simple],
-  Monk: ["Quarterstaff", "Shortsword", "Dart"],
-  Paladin: [...WEAPONS.Martial, ...WEAPONS.Simple],
-  Ranger: [...WEAPONS.Ranged, "Shortsword", "Rapier"],
-  Rogue: ["Rapier", "Shortsword", ...WEAPONS.Ranged],
-  Sorcerer: [...WEAPONS.Simple, "Dagger", "Quarterstaff"],
-  Warlock: [...WEAPONS.Simple, "Dagger", "Quarterstaff"],
-  Wizard: [...WEAPONS.Simple, "Dagger", "Quarterstaff"],
-};
-
-const CLASS_FEATURES: Record<string, string[]> = {
-  Barbarian: ["Rage", "Unarmored Defense"],
-  Bard: ["Bardic Inspiration", "Jack of All Trades"],
-  Cleric: ["Spellcasting", "Divine Domain"],
-  Druid: ["Spellcasting", "Wild Shape"],
-  Fighter: ["Second Wind", "Action Surge"],
-  Monk: ["Martial Arts", "Ki"],
-  Paladin: ["Divine Sense", "Lay on Hands"],
-  Ranger: ["Favored Foe", "Natural Explorer"],
-  Rogue: ["Sneak Attack", "Expertise"],
-  Sorcerer: ["Spellcasting", "Sorcery Points"],
-  Warlock: ["Eldritch Invocations", "Pact Magic"],
-  Wizard: ["Spellcasting", "Arcane Recovery"],
-};
-
-const RACE_FEATURES: Record<string, string[]> = {
-  Human: ["Adaptable", "Versatile"],
-  Elf: ["Darkvision", "Fey Ancestry"],
-  Dwarf: ["Darkvision", "Dwarven Resilience"],
-  Halfling: ["Lucky", "Brave"],
-  Dragonborn: ["Draconic Ancestry", "Breath Weapon"],
-  Gnome: ["Gnome Cunning", "Tinker"],
-  "Half-Elf": ["Darkvision", "Fey Ancestry"],
-  "Half-Orc": ["Relentless Endurance", "Savage Attacks"],
-  Tiefling: ["Hellish Resistance", "Infernal Legacy"],
-  Aasimar: ["Celestial Resistance", "Healing Hands"],
-  Genasi: ["Elemental Gift"],
-  Goliath: ["Stone's Endurance"],
-  Firbolg: ["Hidden Step", "Powerful Build"],
-  Tabaxi: ["Cat's Claw", "Feline Agility"],
-  Kenku: ["Mimicry"],
-  Lizardfolk: ["Bite", "Hunter's Lore"],
-  Triton: ["Amphibious", "Control Air and Water"],
-  "Yuan-ti Pureblood": ["Magic Resistance", "Poison Immunity"],
-  Goblin: ["Nimble Escape"],
-  Hobgoblin: ["Martial Training"],
-  Bugbear: ["Long-Limbed", "Surprise Attack"],
-  Orc: ["Aggressive", "Powerful Build"],
-  Kobold: ["Pack Tactics", "Grovel, Cower, and Beg"],
-};
-
-const SPELLCASTING_CLASSES = new Set([
-  "Bard",
-  "Cleric",
-  "Druid",
-  "Paladin",
-  "Ranger",
-  "Sorcerer",
-  "Warlock",
-  "Wizard",
-]);
-
-const HIT_DICE: Record<string, string> = {
-  Barbarian: "1d12",
-  Bard: "1d8",
-  Cleric: "1d8",
-  Druid: "1d8",
-  Fighter: "1d10",
-  Monk: "1d8",
-  Paladin: "1d10",
-  Ranger: "1d10",
-  Rogue: "1d8",
-  Sorcerer: "1d6",
-  Warlock: "1d8",
-  Wizard: "1d6",
-};
-
 function chooseRandom<T>(items: readonly T[]): T {
   return items[Math.floor(Math.random() * items.length)];
 }
@@ -269,10 +111,6 @@ function chooseMany<T>(items: readonly T[], count: number): T[] {
   return chosen;
 }
 
-function rollAbilityScore() {
-  return Math.floor(Math.random() * 16) + 3;
-}
-
 function formatHeight(totalInches: number) {
   const feet = Math.floor(totalInches / 12);
   const inches = totalInches % 12;
@@ -281,7 +119,12 @@ function formatHeight(totalInches: number) {
 
 function generateIdentity() {
   const race = chooseRandom(Object.keys(RACES));
-  const characterClass = chooseRandom(Object.keys(CLASSES_AND_SUBCLASSES));
+  const recommendedClasses = getRecommendedClassesForRace(race);
+  const characterClass = chooseRandom(
+    recommendedClasses.length > 0
+      ? recommendedClasses
+      : Object.keys(CLASSES_AND_SUBCLASSES),
+  );
   const subraces = RACES[race as keyof typeof RACES];
   const subclasses =
     CLASSES_AND_SUBCLASSES[
@@ -329,7 +172,7 @@ function buildPersonality() {
   };
 }
 
-function generateCharacter(): QuickCharacter {
+function generateCharacter(level = 1): QuickCharacter {
   const identity = generateIdentity();
   const background = chooseRandom(BACKGROUNDS);
   const alignment = chooseRandom(ALIGNMENTS);
@@ -343,41 +186,16 @@ function generateCharacter(): QuickCharacter {
     "the Storm Seeker",
   ]);
   const deity = generateDeity(alignment);
-  const skills = chooseMany(
-    [
-      ...CLASS_SKILL_POOLS[identity.characterClass],
-      ...BACKGROUND_SKILL_POOLS[background],
-      ...SKILLS,
-    ],
-    4,
-  );
-  const savingThrows = CLASS_SAVES[identity.characterClass];
+  const defaults = buildCharacterDefaults({
+    race: identity.race,
+    characterClass: identity.characterClass,
+    background,
+  });
   const feats = chooseMany(FEATS, 1);
-  const features = chooseMany(
-    [
-      ...(RACE_FEATURES[identity.race] ?? []),
-      ...(CLASS_FEATURES[identity.characterClass] ?? []),
-      ...FEATURES_TRAITS,
-    ],
-    4,
-  );
-  const languages = chooseMany(
-    ["Common", ...LANGUAGES.filter((language) => language !== "Common")],
-    3,
-  );
-  const armor = chooseMany(CLASS_ARMOR_POOLS[identity.characterClass] ?? [], 2);
-  const weapons = chooseMany(
-    CLASS_WEAPON_POOLS[identity.characterClass] ?? WEAPONS.Simple,
-    3,
-  );
-  const tools = chooseMany(
-    [...(BACKGROUND_TOOL_POOLS[background] ?? []), ...TOOLS],
-    2,
-  );
-  const spells = SPELLCASTING_CLASSES.has(identity.characterClass)
-    ? chooseMany([...SPELLS.Cantrips, ...SPELLS.Level1, ...SPELLS.Level2], 5)
-    : [];
-  const equipment = [chooseRandom(EQUIPMENT_PACKS), ...chooseMany(GEAR, 3)];
+  const spellPool = Object.values(
+    getAvailableSpells(identity.characterClass),
+  ).flat();
+  const spells = chooseMany(spellPool, Math.min(5, spellPool.length));
   const currency = {
     cp: Math.floor(Math.random() * 15),
     sp: Math.floor(Math.random() * 40),
@@ -386,7 +204,23 @@ function generateCharacter(): QuickCharacter {
     pp: Math.floor(Math.random() * 3),
   };
   const personality = buildPersonality();
-  const metaLevel = 1;
+  const metaLevel = level;
+
+  const abilities = { ...(defaults.abilities ?? INITIAL_CHARACTER_STATE.abilities) };
+  
+  // Stat boost for level 2: ensure minimum values
+  if (level >= 2) {
+    for (const stat in abilities) {
+      const key = stat as AbilityScore;
+      // If it's a primary stat for the class, set higher minimum
+      const classRule = getClassRule(identity.characterClass);
+      const isPrimary = classRule?.abilityPriority.slice(0, 2).includes(key);
+      const minVal = isPrimary ? 14 : 12;
+      if (abilities[key] < minVal) {
+        abilities[key] = minVal;
+      }
+    }
+  }
 
   // Create random image URL using their basic info as seed
   const seedId =
@@ -406,40 +240,33 @@ function generateCharacter(): QuickCharacter {
     race: identity.race,
     subrace: identity.subrace,
     characterClass: identity.characterClass,
-    subclass: identity.subclass,
+    subclass: level >= 2 ? identity.subclass : "None",
     background,
     alignment,
     imageUrl: `https://picsum.photos/seed/${seedId}/400/400`,
-    abilities: {
-      STR: rollAbilityScore(),
-      DEX: rollAbilityScore(),
-      CON: rollAbilityScore(),
-      INT: rollAbilityScore(),
-      WIS: rollAbilityScore(),
-      CHA: rollAbilityScore(),
-    },
-    skills,
-    savingThrows,
+    abilities,
+    skills: defaults.skills ?? [],
+    savingThrows: defaults.savingThrows ?? [],
     feats,
-    features,
-    languages,
-    proficiencies: {
-      armor,
-      weapons,
-      tools,
+    features: defaults.features ?? [],
+    languages: defaults.languages ?? ["Common"],
+    proficiencies: defaults.proficiencies ?? {
+      armor: [],
+      weapons: [],
+      tools: [],
     },
-    weapons,
-    armor,
-    equipment,
-    tools,
+    weapons: defaults.weapons ?? [],
+    armor: defaults.armor ?? [],
+    equipment: defaults.equipment ?? [],
+    tools: defaults.tools ?? [],
     currency,
     spells,
     personality,
     meta: {
       level: metaLevel,
-      xp: 0,
+      xp: level >= 2 ? 300 : 0,
       inspiration: false,
-      hitDice: HIT_DICE[identity.characterClass] ?? "1d8",
+      hitDice: defaults.meta?.hitDice ?? "1d8",
       proficiencyBonus: 2,
     },
     backstory: "",
@@ -479,8 +306,9 @@ function DetailChipList({
 
 export function QuickCharacterGenerator() {
   const router = useRouter();
+  const [level, setLevel] = useState<number>(1);
   const [character, setCharacter] = useState<QuickCharacter>(
-    generateCharacter(),
+    generateCharacter(1),
   );
   const [name, setName] = useState<string>("");
 
@@ -489,8 +317,26 @@ export function QuickCharacterGenerator() {
   };
 
   const handleGenerateNew = () => {
-    setCharacter(generateCharacter());
+    setCharacter(generateCharacter(level));
     setName("");
+  };
+
+  const handleLevelChange = (newLevel: number) => {
+    setLevel(newLevel);
+    // Regenerate or update current character
+    setCharacter(prev => {
+      const identity = {
+        race: prev.race,
+        characterClass: prev.characterClass,
+        subrace: prev.subrace,
+        subclass: prev.subclass,
+      };
+      
+      // If switching to level 1, remove subclass
+      // If switching to level 2, ensure subclass is present and boost stats
+      // For simplicity, let's just regenerate for now to ensure all defaults match the level
+      return generateCharacter(newLevel);
+    });
   };
 
   const handleViewSheet = () => {
@@ -539,7 +385,7 @@ export function QuickCharacterGenerator() {
 
   const displayName = name.trim() || character.name;
   const conModifier = Math.floor((character.abilities.CON - 10) / 2);
-  const hitPoints = Math.max(1, 8 + conModifier);
+  const hitPoints = Math.max(1, (character.meta.level === 2 ? 16 : 8) + conModifier);
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
@@ -551,6 +397,21 @@ export function QuickCharacterGenerator() {
           Create a fully formed character in seconds. Customize the name or
           generate new heroes until you find the perfect fit.
         </p>
+      </div>
+
+      <div className="flex justify-center gap-4 mb-6">
+        <Button
+          onClick={() => handleLevelChange(1)}
+          className={`${level === 1 ? 'bg-[#D4AF37] text-[#0B0F1A]' : 'bg-white/5 text-white border-white/10'} font-bold border`}
+        >
+          Level 1
+        </Button>
+        <Button
+          onClick={() => handleLevelChange(2)}
+          className={`${level === 2 ? 'bg-[#D4AF37] text-[#0B0F1A]' : 'bg-white/5 text-white border-white/10'} font-bold border`}
+        >
+          Level 2
+        </Button>
       </div>
 
       <Card className="bg-[#111827] border-[#D4AF37]/20">

@@ -17,6 +17,7 @@ import {
   CLASSES_AND_SUBCLASSES,
   RACES,
 } from "@/lib/character-data";
+import { buildCharacterDefaults } from "@/lib/character-rules";
 import type { Alignment } from "@/lib/character-types";
 import { useCharacter } from "./CharacterStateContext";
 
@@ -30,12 +31,18 @@ export function GeneratorControls() {
     const raceKeys = Object.keys(RACES);
     const classKeys = Object.keys(CLASSES_AND_SUBCLASSES);
 
-    // Only randomize if NOT locked
+    let nextRace = state.race;
+    let nextClass = state.characterClass;
+    let nextBackground = state.background;
+    let nextSubrace = state.subrace;
+    let nextSubclass = state.subclass;
+
     if (!state.generatorLocks.race) {
       const chosenRace = randomChoice(raceKeys);
       const subraces = RACES[chosenRace as keyof typeof RACES];
       const chosenSubrace = subraces.length > 0 ? randomChoice(subraces) : "";
-      updateState({ race: chosenRace, subrace: chosenSubrace });
+      nextRace = chosenRace;
+      nextSubrace = chosenSubrace;
     }
 
     if (!state.generatorLocks.characterClass) {
@@ -46,30 +53,42 @@ export function GeneratorControls() {
         ];
       const chosenSubclass =
         subclasses.length > 0 ? randomChoice(subclasses) : "";
-      updateState({ characterClass: chosenClass, subclass: chosenSubclass });
+      nextClass = chosenClass;
+      nextSubclass = chosenSubclass;
     }
 
     if (!state.generatorLocks.background) {
-      updateState({ background: randomChoice(BACKGROUNDS) });
+      nextBackground = randomChoice(BACKGROUNDS);
       updateNestedState("identity", {
         alignment: randomChoice(ALIGNMENTS) as Alignment,
       });
     }
 
-    if (!state.generatorLocks.stats) {
-      updateState({
-        abilities: {
-          STR: Math.floor(Math.random() * 16) + 3,
-          DEX: Math.floor(Math.random() * 16) + 3,
-          CON: Math.floor(Math.random() * 16) + 3,
-          INT: Math.floor(Math.random() * 16) + 3,
-          WIS: Math.floor(Math.random() * 16) + 3,
-          CHA: Math.floor(Math.random() * 16) + 3,
-        },
-      });
-    }
+    const defaults = buildCharacterDefaults({
+      race: nextRace,
+      characterClass: nextClass,
+      background: nextBackground,
+    });
 
-    // Additional logic could be added for equipment/spells when filters are on.
+    updateState({
+      race: nextRace,
+      subrace: nextSubrace,
+      characterClass: nextClass,
+      subclass: nextSubclass,
+      background: nextBackground,
+      ...defaults,
+      ...(state.generatorLocks.stats ? { abilities: state.abilities } : {}),
+      ...(state.generatorLocks.equipment
+        ? {
+            armor: state.armor,
+            weapons: state.weapons,
+            equipment: state.equipment,
+            tools: state.tools,
+            proficiencies: state.proficiencies,
+          }
+        : {}),
+      ...(state.generatorLocks.spells ? { spells: state.spells } : {}),
+    });
   };
 
   return (
@@ -100,13 +119,13 @@ export function GeneratorControls() {
                   className="flex items-center justify-between"
                 >
                   <Label
-                    htmlFor={`lock-\${lockKey}`}
+                    htmlFor={`lock-${lockKey}`}
                     className="capitalize cursor-pointer text-sm"
                   >
                     {lockKey.replace(/([A-Z])/g, " $1").trim()}
                   </Label>
                   <Switch
-                    id={`lock-\${lockKey}`}
+                    id={`lock-${lockKey}`}
                     checked={
                       state.generatorLocks[
                         lockKey as keyof typeof state.generatorLocks
@@ -134,13 +153,13 @@ export function GeneratorControls() {
                   className="flex items-center justify-between"
                 >
                   <Label
-                    htmlFor={`filter-\${filterKey}`}
+                    htmlFor={`filter-${filterKey}`}
                     className="capitalize cursor-pointer text-sm"
                   >
                     {filterKey.replace(/([A-Z])/g, " $1").trim()}
                   </Label>
                   <Switch
-                    id={`filter-\${filterKey}`}
+                    id={`filter-${filterKey}`}
                     checked={
                       state.generatorFilters[
                         filterKey as keyof typeof state.generatorFilters

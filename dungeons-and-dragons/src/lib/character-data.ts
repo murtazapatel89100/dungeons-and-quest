@@ -185,6 +185,8 @@ export const EQUIPMENT_PACKS = [
   "Scholar's Pack",
   "Priest's Pack",
   "Burglar's Pack",
+  "Entertainer's Pack",
+  "Diplomat's Pack",
 ];
 
 export const GEAR = ["Rope", "Torch", "Rations", "Waterskin", "Bedroll"];
@@ -195,6 +197,14 @@ export const TOOLS = [
   "Forgery Kit",
   "Herbalism Kit",
   "Alchemist Supplies",
+  "Artisan's Tools",
+  "Brewer's Supplies",
+  "Gaming Set",
+  "Lute",
+  "Mason's Tools",
+  "Navigator's Tools",
+  "Smith's Tools",
+  "Tinker's Tools",
 ];
 
 export const SPELLS = {
@@ -236,6 +246,7 @@ export const LANGUAGES = [
   "Abyssal",
   "Sylvan",
   "Undercommon",
+  "Primordial",
 ];
 
 export const FEATS = [
