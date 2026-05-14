@@ -55,6 +55,13 @@ export interface PersonalityTraits {
   backstory?: string;
 }
 
+export interface CombatAction {
+  name: string;
+  type: "Action" | "Bonus Action";
+  description: string;
+  source: string;
+}
+
 export interface CharacterState {
   identity: CharacterIdentity;
   race: string;
@@ -67,6 +74,7 @@ export interface CharacterState {
   savingThrows: AbilityStat[];
   feats: string[];
   features: string[]; // racial and class features
+  combatActions: CombatAction[];
   languages: string[];
   proficiencies: {
     armor: string[];
@@ -132,6 +140,7 @@ export const INITIAL_CHARACTER_STATE: CharacterState = {
   savingThrows: [],
   feats: [],
   features: [],
+  combatActions: [],
   languages: ["Common"],
   proficiencies: { armor: [], weapons: [], tools: [] },
   weapons: [],

@@ -1,11 +1,19 @@
 import {
   ARMOR,
+  CLASS_COMBAT_ACTIONS,
   EQUIPMENT_PACKS,
   GEAR,
+  GLOBAL_COMBAT_ACTIONS,
+  RACE_COMBAT_ACTIONS,
   SKILLS,
   WEAPONS,
 } from "./character-data";
-import type { AbilityStat, CharacterState, SkillName } from "./character-types";
+import type {
+  AbilityStat,
+  CharacterState,
+  CombatAction,
+  SkillName,
+} from "./character-types";
 
 type AbilityScores = Record<AbilityStat, number>;
 type ClassRule = {
@@ -609,6 +617,43 @@ export function getAvailableSpells(characterClass: string) {
   return getClassRule(characterClass)?.spells ?? {};
 }
 
+export function getAvailableCombatActions(
+  race: string,
+  subrace: string,
+  characterClass: string,
+): CombatAction[] {
+  const actions: CombatAction[] = [...GLOBAL_COMBAT_ACTIONS];
+
+  if (RACE_COMBAT_ACTIONS[race]) {
+    actions.push(...RACE_COMBAT_ACTIONS[race]);
+  }
+
+  // Handle subrace specific actions (e.g., "High Elf")
+  const subraceKey = subrace ? `${subrace} ${race}` : "";
+  if (subraceKey && RACE_COMBAT_ACTIONS[subraceKey]) {
+    actions.push(...RACE_COMBAT_ACTIONS[subraceKey]);
+  } else if (subrace && RACE_COMBAT_ACTIONS[subrace]) {
+    // Some subraces might be listed directly (e.g., "Drow")
+    actions.push(...RACE_COMBAT_ACTIONS[subrace]);
+  }
+
+  if (CLASS_COMBAT_ACTIONS[characterClass]) {
+    actions.push(...CLASS_COMBAT_ACTIONS[characterClass]);
+  }
+
+  // Remove duplicates by name
+  const uniqueActions: CombatAction[] = [];
+  const seenNames = new Set<string>();
+  for (const action of actions) {
+    if (!seenNames.has(action.name)) {
+      seenNames.add(action.name);
+      uniqueActions.push(action);
+    }
+  }
+
+  return uniqueActions;
+}
+
 export function isSpellcaster(characterClass: string) {
   return Object.values(getAvailableSpells(characterClass)).some(
     (spells) => spells.length > 0,
@@ -675,10 +720,12 @@ export function buildDefaultSpells(characterClass: string) {
 
 export function buildCharacterDefaults({
   race,
+  subrace = "",
   characterClass,
   background = "",
 }: {
   race: string;
+  subrace?: string;
   characterClass: string;
   background?: string;
 }): Partial<CharacterState> {
@@ -704,6 +751,7 @@ export function buildCharacterDefaults({
       ...(raceRule?.features ?? []),
       ...(classRule?.features ?? []),
     ]),
+    combatActions: getAvailableCombatActions(race, subrace, characterClass),
     languages: uniqueItems(["Common", ...(raceRule?.languages ?? [])]),
     proficiencies: {
       armor: getAvailableArmor(race, characterClass),
@@ -743,6 +791,11 @@ export function filterCharacterSelections(
     weapons: state.weapons.filter((item) => allowedWeapons.includes(item)),
     equipment: state.equipment.filter(
       (item) => allowedPacks.includes(item) || GEAR.includes(item),
+    ),
+    combatActions: getAvailableCombatActions(
+      state.race,
+      state.subrace,
+      state.characterClass,
     ),
     spells: Object.fromEntries(
       Object.entries(state.spells).map(([level, spells]) => [
