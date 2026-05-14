@@ -11,7 +11,7 @@ import {
   ALIGNMENTS,
   BACKGROUND_TRAITS,
   BACKGROUNDS,
-  CLASSES_AND_SUBCLASSES,
+  CLASSES,
   DEITIES,
   FEATS,
   GENDERS,
@@ -45,7 +45,6 @@ type QuickCharacter = {
   race: string;
   subrace: string;
   characterClass: string;
-  subclass: string;
   background: string;
   alignment: string;
   imageUrl: string;
@@ -84,8 +83,6 @@ type QuickCharacter = {
     flaws: string[];
   };
   meta: {
-    level: number;
-    xp: number;
     inspiration: boolean;
     hitDice: string;
     proficiencyBonus: number;
@@ -93,7 +90,7 @@ type QuickCharacter = {
   backstory: string;
 };
 
-function chooseRandom<T>(items: readonly T[]): T {
+function chooseRandom<T>(items: readonly T[] | T[]): T {
   return items[Math.floor(Math.random() * items.length)];
 }
 
@@ -123,21 +120,14 @@ function generateIdentity() {
   const race = chooseRandom(Object.keys(RACES));
   const recommendedClasses = getRecommendedClassesForRace(race);
   const characterClass = chooseRandom(
-    recommendedClasses.length > 0
-      ? recommendedClasses
-      : Object.keys(CLASSES_AND_SUBCLASSES),
+    recommendedClasses.length > 0 ? recommendedClasses : CLASSES,
   );
   const subraces = RACES[race as keyof typeof RACES];
-  const subclasses =
-    CLASSES_AND_SUBCLASSES[
-      characterClass as keyof typeof CLASSES_AND_SUBCLASSES
-    ];
 
   return {
     race,
     characterClass,
     subrace: subraces.length > 0 ? chooseRandom(subraces) : "None",
-    subclass: subclasses.length > 0 ? chooseRandom(subclasses) : "None",
   };
 }
 
@@ -238,7 +228,6 @@ function generateCharacter(): QuickCharacter {
     race: identity.race,
     subrace: identity.subrace,
     characterClass: identity.characterClass,
-    subclass: "None",
     background,
     alignment,
     imageUrl,
@@ -262,8 +251,6 @@ function generateCharacter(): QuickCharacter {
     spells,
     personality,
     meta: {
-      level: 1,
-      xp: 0,
       inspiration: false,
       hitDice: defaults.meta?.hitDice ?? "1d8",
       proficiencyBonus: 2,
@@ -323,7 +310,6 @@ function buildStateToSave(
     race: character.race,
     subrace: character.subrace,
     characterClass: character.characterClass,
-    subclass: character.subclass,
     background: character.background,
     abilities: character.abilities,
     skills: character.skills as SkillName[],
@@ -372,10 +358,8 @@ export function QuickCharacterGenerator() {
   };
 
   const conModifier = Math.floor((character.abilities.CON - 10) / 2);
-  const hitPoints = Math.max(
-    1,
-    (character.meta.level === 2 ? 16 : 8) + conModifier,
-  );
+  const hitDiceValue = parseInt(character.meta.hitDice?.split("d")[1] || "8", 10);
+  const hitPoints = Math.max(1, hitDiceValue + conModifier);
   const characterState = buildStateToSave(character, displayName);
   const warnings = validateCharacter(characterState);
 
@@ -510,20 +494,12 @@ export function QuickCharacterGenerator() {
                     {character.subrace}
                   </p>
                 </div>
-                <div className="rounded-md bg-black/20 px-4 py-3 border border-white/10">
+                <div className="rounded-md bg-black/20 px-4 py-3 border border-white/10 md:col-span-2">
                   <p className="text-xs text-[#9CA3AF] uppercase tracking-wide">
                     Class
                   </p>
                   <p className="text-lg font-semibold text-[#D4AF37]">
                     {character.characterClass}
-                  </p>
-                </div>
-                <div className="rounded-md bg-black/20 px-4 py-3 border border-white/10">
-                  <p className="text-xs text-[#9CA3AF] uppercase tracking-wide">
-                    Subclass / Archetype
-                  </p>
-                  <p className="text-lg font-semibold text-[#D4AF37]">
-                    {character.subclass}
                   </p>
                 </div>
                 <div className="rounded-md bg-black/20 px-4 py-3 border border-white/10 md:col-span-2">
@@ -779,14 +755,6 @@ export function QuickCharacterGenerator() {
                 <div className="grid grid-cols-2 gap-3">
                   <div className="rounded-md bg-black/20 px-4 py-3 border border-white/10 text-center">
                     <p className="text-xs text-[#9CA3AF] uppercase tracking-wide">
-                      Level
-                    </p>
-                    <p className="text-lg font-semibold text-[#D4AF37]">
-                      {character.meta.level}
-                    </p>
-                  </div>
-                  <div className="rounded-md bg-black/20 px-4 py-3 border border-white/10 text-center">
-                    <p className="text-xs text-[#9CA3AF] uppercase tracking-wide">
                       Hit Dice
                     </p>
                     <p className="text-lg font-semibold text-[#D4AF37]">
@@ -801,12 +769,12 @@ export function QuickCharacterGenerator() {
                       {hitPoints}
                     </p>
                   </div>
-                  <div className="rounded-md bg-black/20 px-4 py-3 border border-white/10 text-center">
+                  <div className="rounded-md bg-black/20 px-4 py-3 border border-white/10 text-center col-span-2">
                     <p className="text-xs text-[#9CA3AF] uppercase tracking-wide">
                       Prof. Bonus
                     </p>
                     <p className="text-lg font-semibold text-[#D4AF37]">
-                      +{character.meta.proficiencyBonus}
+                      +2
                     </p>
                   </div>
                 </div>

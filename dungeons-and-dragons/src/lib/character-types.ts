@@ -67,7 +67,6 @@ export interface CharacterState {
   race: string;
   subrace: string;
   characterClass: string;
-  subclass: string;
   background: string;
   abilities: Record<AbilityStat, number>;
   skills: SkillName[];
@@ -95,8 +94,6 @@ export interface CharacterState {
   spells: Record<number, string[]>; // level -> list of spells (0 = cantrip)
   personality: PersonalityTraits;
   meta: {
-    level: number;
-    xp: number;
     inspiration: boolean;
     hitDice: string; // e.g., "1d8"
     proficiencyBonus: number;
@@ -133,7 +130,6 @@ export const INITIAL_CHARACTER_STATE: CharacterState = {
   race: "",
   subrace: "",
   characterClass: "",
-  subclass: "",
   background: "",
   abilities: { STR: 10, DEX: 10, CON: 10, INT: 10, WIS: 10, CHA: 10 },
   skills: [],
@@ -171,8 +167,6 @@ export const INITIAL_CHARACTER_STATE: CharacterState = {
     flaws: [],
   },
   meta: {
-    level: 1,
-    xp: 0,
     inspiration: false,
     hitDice: "1d8",
     proficiencyBonus: 2,

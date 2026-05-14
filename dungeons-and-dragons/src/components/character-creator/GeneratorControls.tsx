@@ -14,7 +14,7 @@ import { Switch } from "@/components/ui/switch";
 import {
   ALIGNMENTS,
   BACKGROUNDS,
-  CLASSES_AND_SUBCLASSES,
+  CLASSES,
   RACES,
 } from "@/lib/character-data";
 import { buildCharacterDefaults } from "@/lib/character-rules";
@@ -26,16 +26,14 @@ export function GeneratorControls() {
 
   const handleFullRandomize = () => {
     // A highly randomized generic set, accounting for locks
-    const randomChoice = (arr: string[]) =>
+    const randomChoice = (arr: string[] | readonly string[]) =>
       arr[Math.floor(Math.random() * arr.length)];
     const raceKeys = Object.keys(RACES);
-    const classKeys = Object.keys(CLASSES_AND_SUBCLASSES);
 
     let nextRace = state.race;
     let nextClass = state.characterClass;
     let nextBackground = state.background;
     let nextSubrace = state.subrace;
-    let nextSubclass = state.subclass;
 
     if (!state.generatorLocks.race) {
       const chosenRace = randomChoice(raceKeys);
@@ -46,15 +44,7 @@ export function GeneratorControls() {
     }
 
     if (!state.generatorLocks.characterClass) {
-      const chosenClass = randomChoice(classKeys);
-      const subclasses =
-        CLASSES_AND_SUBCLASSES[
-          chosenClass as keyof typeof CLASSES_AND_SUBCLASSES
-        ];
-      const chosenSubclass =
-        subclasses.length > 0 ? randomChoice(subclasses) : "";
-      nextClass = chosenClass;
-      nextSubclass = chosenSubclass;
+      nextClass = randomChoice(CLASSES);
     }
 
     if (!state.generatorLocks.background) {
@@ -74,7 +64,6 @@ export function GeneratorControls() {
       race: nextRace,
       subrace: nextSubrace,
       characterClass: nextClass,
-      subclass: nextSubclass,
       background: nextBackground,
       ...defaults,
       ...(state.generatorLocks.stats ? { abilities: state.abilities } : {}),

@@ -73,7 +73,7 @@ export const CLASS_RULES: Record<string, ClassRule> = {
     skillPool: ["Athletics", "Survival", "Intimidation", "Animal Handling"],
     savingThrows: ["STR", "CON"],
     armor: [...ARMOR.Light, ...ARMOR.Medium, ...ARMOR.Shield],
-    weapons: [...WEAPONS.Simple, ...WEAPONS.Martial, ...WEAPONS.Ranged],
+    weapons: ["Greataxe", "Handaxe", "Javelin"],
     tools: [],
     packs: ["Explorer's Pack"],
     spells: {},
@@ -85,21 +85,14 @@ export const CLASS_RULES: Record<string, ClassRule> = {
     skillPool: ["Performance", "Persuasion", "Deception", "Insight"],
     savingThrows: ["DEX", "CHA"],
     armor: ARMOR.Light,
-    weapons: [
-      ...WEAPONS.Simple,
-      "Hand Crossbow",
-      "Longsword",
-      "Rapier",
-      "Shortsword",
-    ],
+    weapons: ["Rapier", "Dagger", "Shortsword"],
     tools: ["Lute", "Disguise Kit"],
-    packs: ["Entertainer's Pack", "Diplomat's Pack", "Dungeoneer's Pack"],
+    packs: ["Entertainer's Pack"],
     spells: {
-      0: ["Mage Hand", "Minor Illusion"],
-      1: ["Cure Wounds", "Detect Magic", "Sleep"],
-      2: ["Invisibility", "Hold Person"],
+      0: ["Vicious Mockery", "Mage Hand"],
+      1: ["Cure Wounds", "Bane"],
     },
-    features: ["Spellcasting", "Bardic Inspiration", "Jack of All Trades"],
+    features: ["Spellcasting", "Bardic Inspiration"],
     hitDice: "1d8",
   },
   Cleric: {
@@ -107,13 +100,12 @@ export const CLASS_RULES: Record<string, ClassRule> = {
     skillPool: ["Religion", "Medicine", "Insight", "History"],
     savingThrows: ["WIS", "CHA"],
     armor: [...ARMOR.Light, ...ARMOR.Medium, ...ARMOR.Heavy, ...ARMOR.Shield],
-    weapons: WEAPONS.Simple,
+    weapons: ["Mace", "Light Crossbow"],
     tools: [],
-    packs: ["Priest's Pack", "Explorer's Pack"],
+    packs: ["Priest's Pack"],
     spells: {
-      0: ["Sacred Flame"],
-      1: ["Cure Wounds", "Detect Magic"],
-      2: ["Hold Person"],
+      0: ["Sacred Flame", "Thaumaturgy", "Guidance"],
+      1: ["Healing Word", "Cure Wounds", "Bless"],
     },
     features: ["Spellcasting", "Divine Domain"],
     hitDice: "1d8",
@@ -123,26 +115,14 @@ export const CLASS_RULES: Record<string, ClassRule> = {
     skillPool: ["Nature", "Animal Handling", "Survival", "Medicine"],
     savingThrows: ["INT", "WIS"],
     armor: [...ARMOR.Light, ...ARMOR.Medium, ...ARMOR.Shield],
-    weapons: [
-      "Club",
-      "Dagger",
-      "Dart",
-      "Javelin",
-      "Mace",
-      "Quarterstaff",
-      "Scimitar",
-      "Sickle",
-      "Sling",
-      "Spear",
-    ],
+    weapons: ["Quarterstaff", "Scimitar", "Sling"],
     tools: ["Herbalism Kit"],
     packs: ["Explorer's Pack"],
     spells: {
-      0: ["Mage Hand"],
-      1: ["Cure Wounds", "Detect Magic"],
-      2: ["Hold Person"],
+      0: ["Druidcraft", "Shillelagh"],
+      1: ["Cure Wounds", "Entangle"],
     },
-    features: ["Spellcasting", "Wild Shape"],
+    features: ["Spellcasting"],
     hitDice: "1d8",
   },
   Fighter: {
@@ -150,11 +130,11 @@ export const CLASS_RULES: Record<string, ClassRule> = {
     skillPool: ["Athletics", "Intimidation", "Survival", "Perception"],
     savingThrows: ["STR", "CON"],
     armor: [...ARMOR.Light, ...ARMOR.Medium, ...ARMOR.Heavy, ...ARMOR.Shield],
-    weapons: [...WEAPONS.Simple, ...WEAPONS.Martial, ...WEAPONS.Ranged],
+    weapons: ["Longsword", "Shield", "Handaxe"],
     tools: [],
-    packs: ["Dungeoneer's Pack", "Explorer's Pack"],
+    packs: ["Dungeoneer's Pack"],
     spells: {},
-    features: ["Second Wind", "Action Surge"],
+    features: ["Second Wind", "Fighting Style"],
     hitDice: "1d10",
   },
   Monk: {
@@ -162,11 +142,11 @@ export const CLASS_RULES: Record<string, ClassRule> = {
     skillPool: ["Acrobatics", "Stealth", "Insight", "Athletics"],
     savingThrows: ["STR", "DEX"],
     armor: [],
-    weapons: [...WEAPONS.Simple, "Shortsword"],
+    weapons: ["Quarterstaff", "Shortsword", "Dagger"],
     tools: ["Artisan's Tools"],
-    packs: ["Dungeoneer's Pack", "Explorer's Pack"],
+    packs: ["Dungeoneer's Pack"],
     spells: {},
-    features: ["Martial Arts", "Ki"],
+    features: ["Unarmored Defense", "Martial Arts"],
     hitDice: "1d8",
   },
   Paladin: {
@@ -174,13 +154,13 @@ export const CLASS_RULES: Record<string, ClassRule> = {
     skillPool: ["Persuasion", "Athletics", "Religion", "Insight"],
     savingThrows: ["WIS", "CHA"],
     armor: [...ARMOR.Light, ...ARMOR.Medium, ...ARMOR.Heavy, ...ARMOR.Shield],
-    weapons: [...WEAPONS.Simple, ...WEAPONS.Martial, ...WEAPONS.Ranged],
+    weapons: ["Warhammer", "Shield", "Javelin"],
     tools: [],
-    packs: ["Priest's Pack", "Explorer's Pack"],
+    packs: ["Priest's Pack"],
     spells: {
-      1: ["Cure Wounds", "Detect Magic"],
+      1: ["Cure Wounds", "Bless"],
     },
-    features: ["Divine Sense", "Lay on Hands", "Divine Smite"],
+    features: ["Divine Sense", "Lay on Hands"],
     hitDice: "1d10",
   },
   Ranger: {
@@ -188,14 +168,13 @@ export const CLASS_RULES: Record<string, ClassRule> = {
     skillPool: ["Survival", "Nature", "Perception", "Stealth"],
     savingThrows: ["STR", "DEX"],
     armor: [...ARMOR.Light, ...ARMOR.Medium, ...ARMOR.Shield],
-    weapons: [...WEAPONS.Simple, ...WEAPONS.Martial, ...WEAPONS.Ranged],
+    weapons: ["Longbow", "Shortsword", "Shortsword"],
     tools: [],
-    packs: ["Dungeoneer's Pack", "Explorer's Pack"],
+    packs: ["Explorer's Pack"],
     spells: {
-      1: ["Cure Wounds", "Detect Magic"],
-      2: ["Hold Person"],
+      1: ["Hunter's Mark", "Cure Wounds"],
     },
-    features: ["Favored Foe", "Natural Explorer"],
+    features: ["Favored Enemy", "Natural Explorer"],
     hitDice: "1d10",
   },
   Rogue: {
@@ -203,15 +182,9 @@ export const CLASS_RULES: Record<string, ClassRule> = {
     skillPool: ["Stealth", "Sleight of Hand", "Acrobatics", "Deception"],
     savingThrows: ["DEX", "INT"],
     armor: ARMOR.Light,
-    weapons: [
-      ...WEAPONS.Simple,
-      "Hand Crossbow",
-      "Longsword",
-      "Rapier",
-      "Shortsword",
-    ],
+    weapons: ["Rapier", "Shortbow", "Dagger"],
     tools: ["Thieves' Tools"],
-    packs: ["Burglar's Pack", "Dungeoneer's Pack", "Explorer's Pack"],
+    packs: ["Burglar's Pack"],
     spells: {},
     features: ["Sneak Attack", "Expertise"],
     hitDice: "1d8",
@@ -221,12 +194,12 @@ export const CLASS_RULES: Record<string, ClassRule> = {
     skillPool: ["Arcana", "Persuasion", "Deception", "Insight"],
     savingThrows: ["CON", "CHA"],
     armor: [],
-    weapons: ["Dagger", "Dart", "Light Crossbow", "Quarterstaff", "Sling"],
+    weapons: ["Dagger", "Dagger", "Light Crossbow"],
     tools: [],
-    packs: ["Dungeoneer's Pack", "Explorer's Pack"],
+    packs: ["Dungeoneer's Pack"],
     spells: {
-      0: ["Fire Bolt", "Mage Hand", "Minor Illusion", "Ray of Frost"],
-      1: ["Magic Missile", "Shield", "Burning Hands", "Sleep"],
+      0: ["Fire Bolt", "Ray of Frost", "Mage Hand", "Prestidigitation"],
+      1: ["Magic Missile", "Shield"],
     },
     features: ["Spellcasting", "Sorcerous Origin"],
     hitDice: "1d6",
@@ -236,14 +209,14 @@ export const CLASS_RULES: Record<string, ClassRule> = {
     skillPool: ["Arcana", "Deception", "Intimidation", "Investigation"],
     savingThrows: ["WIS", "CHA"],
     armor: ARMOR.Light,
-    weapons: WEAPONS.Simple,
+    weapons: ["Dagger", "Dagger", "Light Crossbow"],
     tools: [],
-    packs: ["Scholar's Pack", "Dungeoneer's Pack"],
+    packs: ["Scholar's Pack"],
     spells: {
-      0: ["Eldritch Blast", "Mage Hand", "Minor Illusion"],
-      1: ["Burning Hands", "Shield", "Detect Magic"],
+      0: ["Eldritch Blast", "Minor Illusion"],
+      1: ["Hex", "Hellish Rebuke"],
     },
-    features: ["Pact Magic"],
+    features: ["Pact Magic", "Otherworldly Patron"],
     hitDice: "1d8",
   },
   Wizard: {
@@ -251,12 +224,12 @@ export const CLASS_RULES: Record<string, ClassRule> = {
     skillPool: ["Arcana", "Investigation", "History", "Religion"],
     savingThrows: ["INT", "WIS"],
     armor: [],
-    weapons: ["Dagger", "Dart", "Light Crossbow", "Quarterstaff", "Sling"],
+    weapons: ["Quarterstaff", "Dagger"],
     tools: [],
-    packs: ["Scholar's Pack", "Explorer's Pack"],
+    packs: ["Scholar's Pack"],
     spells: {
-      0: ["Fire Bolt", "Mage Hand", "Minor Illusion", "Ray of Frost"],
-      1: ["Magic Missile", "Shield", "Burning Hands", "Sleep", "Detect Magic"],
+      0: ["Fire Bolt", "Mage Hand", "Light"],
+      1: ["Magic Missile", "Shield", "Sleep"],
     },
     features: ["Spellcasting", "Arcane Recovery"],
     hitDice: "1d6",
@@ -716,4 +689,78 @@ export function filterCharacterSelections(
       ]),
     ) as CharacterState["spells"],
   };
+}
+
+export function getWeaponDamage(weaponName: string): string {
+  const damageMap: Record<string, string> = {
+    Greataxe: "1d12",
+    Greatsword: "1d10",
+    Longsword: "1d8",
+    Rapier: "1d8",
+    Warhammer: "1d8",
+    Longbow: "1d8",
+    Mace: "1d6",
+    Quarterstaff: "1d6",
+    Shortsword: "1d6",
+    Scimitar: "1d6",
+    Handaxe: "1d6",
+    "Light Crossbow": "1d8",
+    Shortbow: "1d6",
+    Javelin: "1d6",
+    Dagger: "1d4",
+    Sling: "1d4",
+    Club: "1d4",
+    Sickle: "1d4",
+    Dart: "1d4",
+    "Unarmed Strike": "1", // Monks overwrite this in the UI
+  };
+  return damageMap[weaponName] || "1d6";
+}
+
+export function calculateArmorClass(
+  armorList: string[],
+  abilities: Record<AbilityStat, number>,
+  characterClass: string,
+): number {
+  const dexMod = Math.floor((abilities.DEX - 10) / 2);
+  const conMod = Math.floor((abilities.CON - 10) / 2);
+  const wisMod = Math.floor((abilities.WIS - 10) / 2);
+
+  let baseAC = 10 + dexMod;
+  let hasShield = false;
+
+  const armorLower = armorList.map((a) => a.toLowerCase());
+  if (armorLower.some((a) => a.includes("shield"))) {
+    hasShield = true;
+  }
+
+  // Check unarmored defense
+  if (characterClass === "Barbarian" && !armorLower.some((a) => a.includes("armor"))) {
+    baseAC = 10 + dexMod + conMod;
+  } else if (characterClass === "Monk" && !armorLower.some((a) => a.includes("armor")) && !hasShield) {
+    baseAC = 10 + dexMod + wisMod;
+  } else if (armorLower.some((a) => a.includes("plate"))) {
+    baseAC = 18; // Heavy armor, no DEX
+  } else if (armorLower.some((a) => a.includes("chain mail"))) {
+    baseAC = 16; // Heavy armor, no DEX
+  } else if (armorLower.some((a) => a.includes("scale mail") || a.includes("breastplate"))) {
+    baseAC = 14 + Math.min(2, dexMod); // Medium armor max 2 DEX
+  } else if (armorLower.some((a) => a.includes("chain shirt"))) {
+    baseAC = 13 + Math.min(2, dexMod); // Medium armor max 2 DEX
+  } else if (armorLower.some((a) => a.includes("hide"))) {
+    baseAC = 12 + Math.min(2, dexMod); // Medium armor max 2 DEX
+  } else if (armorLower.some((a) => a.includes("studded leather"))) {
+    baseAC = 12 + dexMod; // Light armor
+  } else if (armorLower.some((a) => a.includes("leather"))) {
+    baseAC = 11 + dexMod; // Light armor
+  } else if (characterClass === "Sorcerer" || characterClass === "Wizard") {
+    // Draconic Resilience or Mage Armor often used, simplify to baseline
+    baseAC = 10 + dexMod;
+  }
+
+  if (hasShield) {
+    baseAC += 2;
+  }
+
+  return baseAC;
 }

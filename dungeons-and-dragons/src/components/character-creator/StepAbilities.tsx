@@ -9,6 +9,7 @@ import { ABILITIES, SKILLS } from "@/lib/character-data";
 import {
   buildDefaultAbilities,
   getAvailableSkills,
+  getClassRule,
 } from "@/lib/character-rules";
 import type { AbilityStat, SkillName } from "@/lib/character-types";
 import { validateCharacter } from "@/lib/character-validation";
@@ -39,19 +40,23 @@ export function StepAbilities() {
         () => Math.floor(Math.random() * 6) + 1,
       );
       rolls.sort((a, b) => a - b);
-      return rolls[1] + rolls[2] + rolls[3];
+      const sum = rolls[1] + rolls[2] + rolls[3];
+      // Clamp between 8 and 17 as per restrictions.md
+      return Math.min(17, Math.max(8, sum));
     };
 
-    updateState({
-      abilities: {
-        STR: roll4d6DropLowest(),
-        DEX: roll4d6DropLowest(),
-        CON: roll4d6DropLowest(),
-        INT: roll4d6DropLowest(),
-        WIS: roll4d6DropLowest(),
-        CHA: roll4d6DropLowest(),
-      },
+    const newScores = Array.from({ length: 6 }, () => roll4d6DropLowest());
+    newScores.sort((a, b) => b - a); // Sort descending
+
+    const priority =
+      getClassRule(state.characterClass)?.abilityPriority || ABILITIES;
+    const abilities = {} as Record<AbilityStat, number>;
+
+    priority.forEach((stat, index) => {
+      abilities[stat as AbilityStat] = newScores[index];
     });
+
+    updateState({ abilities });
   };
 
   const setStandardArray = () => {

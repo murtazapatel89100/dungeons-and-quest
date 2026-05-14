@@ -8,9 +8,8 @@ export interface CharacterWarning {
 
 export function validateCharacter(state: CharacterState): CharacterWarning[] {
   const warnings: CharacterWarning[] = [];
-  const { meta, abilities, characterClass, subclass, identity, personality } =
+  const { abilities, characterClass, identity, personality } =
     state;
-  const level = meta?.level || 1;
 
   const addWarning = (message: string, step: string, field?: string) => {
     if (!warnings.some((w) => w.message === message)) {
@@ -18,7 +17,7 @@ export function validateCharacter(state: CharacterState): CharacterWarning[] {
     }
   };
 
-  // Global Rules - Ability Score Hard Limits
+  // Global Rules - Ability Score Hard Limits (Level 1)
   const minStat = 8;
   const maxStat = 17;
   const maxPool = 75;
@@ -44,19 +43,9 @@ export function validateCharacter(state: CharacterState): CharacterWarning[] {
 
   if (totalStats > maxPool) {
     addWarning(
-      "Your total ability score pool exceeds the recommended power range for this level.",
+      "Your total ability score pool exceeds the recommended power range for level 1.",
       "abilities",
     );
-  }
-
-  // Level-based Warnings
-  if (level === 1) {
-    if (Object.values(abilities).some((stat) => stat > 17)) {
-      addWarning(
-        "Level 1 heroes are still inexperienced adventurers. Ability scores above 17 are not recommended.",
-        "abilities",
-      );
-    }
   }
 
   // Class-specific
@@ -73,12 +62,6 @@ export function validateCharacter(state: CharacterState): CharacterWarning[] {
         "abilities",
         "CON",
       );
-    if (subclass === "Berserker" && abilities.STR < 15)
-      addWarning(
-        "Berserkers are most effective when focused on aggressive Strength-based combat.",
-        "abilities",
-        "STR",
-      );
   }
   if (characterClass === "Bard") {
     if (abilities.CHA < 14)
@@ -86,12 +69,6 @@ export function validateCharacter(state: CharacterState): CharacterWarning[] {
         "Bards depend heavily on Charisma for spellcasting and social influence.",
         "abilities",
         "CHA",
-      );
-    if (subclass === "Lore" && abilities.INT < 12)
-      addWarning(
-        "Lore Bards commonly excel with strong Intelligence and versatility skills.",
-        "abilities",
-        "INT",
       );
   }
   if (characterClass === "Cleric") {
@@ -101,12 +78,6 @@ export function validateCharacter(state: CharacterState): CharacterWarning[] {
         "abilities",
         "WIS",
       );
-    if (subclass === "Tempest" && abilities.STR < 14)
-      addWarning(
-        "Tempest Clerics are commonly built for frontline combat and storm magic.",
-        "abilities",
-        "STR",
-      );
   }
   if (characterClass === "Druid") {
     if (abilities.WIS < 14)
@@ -115,24 +86,12 @@ export function validateCharacter(state: CharacterState): CharacterWarning[] {
         "abilities",
         "WIS",
       );
-    if (subclass === "Moon" && abilities.CON < 14)
-      addWarning(
-        "Circle of the Moon Druids benefit greatly from durability and survivability.",
-        "abilities",
-        "CON",
-      );
   }
   if (characterClass === "Fighter") {
     if (abilities.STR < 14 && abilities.DEX < 14)
       addWarning(
         "Most Fighters rely heavily on Strength or Dexterity for combat effectiveness.",
         "abilities",
-      );
-    if (subclass === "Eldritch Knight" && abilities.INT < 12)
-      addWarning(
-        "Eldritch Knights benefit from Intelligence for magical combat abilities.",
-        "abilities",
-        "INT",
       );
   }
   if (characterClass === "Monk") {
@@ -184,12 +143,6 @@ export function validateCharacter(state: CharacterState): CharacterWarning[] {
         "abilities",
         "DEX",
       );
-    if (subclass === "Assassin" && abilities.CHA < 12)
-      addWarning(
-        "Assassins often benefit from deception and social infiltration skills.",
-        "abilities",
-        "CHA",
-      );
   }
   if (characterClass === "Sorcerer") {
     if (abilities.CHA < 14)
@@ -216,31 +169,9 @@ export function validateCharacter(state: CharacterState): CharacterWarning[] {
       );
   }
 
-  // Alignment
-  const alignment = identity?.alignment;
-  if (alignment === "Lawful Good" && subclass === "Fiend")
-    addWarning(
-      "This alignment may conflict with the dangerous nature of fiendish pacts.",
-      "details",
-    );
-  if (alignment === "Chaotic Evil" && subclass === "Devotion")
-    addWarning(
-      "Devotion Paladins traditionally uphold honor, justice, and selflessness.",
-      "details",
-    );
-  if (alignment === "Lawful Good" && subclass === "Assassin")
-    addWarning(
-      "Assassin archetypes are often associated with morally questionable methods.",
-      "details",
-    );
-  if (alignment === "Neutral Good" && subclass === "Necromancy")
-    addWarning(
-      "Necromancy magic is frequently feared despite the caster's intentions.",
-      "details",
-    );
-
   // Deity
   const deity = identity?.deity;
+  const alignment = identity?.alignment;
   if (deity === "Bahamut" && alignment === "Chaotic Evil")
     addWarning(
       "Bahamut is traditionally associated with justice, honor, and protection.",

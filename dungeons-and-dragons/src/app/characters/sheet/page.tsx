@@ -11,6 +11,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { calculateArmorClass, getWeaponDamage } from "@/lib/character-rules";
 import type {
   AbilityStat,
   CharacterState,
@@ -95,7 +96,11 @@ export default function CharacterSheetPage() {
   const passiveInsight = 10 + getSkillMod("Insight");
 
   const initiative = calculateModifier(character.abilities.DEX);
-  const armorClass = 10 + calculateModifier(character.abilities.DEX); // Simplified AC
+  const armorClass = calculateArmorClass(
+    character.armor,
+    character.abilities,
+    character.characterClass,
+  );
 
   // Calculate max HP from hit dice for level 1 (max of hit dice + con mod)
   const hitDiceValue = character.meta?.hitDice
@@ -105,6 +110,28 @@ export default function CharacterSheetPage() {
     1,
     hitDiceValue + calculateModifier(character.abilities.CON),
   );
+
+  const getSpellcastingStat = (cls: string): AbilityStat => {
+    switch (cls) {
+      case "Bard":
+      case "Paladin":
+      case "Sorcerer":
+      case "Warlock":
+        return "CHA";
+      case "Cleric":
+      case "Druid":
+      case "Ranger":
+        return "WIS";
+      case "Wizard":
+      case "Fighter":
+      case "Rogue":
+      default:
+        return "INT";
+    }
+  };
+
+  const spellStat = getSpellcastingStat(character.characterClass);
+  const spellMod = calculateModifier(character.abilities[spellStat]);
 
   return (
     <div className="min-h-screen bg-[#0f1115] text-slate-300 relative overflow-x-hidden font-sans pt-24 pb-12">
@@ -170,9 +197,6 @@ export default function CharacterSheetPage() {
                 <Sword className="w-12 h-12 text-slate-600" />
               </div>
             )}
-            <div className="absolute -bottom-2 -right-2 bg-indigo-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg border border-indigo-400">
-              Lvl {character.meta.level}
-            </div>
           </div>
 
           <div className="flex-1 text-center sm:text-left space-y-2">
@@ -473,43 +497,78 @@ export default function CharacterSheetPage() {
                       </h3>
                       {character.weapons.length > 0 ? (
                         <div className="grid gap-3">
-                          {character.weapons.map((w) => (
-                            <div
-                              key={w}
-                              className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-black/40 border border-white/5 p-3 rounded-lg hover:border-indigo-500/30 transition-colors"
-                            >
-                              <div>
-                                <span className="font-bold text-white text-base">
-                                  {w}
-                                </span>
-                                <p className="text-xs text-slate-400">
-                                  Weapon Attack
-                                </p>
-                              </div>
-                              <div className="flex gap-4 mt-2 sm:mt-0">
-                                <div className="text-center">
-                                  <div className="text-sm font-mono font-bold text-indigo-300">
-                                    +
-                                    {calculateModifier(
-                                      character.abilities.STR,
-                                    ) + character.meta.proficiencyBonus}
+                          {character.weapons.map((w) => {
+                            const isFinesse = [
+                              "Rapier",
+                              "Shortsword",
+                              "Dagger",
+                              "Scimitar",
+                              "Dart",
+                            ].includes(w);
+                            const isRanged = [
+                              "Longbow",
+                              "Shortbow",
+                              "Light Crossbow",
+                              "Sling",
+                              "Dart",
+                            ].includes(w);
+
+                            const strMod = calculateModifier(
+                              character.abilities.STR,
+                            );
+                            const dexMod = calculateModifier(
+                              character.abilities.DEX,
+                            );
+
+                            const attackStatMod = isRanged
+                              ? dexMod
+                              : isFinesse
+                                ? Math.max(strMod, dexMod)
+                                : strMod;
+                            
+                            const damageDice = getWeaponDamage(w);
+
+                            return (
+                              <div
+                                key={w}
+                                className="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-black/40 border border-white/5 p-3 rounded-lg hover:border-indigo-500/30 transition-colors"
+                              >
+                                <div>
+                                  <span className="font-bold text-white text-base">
+                                    {w}
+                                  </span>
+                                  <p className="text-xs text-slate-400">
+                                    Weapon Attack
+                                  </p>
+                                </div>
+                                <div className="flex gap-4 mt-2 sm:mt-0">
+                                  <div className="text-center">
+                                    <div className="text-sm font-mono font-bold text-indigo-300">
+                                      {formatMod(
+                                        attackStatMod +
+                                          character.meta.proficiencyBonus,
+                                      )}
+                                    </div>
+                                    <div className="text-[10px] text-slate-500 uppercase">
+                                      Hit
+                                    </div>
                                   </div>
-                                  <div className="text-[10px] text-slate-500 uppercase">
-                                    Hit
+                                  <div className="text-center">
+                                    <div className="text-sm font-mono font-bold text-red-300">
+                                      {damageDice}{" "}
+                                      {attackStatMod !== 0 &&
+                                        (attackStatMod > 0
+                                          ? `+ ${attackStatMod}`
+                                          : `- ${Math.abs(attackStatMod)}`)}
+                                    </div>
+                                    <div className="text-[10px] text-slate-500 uppercase">
+                                      Damage
+                                    </div>
                                   </div>
                                 </div>
-                                <div className="text-center">
-                                  <div className="text-sm font-mono font-bold text-red-300">
-                                    1d? +{" "}
-                                    {calculateModifier(character.abilities.STR)}
-                                  </div>
-                                  <div className="text-[10px] text-slate-500 uppercase">
-                                    Damage
-                                  </div>
-                                </div>
                               </div>
-                            </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       ) : (
                         <p className="text-sm text-slate-500 italic px-2">
@@ -528,9 +587,15 @@ export default function CharacterSheetPage() {
                         <div className="flex gap-4">
                           <div className="text-center">
                             <div className="text-sm font-mono font-bold text-indigo-300">
-                              +
-                              {calculateModifier(character.abilities.STR) +
-                                character.meta.proficiencyBonus}
+                              {formatMod(
+                                (character.characterClass === "Monk"
+                                  ? Math.max(
+                                      calculateModifier(character.abilities.STR),
+                                      calculateModifier(character.abilities.DEX),
+                                    )
+                                  : calculateModifier(character.abilities.STR)) +
+                                  character.meta.proficiencyBonus,
+                              )}
                             </div>
                             <div className="text-[10px] text-slate-500 uppercase">
                               Hit
@@ -538,7 +603,18 @@ export default function CharacterSheetPage() {
                           </div>
                           <div className="text-center">
                             <div className="text-sm font-mono font-bold text-red-300">
-                              {1 + calculateModifier(character.abilities.STR)}
+                              {character.characterClass === "Monk" ? "1d4" : "1"}{" "}
+                              {(() => {
+                                const mod =
+                                  character.characterClass === "Monk"
+                                    ? Math.max(
+                                        calculateModifier(character.abilities.STR),
+                                        calculateModifier(character.abilities.DEX),
+                                      )
+                                    : calculateModifier(character.abilities.STR);
+                                if (mod === 0) return "";
+                                return mod > 0 ? `+ ${mod}` : `- ${Math.abs(mod)}`;
+                              })()}
                             </div>
                             <div className="text-[10px] text-slate-500 uppercase">
                               Damage
@@ -625,11 +701,11 @@ export default function CharacterSheetPage() {
                     <span>Spellbook</span>
                     <span className="text-xs font-sans font-normal text-slate-400 bg-black/50 px-2 py-1 rounded">
                       Spell Attack: +
-                      {calculateModifier(character.abilities.INT) +
+                      {spellMod +
                         character.meta.proficiencyBonus}{" "}
                       | Save DC:{" "}
                       {8 +
-                        calculateModifier(character.abilities.INT) +
+                        spellMod +
                         character.meta.proficiencyBonus}
                     </span>
                   </h2>
