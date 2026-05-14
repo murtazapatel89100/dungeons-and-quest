@@ -39,7 +39,6 @@ interface PreGeneratedCharacter {
   race: string;
   subrace: string;
   characterClass: string;
-  subclass: string;
   background: string;
   alignment: string;
   archetype: string;
@@ -96,8 +95,6 @@ type DetailedPreGeneratedCharacter = PreGeneratedCharacter & {
   };
   backstory: string;
   meta: {
-    level: number;
-    xp: number;
     inspiration: boolean;
     hitDice: string;
     proficiencyBonus: number;
@@ -113,10 +110,9 @@ const PREGENERATED_CHARACTERS: PreGeneratedCharacter[] = [
     race: "Dwarf",
     subrace: "Mountain",
     characterClass: "Fighter",
-    subclass: "Champion",
     background: "Soldier",
     alignment: "Lawful Good",
-    archetype: "Dwarf Fighter (Champion)",
+    archetype: "Dwarf Fighter",
     style: "Frontline tank and weapon specialist.",
     highlights: ["High Constitution", "Heavy Armor", "Battle Control"],
     abilities: { STR: 16, DEX: 10, CON: 15, INT: 11, WIS: 13, CHA: 10 },
@@ -133,10 +129,9 @@ const PREGENERATED_CHARACTERS: PreGeneratedCharacter[] = [
     race: "Elf",
     subrace: "High",
     characterClass: "Wizard",
-    subclass: "Evocation",
     background: "Sage",
     alignment: "Chaotic Good",
-    archetype: "Elf Wizard (Evocation)",
+    archetype: "Elf Wizard",
     style: "Ranged spell damage and battlefield shaping.",
     highlights: ["Arcane Burst", "Crowd Control", "Utility Magic"],
     abilities: { STR: 8, DEX: 13, CON: 12, INT: 16, WIS: 14, CHA: 11 },
@@ -154,10 +149,9 @@ const PREGENERATED_CHARACTERS: PreGeneratedCharacter[] = [
     race: "Halfling",
     subrace: "Lightfoot",
     characterClass: "Rogue",
-    subclass: "Thief",
     background: "Criminal",
     alignment: "Chaotic Neutral",
-    archetype: "Halfling Rogue (Thief)",
+    archetype: "Halfling Rogue",
     style: "Stealth, scouting, and precision strikes.",
     highlights: ["Sneak Attack", "Lockpicking", "Mobility"],
     abilities: { STR: 9, DEX: 16, CON: 11, INT: 12, WIS: 14, CHA: 13 },
@@ -179,10 +173,9 @@ const PREGENERATED_CHARACTERS: PreGeneratedCharacter[] = [
     race: "Human",
     subrace: "Standard",
     characterClass: "Paladin",
-    subclass: "Devotion",
     background: "Acolyte",
     alignment: "Lawful Good",
-    archetype: "Human Paladin (Devotion)",
+    archetype: "Human Paladin",
     style: "Defensive support with divine burst damage.",
     highlights: ["Party Support", "Divine Smite", "High Survivability"],
     abilities: { STR: 15, DEX: 11, CON: 14, INT: 10, WIS: 16, CHA: 14 },
@@ -200,10 +193,9 @@ const PREGENERATED_CHARACTERS: PreGeneratedCharacter[] = [
     race: "Half-Orc",
     subrace: "None",
     characterClass: "Barbarian",
-    subclass: "Berserker",
     background: "Outlander",
     alignment: "Chaotic Neutral",
-    archetype: "Half-Orc Barbarian (Berserker)",
+    archetype: "Half-Orc Barbarian",
     style: "Raw damage and battlefield presence through primal fury.",
     highlights: ["Massive Damage", "Rage Mitigation", "Intimidation"],
     abilities: { STR: 17, DEX: 10, CON: 16, INT: 9, WIS: 12, CHA: 10 },
@@ -220,10 +212,9 @@ const PREGENERATED_CHARACTERS: PreGeneratedCharacter[] = [
     race: "Half-Elf",
     subrace: "None",
     characterClass: "Bard",
-    subclass: "Lore",
     background: "Entertainer",
     alignment: "Neutral Good",
-    archetype: "Half-Elf Bard (Lore)",
+    archetype: "Half-Elf Bard",
     style: "Control, support, and inspiration through performance.",
     highlights: ["Crowd Control", "Team Inspiration", "Skill Versatility"],
     abilities: { STR: 10, DEX: 14, CON: 12, INT: 13, WIS: 13, CHA: 16 },
@@ -241,10 +232,9 @@ const PREGENERATED_CHARACTERS: PreGeneratedCharacter[] = [
     race: "Dwarf",
     subrace: "Hill",
     characterClass: "Cleric",
-    subclass: "Tempest",
     background: "Acolyte",
     alignment: "Chaotic Good",
-    archetype: "Dwarf Cleric (Tempest)",
+    archetype: "Dwarf Cleric",
     style: "Healing support with thunderous offense.",
     highlights: ["Healing & Buffs", "Offensive Magic", "Channel Divinity"],
     abilities: { STR: 13, DEX: 10, CON: 14, INT: 12, WIS: 16, CHA: 12 },
@@ -262,10 +252,9 @@ const PREGENERATED_CHARACTERS: PreGeneratedCharacter[] = [
     race: "Elf",
     subrace: "Wood",
     characterClass: "Ranger",
-    subclass: "Hunter",
     background: "Hermit",
     alignment: "Neutral Good",
-    archetype: "Elf Ranger (Hunter)",
+    archetype: "Elf Ranger",
     style: "Ranged precision and nature mastery.",
     highlights: ["Ranged Damage", "Survival Skills", "Nature Magic"],
     abilities: { STR: 12, DEX: 15, CON: 13, INT: 11, WIS: 15, CHA: 10 },
@@ -283,10 +272,9 @@ const PREGENERATED_CHARACTERS: PreGeneratedCharacter[] = [
     race: "Tiefling",
     subrace: "None",
     characterClass: "Warlock",
-    subclass: "Fiend",
     background: "Charlatan",
     alignment: "Chaotic Evil",
-    archetype: "Tiefling Warlock (Fiend)",
+    archetype: "Tiefling Warlock",
     style: "Eldritch power and dark pacts.",
     highlights: ["Eldritch Blast", "Invocations", "Dark Pact Powers"],
     abilities: { STR: 10, DEX: 14, CON: 11, INT: 13, WIS: 10, CHA: 15 },
@@ -412,8 +400,6 @@ function generateDetailedCharacter(
     personality,
     backstory: `${character.description} ${generatedBackstory} Their bond with ${deity} continues to influence every choice they make.`,
     meta: {
-      level: 1,
-      xp: 0,
       inspiration: false,
       hitDice: defaults.meta?.hitDice ?? "1d8",
       proficiencyBonus: 2,
@@ -451,49 +437,48 @@ function DetailChipList({
 }
 
 function buildStateToSave(
-  levelAdjusted: DetailedPreGeneratedCharacter,
+  char: DetailedPreGeneratedCharacter,
 ): CharacterState {
   return {
     ...INITIAL_CHARACTER_STATE,
     identity: {
-      name: levelAdjusted.name,
-      gender: levelAdjusted.gender,
-      age: levelAdjusted.age,
-      height: levelAdjusted.height,
-      weight: levelAdjusted.weight,
-      alignment: levelAdjusted.alignment as Alignment,
-      deity: levelAdjusted.deity,
-      title: levelAdjusted.title,
-      imageUrl: `/images/character-portraits/pregen/${levelAdjusted.id}.png`,
+      name: char.name,
+      gender: char.gender,
+      age: char.age,
+      height: char.height,
+      weight: char.weight,
+      alignment: char.alignment as Alignment,
+      deity: char.deity,
+      title: char.title,
+      imageUrl: `/images/character-portraits/pregen/${char.id}.png`,
     },
-    race: levelAdjusted.race,
-    subrace: levelAdjusted.subrace,
-    characterClass: levelAdjusted.characterClass,
-    subclass: levelAdjusted.subclass,
-    background: levelAdjusted.background,
-    abilities: levelAdjusted.abilities,
-    skills: levelAdjusted.skills as SkillName[],
-    savingThrows: levelAdjusted.savingThrows,
-    feats: levelAdjusted.feats,
-    features: levelAdjusted.features,
-    combatActions: levelAdjusted.combatActions,
-    languages: levelAdjusted.languages,
+    race: char.race,
+    subrace: char.subrace,
+    characterClass: char.characterClass,
+    background: char.background,
+    abilities: char.abilities,
+    skills: char.skills as SkillName[],
+    savingThrows: char.savingThrows,
+    feats: char.feats,
+    features: char.features,
+    combatActions: char.combatActions,
+    languages: char.languages,
     proficiencies: {
-      armor: levelAdjusted.loadout.armor,
-      weapons: levelAdjusted.loadout.weapons,
-      tools: levelAdjusted.loadout.tools,
+      armor: char.loadout.armor,
+      weapons: char.loadout.weapons,
+      tools: char.loadout.tools,
     },
-    weapons: levelAdjusted.weapons,
-    armor: levelAdjusted.armorList,
-    equipment: levelAdjusted.equipment,
-    tools: levelAdjusted.tools,
-    currency: levelAdjusted.currency,
-    spells: { 0: levelAdjusted.spellsKnown },
+    weapons: char.weapons,
+    armor: char.armorList,
+    equipment: char.equipment,
+    tools: char.tools,
+    currency: char.currency,
+    spells: { 0: char.spellsKnown },
     personality: {
-      ...levelAdjusted.personality,
-      backstory: levelAdjusted.backstory,
+      ...char.personality,
+      backstory: char.backstory,
     },
-    meta: levelAdjusted.meta,
+    meta: char.meta,
   };
 }
 
@@ -502,51 +487,16 @@ export function PreGeneratedCharacters() {
   const [selectedCharacterId, setSelectedCharacterId] = useState<string>(
     PREGENERATED_CHARACTERS[0].id,
   );
-  const [characterLevels, setCharacterLevels] = useState<
-    Record<string, number>
-  >(Object.fromEntries(PREGENERATED_CHARACTERS.map((c) => [c.id, 1])));
 
   const detailedCharacters = useMemo(
     () => PREGENERATED_CHARACTERS.map(generateDetailedCharacter),
     [],
   );
 
-  const getLevelAdjustedCharacter = (
-    baseChar: DetailedPreGeneratedCharacter,
-  ) => {
-    const level = characterLevels[baseChar.id] || 1;
-    if (level === 1) {
-      return {
-        ...baseChar,
-        subclass: "None",
-        meta: { ...baseChar.meta, level: 1, xp: 0 },
-      };
-    }
-
-    // Level 2 adjustments
-    const classRule = getClassRule(baseChar.characterClass);
-    const primaryStats = classRule?.abilityPriority.slice(0, 2) || [];
-
-    const adjustedAbilities = { ...baseChar.abilities };
-    for (const stat in adjustedAbilities) {
-      const key = stat as AbilityScore;
-      adjustedAbilities[key] += primaryStats.includes(key) ? 2 : 1;
-    }
-
-    return {
-      ...baseChar,
-      abilities: adjustedAbilities,
-      meta: { ...baseChar.meta, level: 2, xp: 300 },
-      hitPoints:
-        baseChar.hitPoints + 8 + Math.floor((adjustedAbilities.CON - 10) / 2), // Rough level 2 HP
-    };
-  };
-
-  const selectedCharacter = getLevelAdjustedCharacter(
+  const selectedCharacter =
     detailedCharacters.find(
       (character) => character.id === selectedCharacterId,
-    ) ?? detailedCharacters[0],
-  );
+    ) ?? detailedCharacters[0];
 
   const abilityModifier = (value: number) => {
     const mod = Math.floor((value - 10) / 2);
@@ -554,8 +504,7 @@ export function PreGeneratedCharacters() {
   };
 
   const handleViewSheet = (character: DetailedPreGeneratedCharacter) => {
-    const levelAdjusted = getLevelAdjustedCharacter(character);
-    const stateToSave = buildStateToSave(levelAdjusted);
+    const stateToSave = buildStateToSave(character);
     localStorage.setItem("dnd_character_sheet", JSON.stringify(stateToSave));
     router.push("/characters/sheet");
   };
@@ -576,10 +525,8 @@ export function PreGeneratedCharacters() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {detailedCharacters.map((baseCharacter) => {
-          const character = getLevelAdjustedCharacter(baseCharacter);
+        {detailedCharacters.map((character) => {
           const isSelected = selectedCharacterId === character.id;
-          const currentLevel = characterLevels[character.id] || 1;
           const characterState = buildStateToSave(character);
           const warnings = validateCharacter(characterState);
 
@@ -628,52 +575,19 @@ export function PreGeneratedCharacters() {
               </div>
 
               <CardHeader className="pb-3">
-                <div className="flex justify-between items-start">
-                  <div>
-                    <CardTitle className="font-['Cinzel'] text-xl text-[#F9FAFB]">
-                      {character.name}
-                    </CardTitle>
-                    <p className="text-xs text-[#D4AF37] font-semibold mt-1">
-                      {character.gender} {character.race}
-                    </p>
-                  </div>
-                  <div className="flex gap-1">
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCharacterLevels((prev) => ({
-                          ...prev,
-                          [character.id]: 1,
-                        }));
-                      }}
-                      className={`px-2 py-1 text-[10px] font-bold rounded border ${currentLevel === 1 ? "bg-[#D4AF37] text-[#0B0F1A] border-[#D4AF37]" : "bg-black/40 text-[#9CA3AF] border-white/10"}`}
-                    >
-                      L1
-                    </button>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setCharacterLevels((prev) => ({
-                          ...prev,
-                          [character.id]: 2,
-                        }));
-                      }}
-                      className={`px-2 py-1 text-[10px] font-bold rounded border ${currentLevel === 2 ? "bg-[#D4AF37] text-[#0B0F1A] border-[#D4AF37]" : "bg-black/40 text-[#9CA3AF] border-white/10"}`}
-                    >
-                      L2
-                    </button>
-                  </div>
+                <div>
+                  <CardTitle className="font-['Cinzel'] text-xl text-[#F9FAFB]">
+                    {character.name}
+                  </CardTitle>
+                  <p className="text-xs text-[#D4AF37] font-semibold mt-1">
+                    {character.gender} {character.race}
+                  </p>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
                   <p className="text-sm font-semibold text-[#F9FAFB]">
-                    {character.characterClass}{" "}
-                    {character.subclass !== "None"
-                      ? `(${character.subclass})`
-                      : ""}
+                    {character.characterClass}
                   </p>
                   <p className="text-xs text-[#9CA3AF]">
                     {character.archetype}
@@ -694,7 +608,7 @@ export function PreGeneratedCharacters() {
                   </div>
                   <div className="rounded-md border border-white/10 bg-black/20 px-3 py-2">
                     <p className="text-[#9CA3AF] uppercase tracking-wide">
-                      Stats (L{currentLevel})
+                      Stats
                     </p>
                     <p className="mt-1 text-[#D4AF37]">
                       STR {character.abilities.STR}, DEX{" "}
@@ -747,7 +661,7 @@ export function PreGeneratedCharacters() {
                     <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-[#111827] border-[#D4AF37]/20">
                       <DialogHeader>
                         <DialogTitle className="font-['Cinzel'] text-2xl text-[#D4AF37]">
-                          {character.name} (Level {currentLevel})
+                          {character.name}
                         </DialogTitle>
                       </DialogHeader>
 
@@ -848,12 +762,6 @@ export function PreGeneratedCharacters() {
                               <p>
                                 <span className="text-[#9CA3AF]">Class:</span>{" "}
                                 {character.characterClass}
-                              </p>
-                              <p>
-                                <span className="text-[#9CA3AF]">
-                                  Subclass:
-                                </span>{" "}
-                                {character.subclass}
                               </p>
                             </div>
                           </div>
@@ -1068,12 +976,6 @@ export function PreGeneratedCharacters() {
                             </h3>
                             <div className="grid grid-cols-2 gap-3 text-center text-xs">
                               <div className="rounded-md bg-black/20 px-2 py-3 border border-white/10">
-                                <p className="text-[#9CA3AF]">Level</p>
-                                <p className="font-semibold text-[#D4AF37]">
-                                  {character.meta.level}
-                                </p>
-                              </div>
-                              <div className="rounded-md bg-black/20 px-2 py-3 border border-white/10">
                                 <p className="text-[#9CA3AF]">Hit Dice</p>
                                 <p className="font-semibold text-[#D4AF37]">
                                   {character.meta.hitDice}
@@ -1088,7 +990,7 @@ export function PreGeneratedCharacters() {
                               <div className="rounded-md bg-black/20 px-2 py-3 border border-white/10">
                                 <p className="text-[#9CA3AF]">Prof. Bonus</p>
                                 <p className="font-semibold text-[#D4AF37]">
-                                  +{character.meta.proficiencyBonus}
+                                  +2
                                 </p>
                               </div>
                             </div>
@@ -1249,12 +1151,6 @@ export function PreGeneratedCharacters() {
                               <p>
                                 <span className="text-[#9CA3AF]">Class:</span>{" "}
                                 {character.characterClass}
-                              </p>
-                              <p>
-                                <span className="text-[#9CA3AF]">
-                                  Subclass:
-                                </span>{" "}
-                                {character.subclass}
                               </p>
                               <p>
                                 <span className="text-[#9CA3AF]">

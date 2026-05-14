@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CLASSES_AND_SUBCLASSES, RACES } from "@/lib/character-data";
+import { CLASSES, RACES } from "@/lib/character-data";
 import {
   buildCharacterDefaults,
   getRecommendedClassesForRace,
@@ -17,15 +17,10 @@ import {
 import { useCharacter } from "./CharacterStateContext";
 
 export function StepRaceClass() {
-  const { state, updateState, updateNestedState } = useCharacter();
+  const { state, updateState } = useCharacter();
 
   const currentRaceTypes = state.race
     ? RACES[state.race as keyof typeof RACES] || []
-    : [];
-  const currentClassTypes = state.characterClass
-    ? CLASSES_AND_SUBCLASSES[
-        state.characterClass as keyof typeof CLASSES_AND_SUBCLASSES
-      ] || []
     : [];
   const recommendedClasses = getRecommendedClassesForRace(state.race);
 
@@ -117,7 +112,6 @@ export function StepRaceClass() {
               onValueChange={(val) => {
                 updateState({
                   characterClass: val,
-                  subclass: "",
                   ...buildCharacterDefaults({
                     race: state.race,
                     subrace: state.subrace,
@@ -131,7 +125,7 @@ export function StepRaceClass() {
                 <SelectValue placeholder="Select Class" />
               </SelectTrigger>
               <SelectContent className="bg-slate-900 border-white/10 text-white max-h-[300px]">
-                {Object.keys(CLASSES_AND_SUBCLASSES).map((cls) => {
+                {CLASSES.map((cls) => {
                   const isRecommended = recommendedClasses.includes(cls);
 
                   return (
@@ -149,64 +143,6 @@ export function StepRaceClass() {
               </p>
             )}
           </div>
-
-          {state.meta.level >= 2 && currentClassTypes.length > 0 && (
-            <div className="space-y-2 animate-in fade-in zoom-in-95 duration-300">
-              <Label className="text-rose-200">Subclass / Domain / Path</Label>
-              <Select
-                value={state.subclass}
-                onValueChange={(val) => updateState({ subclass: val })}
-              >
-                <SelectTrigger className="bg-black/40 border-white/10 text-white">
-                  <SelectValue placeholder="Select Subclass" />
-                </SelectTrigger>
-                <SelectContent className="bg-slate-900 border-white/10 text-white max-h-[300px]">
-                  {currentClassTypes.map((sc) => (
-                    <SelectItem key={sc} value={sc}>
-                      {sc}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* Leveling & Basic Meta */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="space-y-2">
-          <Label className="text-indigo-200">Level</Label>
-          <Input
-            type="number"
-            min={1}
-            max={20}
-            value={state.meta.level}
-            onChange={(e) => {
-              const newLevel = parseInt(e.target.value, 10) || 1;
-              updateNestedState("meta", {
-                level: newLevel,
-              });
-              if (newLevel < 2) {
-                updateState({ subclass: "" });
-              }
-            }}
-            className="bg-black/30 border-white/10 text-white font-['Cinzel'] text-xl"
-          />
-        </div>
-        <div className="space-y-2">
-          <Label className="text-indigo-200">Experience Points (XP)</Label>
-          <Input
-            type="number"
-            min={0}
-            value={state.meta.xp}
-            onChange={(e) =>
-              updateNestedState("meta", {
-                xp: parseInt(e.target.value, 10) || 0,
-              })
-            }
-            className="bg-black/30 border-white/10 text-white"
-          />
         </div>
       </div>
     </div>

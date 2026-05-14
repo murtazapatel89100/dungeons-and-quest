@@ -21,7 +21,6 @@ import {
 import {
   buildCharacterDefaults,
   getAvailableSpells,
-  getClassRule,
   getRecommendedClassesForRace,
 } from "@/lib/character-rules";
 import {
@@ -185,7 +184,7 @@ function buildPersonality() {
   };
 }
 
-function generateCharacter(level = 1): QuickCharacter {
+function generateCharacter(): QuickCharacter {
   const identity = generateIdentity();
   const background = chooseRandom(BACKGROUNDS);
   const alignment = chooseRandom(ALIGNMENTS);
@@ -217,25 +216,10 @@ function generateCharacter(level = 1): QuickCharacter {
     pp: Math.floor(Math.random() * 3),
   };
   const personality = buildPersonality();
-  const metaLevel = level;
 
   const abilities = {
     ...(defaults.abilities ?? INITIAL_CHARACTER_STATE.abilities),
   };
-
-  // Stat boost for level 2: ensure minimum values
-  if (level >= 2) {
-    for (const stat in abilities) {
-      const key = stat as AbilityScore;
-      // If it's a primary stat for the class, set higher minimum
-      const classRule = getClassRule(identity.characterClass);
-      const isPrimary = classRule?.abilityPriority.slice(0, 2).includes(key);
-      const minVal = isPrimary ? 14 : 12;
-      if (abilities[key] < minVal) {
-        abilities[key] = minVal;
-      }
-    }
-  }
 
   const isFemale = gender === "Female";
   const maxPortraits = isFemale ? 5 : 7;
@@ -254,7 +238,7 @@ function generateCharacter(level = 1): QuickCharacter {
     race: identity.race,
     subrace: identity.subrace,
     characterClass: identity.characterClass,
-    subclass: level >= 2 ? identity.subclass : "None",
+    subclass: "None",
     background,
     alignment,
     imageUrl,
@@ -278,8 +262,8 @@ function generateCharacter(level = 1): QuickCharacter {
     spells,
     personality,
     meta: {
-      level: metaLevel,
-      xp: level >= 2 ? 300 : 0,
+      level: 1,
+      xp: 0,
       inspiration: false,
       hitDice: defaults.meta?.hitDice ?? "1d8",
       proficiencyBonus: 2,
@@ -365,9 +349,8 @@ function buildStateToSave(
 
 export function QuickCharacterGenerator() {
   const router = useRouter();
-  const [level, setLevel] = useState<number>(1);
   const [character, setCharacter] = useState<QuickCharacter>(
-    generateCharacter(1),
+    generateCharacter(),
   );
   const [name, setName] = useState<string>("");
 
@@ -376,44 +359,8 @@ export function QuickCharacterGenerator() {
   };
 
   const handleGenerateNew = () => {
-    setCharacter(generateCharacter(level));
+    setCharacter(generateCharacter());
     setName("");
-  };
-
-  const handleLevelChange = (newLevel: number) => {
-    if (newLevel === level) return;
-    setLevel(newLevel);
-    setCharacter((prev) => {
-      const updated = { ...prev };
-      const classRule = getClassRule(updated.characterClass);
-      const primaryStats = classRule?.abilityPriority.slice(0, 2) || [];
-
-      if (newLevel === 2 && prev.meta.level === 1) {
-        updated.meta = { ...prev.meta, level: 2, xp: 300 };
-        updated.abilities = { ...prev.abilities };
-        for (const stat in updated.abilities) {
-          const key = stat as AbilityScore;
-          updated.abilities[key] += primaryStats.includes(key) ? 2 : 1;
-        }
-        const subclasses =
-          CLASSES_AND_SUBCLASSES[
-            updated.characterClass as keyof typeof CLASSES_AND_SUBCLASSES
-          ];
-        updated.subclass =
-          subclasses && subclasses.length > 0
-            ? chooseRandom(subclasses)
-            : "None";
-      } else if (newLevel === 1 && prev.meta.level === 2) {
-        updated.meta = { ...prev.meta, level: 1, xp: 0 };
-        updated.abilities = { ...prev.abilities };
-        for (const stat in updated.abilities) {
-          const key = stat as AbilityScore;
-          updated.abilities[key] -= primaryStats.includes(key) ? 2 : 1;
-        }
-        updated.subclass = "None";
-      }
-      return updated;
-    });
   };
 
   const displayName = name.trim() || character.name;
@@ -442,21 +389,6 @@ export function QuickCharacterGenerator() {
           Create a fully formed character in seconds. Customize the name or
           generate new heroes until you find the perfect fit.
         </p>
-      </div>
-
-      <div className="flex justify-center gap-4 mb-6">
-        <Button
-          onClick={() => handleLevelChange(1)}
-          className={`${level === 1 ? "bg-[#D4AF37] text-[#0B0F1A]" : "bg-white/5 text-white border-white/10"} font-bold border`}
-        >
-          Level 1
-        </Button>
-        <Button
-          onClick={() => handleLevelChange(2)}
-          className={`${level === 2 ? "bg-[#D4AF37] text-[#0B0F1A]" : "bg-white/5 text-white border-white/10"} font-bold border`}
-        >
-          Level 2
-        </Button>
       </div>
 
       <Card className="bg-[#111827] border-[#D4AF37]/20">

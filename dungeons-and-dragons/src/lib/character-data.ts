@@ -59,37 +59,20 @@ export const RACES = {
   Kobold: [],
 };
 
-export const CLASSES_AND_SUBCLASSES = {
-  Barbarian: ["Berserker", "Totem Warrior"],
-  Bard: ["Lore", "Valor"],
-  Cleric: [
-    "Knowledge",
-    "Life",
-    "Light",
-    "Nature",
-    "Tempest",
-    "Trickery",
-    "War",
-  ],
-  Druid: ["Land", "Moon"],
-  Fighter: ["Champion", "Battle Master", "Eldritch Knight"],
-  Monk: ["Open Hand", "Shadow", "Four Elements"],
-  Paladin: ["Devotion", "Ancients", "Vengeance"],
-  Ranger: ["Hunter", "Beast Master"],
-  Rogue: ["Thief", "Assassin", "Arcane Trickster"],
-  Sorcerer: ["Draconic", "Wild Magic"],
-  Warlock: ["Archfey", "Fiend", "Great Old One"],
-  Wizard: [
-    "Abjuration",
-    "Conjuration",
-    "Divination",
-    "Enchantment",
-    "Evocation",
-    "Illusion",
-    "Necromancy",
-    "Transmutation",
-  ],
-};
+export const CLASSES = [
+  "Barbarian",
+  "Bard",
+  "Cleric",
+  "Druid",
+  "Fighter",
+  "Monk",
+  "Paladin",
+  "Ranger",
+  "Rogue",
+  "Sorcerer",
+  "Warlock",
+  "Wizard",
+];
 
 export const SKILLS = [
   "Acrobatics",
@@ -488,7 +471,6 @@ export const RACE_COMBAT_ACTIONS: Record<string, CombatAction[]> = {
 
 export const CLASS_COMBAT_ACTIONS: Record<string, CombatAction[]> = {
   Barbarian: [
-    { name: "Reckless Attack", type: "Action", description: "Attack aggressively", source: "Class: Barbarian" },
     { name: "Rage", type: "Bonus Action", description: "Enter primal fury", source: "Class: Barbarian" },
   ],
   Bard: [
@@ -496,24 +478,19 @@ export const CLASS_COMBAT_ACTIONS: Record<string, CombatAction[]> = {
     { name: "Bardic Inspiration", type: "Bonus Action", description: "Boost ally capabilities", source: "Class: Bard" },
   ],
   Cleric: [
-    { name: "Divine Channel", type: "Action", description: "Invoke divine power", source: "Class: Cleric" },
     { name: "Healing Prayer", type: "Bonus Action", description: "Restore minor health", source: "Class: Cleric" },
   ],
   Druid: [
-    { name: "Wild Shape", type: "Action", description: "Transform into beast", source: "Class: Druid" },
     { name: "Spirit Bloom", type: "Bonus Action", description: "Channel nature energy", source: "Class: Druid" },
   ],
   Fighter: [
-    { name: "Action Surge", type: "Action", description: "Gain additional combat action", source: "Class: Fighter" },
     { name: "Second Wind", type: "Bonus Action", description: "Recover stamina quickly", source: "Class: Fighter" },
   ],
   Monk: [
-    { name: "Flurry Strike", type: "Action", description: "Perform rapid attacks", source: "Class: Monk" },
     { name: "Martial Arts", type: "Bonus Action", description: "Follow up with swift strike", source: "Class: Monk" },
   ],
   Paladin: [
-    { name: "Divine Smite", type: "Action", description: "Infuse attack with holy power", source: "Class: Paladin" },
-    { name: "Sacred Oath", type: "Bonus Action", description: "Reinforce divine conviction", source: "Class: Paladin" },
+    { name: "Divine Sense", type: "Bonus Action", description: "Detect celestial, fiend, or undead", source: "Class: Paladin" },
   ],
   Ranger: [
     { name: "Hunter's Mark", type: "Action", description: "Mark dangerous prey", source: "Class: Ranger" },
@@ -521,11 +498,9 @@ export const CLASS_COMBAT_ACTIONS: Record<string, CombatAction[]> = {
   ],
   Rogue: [
     { name: "Sneak Attack", type: "Action", description: "Strike vulnerable target", source: "Class: Rogue" },
-    { name: "Cunning Action", type: "Bonus Action", description: "Move or hide efficiently", source: "Class: Rogue" },
   ],
   Sorcerer: [
     { name: "Arcane Burst", type: "Action", description: "Release magical energy", source: "Class: Sorcerer" },
-    { name: "Metamagic Focus", type: "Bonus Action", description: "Modify spellcasting behavior", source: "Class: Sorcerer" },
   ],
   Warlock: [
     { name: "Eldritch Blast", type: "Action", description: "Fire eldritch energy", source: "Class: Warlock" },
@@ -533,6 +508,5 @@ export const CLASS_COMBAT_ACTIONS: Record<string, CombatAction[]> = {
   ],
   Wizard: [
     { name: "Arcane Cast", type: "Action", description: "Cast prepared spell", source: "Class: Wizard" },
-    { name: "Spell Focus", type: "Bonus Action", description: "Strengthen magical precision", source: "Class: Wizard" },
   ],
 };

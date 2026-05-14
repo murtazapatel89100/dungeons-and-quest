@@ -20,16 +20,8 @@ export function validateCharacter(state: CharacterState): CharacterWarning[] {
 
   // Global Rules - Ability Score Hard Limits
   const minStat = 8;
-  let maxStat = 17;
-  let maxPool = 75;
-
-  if (level >= 4 && level <= 7) {
-    maxStat = 18;
-    maxPool = 80;
-  } else if (level >= 8 && level <= 10) {
-    maxStat = 20;
-    maxPool = 85;
-  }
+  const maxStat = 17;
+  const maxPool = 75;
 
   let totalStats = 0;
   for (const [stat, val] of Object.entries(abilities)) {
@@ -43,7 +35,7 @@ export function validateCharacter(state: CharacterState): CharacterWarning[] {
     }
     if (val > maxStat) {
       addWarning(
-        `This ability score exceeds the recommended limit for a level ${level} character.`,
+        `This ability score exceeds the recommended limit for a level 1 character.`,
         "abilities",
         stat,
       );
@@ -62,38 +54,6 @@ export function validateCharacter(state: CharacterState): CharacterWarning[] {
     if (Object.values(abilities).some((stat) => stat > 17)) {
       addWarning(
         "Level 1 heroes are still inexperienced adventurers. Ability scores above 17 are not recommended.",
-        "abilities",
-      );
-    }
-  } else if (level === 2) {
-    if (totalStats > 75) {
-      addWarning(
-        "Your character's overall power exceeds the expected balance for level 2 adventures.",
-        "abilities",
-      );
-    }
-  } else if (level === 4) {
-    addWarning(
-      "Level 4 characters commonly begin specializing their strongest abilities.",
-      "abilities",
-    );
-  } else if (level === 6) {
-    if (abilities.CON < 12) {
-      addWarning(
-        "Low Constitution may severely impact survivability at this level range.",
-        "abilities",
-        "CON",
-      );
-    }
-  } else if (level === 7) {
-    addWarning(
-      "Your current ability spread may reduce effectiveness in team-oriented encounters.",
-      "abilities",
-    );
-  } else if (level === 8) {
-    if (Object.values(abilities).some((stat) => stat > 20)) {
-      addWarning(
-        "Ability scores above 20 are not recommended without legendary enhancements.",
         "abilities",
       );
     }
