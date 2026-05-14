@@ -4,31 +4,10 @@ import { ExperienceCards } from "@/components/playstyles/ExperienceCards";
 import { PathQuiz } from "@/components/playstyles/PathQuiz";
 import { PlaystylesHero } from "@/components/playstyles/PlaystylesHero";
 import { RecommendationsAndResources } from "@/components/playstyles/RecommendationsAndResources";
+import { constructMetadata, pageMetadata } from "@/../config/seo";
 
-export const metadata: Metadata = {
-  title: "Choosing Your Playstyle | Dice & Codex",
-  description:
-    "Discover the many ways to experience tabletop RPGs: from high-fantasy epic combat to deep narrative roleplaying. Find the style that fits your group with Dice & Codex.",
-  openGraph: {
-    title: "Choosing Your Playstyle | Dice & Codex",
-    description:
-      "Discover the many ways to experience fantasy roleplaying, from classic tabletop to cinematic roleplay communities.",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Dice & Codex Playstyles",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Choosing Your Playstyle | Dice & Codex",
-    description: "Discover the many ways to experience tabletop roleplaying.",
-    images: ["/og-image.jpg"],
-  },
-};
+
+export const metadata: Metadata = constructMetadata(pageMetadata.playstyles);
 
 export default function PlaystylesPage() {
   return (

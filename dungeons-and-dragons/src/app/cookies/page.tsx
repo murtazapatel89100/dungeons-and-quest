@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/LegalPage";
+import { constructMetadata, pageMetadata } from "@/../config/seo";
 
-export const metadata: Metadata = {
-  title: "Cookie Settings | Dice & Codex",
-  description:
-    "Information about how Dice & Codex uses cookies and local storage. We use local storage for character data and site preferences.",
-  openGraph: {
-    title: "Cookie Settings | Dice & Codex",
-    description: "Manage your data preferences and learn about our use of local storage.",
-  },
-};
+
+export const metadata: Metadata = constructMetadata(pageMetadata.cookies);
 
 export default function CookiesPage() {
   return (

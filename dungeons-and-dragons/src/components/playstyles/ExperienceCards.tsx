@@ -23,7 +23,7 @@ const iconMap: Record<string, LucideIcon> = {
 
 export function ExperienceCards() {
   return (
-    <section id="experiences" className="py-24 bg-[#0B0F1A] relative z-20">
+    <section id="paths" className="py-24 bg-[#0B0F1A] relative z-20">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-16">
           <motion.h2

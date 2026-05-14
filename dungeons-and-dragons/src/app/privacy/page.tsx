@@ -1,16 +1,9 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/LegalPage";
+import { constructMetadata, pageMetadata } from "@/../config/seo";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy | Dice & Codex",
-  description:
-    "Understand how Dice & Codex handles your information and data. We prioritize local storage to keep your character data private.",
-  openGraph: {
-    title: "Privacy Policy | Dice & Codex",
-    description:
-      "Learn about our commitment to privacy and data security at Dice & Codex.",
-  },
-};
+
+export const metadata: Metadata = constructMetadata(pageMetadata.privacy);
 
 export default function PrivacyPage() {
   return (

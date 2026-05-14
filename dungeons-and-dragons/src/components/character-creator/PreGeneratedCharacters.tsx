@@ -335,6 +335,8 @@ function buildPersonality() {
   };
 }
 
+import { getAlignmentBackstories } from "@/lib/backstory-generator";
+
 function generateDetailedCharacter(
   character: PreGeneratedCharacter,
 ): DetailedPreGeneratedCharacter {
@@ -366,6 +368,9 @@ function generateDetailedCharacter(
     "the Storm Seeker",
   ]);
 
+  const backstories = getAlignmentBackstories(character.alignment, character.race, character.characterClass, character.background);
+  const generatedBackstory = pickRandom(backstories);
+
   return {
     ...character,
     title,
@@ -396,10 +401,7 @@ function generateDetailedCharacter(
     },
     spellsKnown,
     personality,
-    backstory:
-      `${character.description} ` +
-      `Their life as a ${character.background.toLowerCase()} shaped a ${character.alignment.toLowerCase()} worldview, ` +
-      `and their bond with ${deity} continues to influence every choice they make.`,
+    backstory: `${character.description} ${generatedBackstory} Their bond with ${deity} continues to influence every choice they make.`,
     meta: {
       level: 1,
       xp: 0,

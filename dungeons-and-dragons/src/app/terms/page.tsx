@@ -1,15 +1,9 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/LegalPage";
+import { constructMetadata, pageMetadata } from "@/../config/seo";
 
-export const metadata: Metadata = {
-  title: "Terms of Service | Dice & Codex",
-  description:
-    "The rules and guidelines for using the Dice & Codex application. Read about our usage terms and trademark disclaimers.",
-  openGraph: {
-    title: "Terms of Service | Dice & Codex",
-    description: "Read the terms and conditions for using Dice & Codex.",
-  },
-};
+
+export const metadata: Metadata = constructMetadata(pageMetadata.terms);
 
 export default function TermsPage() {
   return (

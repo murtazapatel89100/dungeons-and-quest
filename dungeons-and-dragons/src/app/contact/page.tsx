@@ -1,32 +1,10 @@
 import type { Metadata } from "next";
 import { Mail, MessageSquare, Handshake } from "lucide-react";
 import contactConfig from "../../../config/contact.json";
+import { constructMetadata, pageMetadata } from "@/../config/seo";
 
-export const metadata: Metadata = {
-  title: "Contact Us | Dice & Codex",
-  description:
-    "Get in touch with the Dice & Codex team for support, feedback, or collaboration opportunities.",
-  openGraph: {
-    title: "Contact Us | Dice & Codex",
-    description:
-      "Get in touch with the Dice & Codex team for support, feedback, or collaboration opportunities.",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Contact Dice & Codex",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Contact Us | Dice & Codex",
-    description:
-      "Get in touch with the Dice & Codex team for support, feedback, or collaboration opportunities.",
-    images: ["/og-image.jpg"],
-  },
-};
+
+export const metadata: Metadata = constructMetadata(pageMetadata.contact);
 
 export default function ContactPage() {
   return (

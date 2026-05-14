@@ -1,8 +1,17 @@
 "use client";
 
 import { useMemo } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Select,
   SelectContent,
@@ -10,6 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ImageIcon, UploadIcon } from "lucide-react";
 import {
   ALIGNMENTS,
   BACKGROUNDS,
@@ -69,31 +79,103 @@ export function StepIdentity() {
         </div>
 
         <div className="space-y-2 md:col-span-2">
-          <Label className="text-indigo-200">Portrait URL (Optional)</Label>
-          <Input
-            value={state.identity.imageUrl || ""}
-            onChange={(e) =>
-              updateNestedState("identity", { imageUrl: e.target.value })
-            }
-            placeholder="https://example.com/portrait.jpg"
-            className="bg-black/30 border-white/10 text-white placeholder:text-white/20"
-          />
-          {state.identity.imageUrl && (
-            <div className="mt-4 flex justify-center">
-              {/* biome-ignore lint/performance/noImgElement: Portrait preview from external URL */}
-              <img
-                src={state.identity.imageUrl}
-                alt="Portrait Preview"
-                className="w-32 h-32 rounded-full object-cover border-2 border-indigo-500/50 shadow-lg shadow-indigo-500/20"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = "none";
-                }}
-                onLoad={(e) => {
-                  (e.target as HTMLImageElement).style.display = "block";
-                }}
+          <Label className="text-indigo-200">Portrait (Optional)</Label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+            <div className="relative">
+              <Input
+                type="file"
+                disabled
+                className="hidden"
+                id="portrait-upload"
               />
+              <Label
+                htmlFor="portrait-upload"
+                className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-white/20 rounded-lg bg-black/20 text-white/50 cursor-not-allowed hover:bg-black/30 transition-colors"
+              >
+                <UploadIcon className="w-8 h-8 mb-2 opacity-50" />
+                <span className="text-sm font-medium">Upload Image</span>
+                <span className="text-xs opacity-75 mt-1">(Coming Soon)</span>
+              </Label>
             </div>
-          )}
+
+            <Dialog>
+              <DialogTrigger asChild>
+                <button
+                  type="button"
+                  className="flex flex-col items-center justify-center w-full h-32 border-2 border-white/20 rounded-lg bg-black/20 text-indigo-200 cursor-pointer hover:bg-black/40 hover:border-indigo-500/50 transition-all group overflow-hidden"
+                >
+                  {state.identity.imageUrl ? (
+                    // biome-ignore lint/performance/noImgElement: Portrait preview
+                    <img
+                      src={state.identity.imageUrl}
+                      alt="Selected Portrait"
+                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                    />
+                  ) : (
+                    <>
+                      <ImageIcon className="w-8 h-8 mb-2 group-hover:scale-110 transition-transform duration-300" />
+                      <span className="text-sm font-medium">Choose Portrait</span>
+                      <span className="text-xs opacity-75 mt-1 text-white/50">Select from library</span>
+                    </>
+                  )}
+                </button>
+              </DialogTrigger>
+              <DialogContent className="bg-slate-900 border-indigo-500/30 text-white max-w-3xl">
+                <DialogHeader>
+                  <DialogTitle className="text-2xl font-['Cinzel'] text-indigo-300">Choose a Portrait</DialogTitle>
+                  <DialogDescription className="text-indigo-200/70">
+                    Select a portrait for your character from our gallery.
+                  </DialogDescription>
+                </DialogHeader>
+                <ScrollArea className="h-[60vh] mt-4 pr-4">
+                  <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-4">
+                    {[
+                      ...Array.from({ length: 7 }, (_, i) => `/images/character-portraits/male-portrait-${i + 1}.png`),
+                      ...Array.from({ length: 5 }, (_, i) => `/images/character-portraits/female-portrait-${i + 1}.png`)
+                    ].map((portraitPath, i) => {
+                      const isSelected = state.identity.imageUrl === portraitPath;
+                      return (
+                        <button
+                          key={portraitPath}
+                          type="button"
+                          onClick={() => updateNestedState("identity", { imageUrl: portraitPath })}
+                          className={`relative aspect-[3/4] rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                            isSelected
+                              ? "border-indigo-500 ring-2 ring-indigo-500/50 shadow-lg shadow-indigo-500/20"
+                              : "border-transparent hover:border-indigo-400/50"
+                          }`}
+                        >
+                          {/* biome-ignore lint/performance/noImgElement: Portrait gallery */}
+                          <img
+                            src={portraitPath}
+                            alt={`Portrait ${i + 1}`}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                          />
+                          {isSelected && (
+                            <div className="absolute inset-0 bg-indigo-500/20 flex items-center justify-center">
+                              <div className="bg-indigo-600 rounded-full p-1 shadow-lg">
+                                <svg
+                                  className="w-6 h-6 text-white"
+                                  fill="none"
+                                  stroke="currentColor"
+                                  viewBox="0 0 24 24"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  aria-hidden="true"
+                                >
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                </svg>
+                              </div>
+                            </div>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </ScrollArea>
+              </DialogContent>
+            </Dialog>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">

@@ -152,8 +152,7 @@ export function StepAbilities() {
             const isAvailable = availableSkills.includes(skill);
 
             return (
-              <button
-                type="button"
+              <label
                 key={skill}
                 className={`flex items-center space-x-3 p-2 rounded-lg transition-colors border-none text-left w-full ${
                   isAvailable
@@ -162,19 +161,15 @@ export function StepAbilities() {
                       : "bg-transparent hover:bg-white/5 cursor-pointer"
                     : "bg-black/20 opacity-45 cursor-not-allowed"
                 }`}
-                onClick={() => {
-                  if (isAvailable) toggleSkill(skill);
-                }}
-                disabled={!isAvailable}
               >
                 <Checkbox
                   id={`skill-${skill}`}
                   checked={isProficient}
                   disabled={!isAvailable}
                   onCheckedChange={() => toggleSkill(skill)}
-                  className={`border-white/20 pointer-events-none ${isProficient ? "bg-indigo-500 border-indigo-500 text-white" : ""}`}
+                  className={`border-white/20 ${isProficient ? "bg-indigo-500 border-indigo-500 text-white" : ""}`}
                 />
-                <span className="text-indigo-100 flex-1 pointer-events-none">
+                <span className="text-indigo-100 flex-1">
                   {skill}
                 </span>
                 {!isAvailable && (
@@ -182,7 +177,7 @@ export function StepAbilities() {
                     Unavailable
                   </span>
                 )}
-              </button>
+              </label>
             );
           })}
         </div>

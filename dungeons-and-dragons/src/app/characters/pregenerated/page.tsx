@@ -1,24 +1,9 @@
 import type { Metadata } from "next";
 import { PreGeneratedCharacters } from "@/components/character-creator/PreGeneratedCharacters";
+import { constructMetadata, pageMetadata } from "@/../config/seo";
 
-export const metadata: Metadata = {
-  title: "Legendary Starter Roster | Dice & Codex",
-  description:
-    "Choose from pre-generated tabletop RPG characters designed for quick campaign starts. Pick your archetype and start playing with Dice & Codex.",
-  openGraph: {
-    title: "Legendary Starter Roster | Dice & Codex",
-    description:
-      "Choose from pre-generated characters designed for quick campaign starts.",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Dice & Codex Starter Roster",
-      },
-    ],
-  },
-};
+
+export const metadata: Metadata = constructMetadata(pageMetadata.charactersPregen);
 
 export default function PregeneratedCharactersPage() {
   return (

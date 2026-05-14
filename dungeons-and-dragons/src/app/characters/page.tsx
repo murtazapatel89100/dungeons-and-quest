@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CharactersHero } from "@/components/character-creator/CharactersHero";
+import { constructMetadata, pageMetadata } from "@/../config/seo";
+
 import {
   Card,
   CardContent,
@@ -8,30 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-export const metadata: Metadata = {
-  title: "Character Builder Hub | Dice & Codex",
-  description:
-    "Choose how you want to build your next hero: full custom creation, one-click quick build, or pre-built character templates with the Dice & Codex generator.",
-  openGraph: {
-    title: "Character Builder Hub | Dice & Codex",
-    description:
-      "Choose how you want to build your next hero: full custom creation, one-click quick build, or pre-built character templates.",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Dice & Codex Character Builder",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Character Builder Hub | Dice & Codex",
-    description: "Build your next hero with our interactive character tools.",
-    images: ["/og-image.jpg"],
-  },
-};
+export const metadata: Metadata = constructMetadata(pageMetadata.characters);
 
 const CHARACTER_PATHS = [
   {

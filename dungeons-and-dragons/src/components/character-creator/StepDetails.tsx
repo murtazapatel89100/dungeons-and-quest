@@ -5,6 +5,7 @@ import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { getAlignmentBackstories } from "@/lib/backstory-generator";
 import {
   BACKGROUND_TRAITS,
   PERSONALITY_SUGGESTIONS,
@@ -54,13 +55,10 @@ export function StepDetails() {
     const race = state.race || "adventurer";
     const charClass = state.characterClass || "hero";
     const bg = state.background || "wanderer";
+    const alignment = state.identity?.alignment || "True Neutral";
 
-    return [
-      `Born as a ${race}, I was raised with the typical traditions of my people until an incident forced me to learn the ways of a ${charClass}. My life as a ${bg} taught me to survive the harsh realities of the world. Now, I seek to make a name for myself and uncover the truth behind the mysteries of my past.`,
-      `The path of a ${charClass} was never an easy one, especially for a ${race} like me. Coming from a background as a ${bg}, I had to claw my way up, learning the hard lessons of trust and betrayal. I have lost much, but my resolve remains unbroken as I set out on this new journey.`,
-      `As a ${bg}, I always felt a calling to something greater. When my affinity for the skills of a ${charClass} became apparent, I left my homeland behind. Being a ${race} in unfamiliar lands has its challenges, but my unique heritage and training give me the edge I need to forge my own legend.`,
-    ];
-  }, [state.race, state.characterClass, state.background]);
+    return getAlignmentBackstories(alignment, race, charClass, bg);
+  }, [state.race, state.characterClass, state.background, state.identity?.alignment]);
 
   const selectBackstory = (story: string) => {
     updateNestedState("personality", { backstory: story });
@@ -126,7 +124,7 @@ export function StepDetails() {
                 key={story}
                 type="button"
                 onClick={() => selectBackstory(story)}
-                className="text-left text-xs p-3 rounded-lg border border-white/10 bg-black/40 hover:bg-indigo-500/20 hover:border-indigo-500/50 cursor-pointer transition-colors text-white/80 line-clamp-4 focus:outline-hidden focus:ring-1 focus:ring-indigo-500"
+                className="text-left text-xs p-3 rounded-lg border border-white/10 bg-black/40 hover:bg-indigo-500/20 hover:border-indigo-500/50 cursor-pointer transition-colors text-white/80 focus:outline-hidden focus:ring-1 focus:ring-indigo-500"
               >
                 {story}
               </button>
@@ -139,7 +137,7 @@ export function StepDetails() {
               updateNestedState("personality", { backstory: e.target.value })
             }
             placeholder="Write your hero's origins, or click a suggestion above to start..."
-            className="bg-black/40 border-white/10 text-white placeholder:text-white/20 min-h-[120px]"
+            className="bg-black/40 border-white/10 text-white placeholder:text-white/20 min-h-[250px]"
           />
         </div>
 

@@ -151,12 +151,17 @@ function generateDeity(alignment: string) {
   return chooseRandom([...DEITIES.Neutral, ...DEITIES.Good]);
 }
 
+import { getAlignmentBackstories } from "@/lib/backstory-generator";
+
 function buildBackstory(character: QuickCharacter) {
   const trait = chooseRandom(character.personality.traits);
   const goal = chooseRandom(character.personality.goals);
   const secret = chooseRandom(character.personality.secrets);
+  
+  const backstories = getAlignmentBackstories(character.alignment, character.race, character.characterClass, character.background);
+  const baseStory = chooseRandom(backstories);
 
-  return `Raised as a ${character.background.toLowerCase()}, ${character.name} carries the mark of a ${character.alignment.toLowerCase()} ${character.characterClass.toLowerCase()} shaped by ${character.race.toLowerCase()} heritage. Guided by ${character.deity}, they rely on ${trait.toLowerCase()} instincts and chase ${goal.toLowerCase()} while guarding a secret: ${secret.toLowerCase()}.`;
+  return `${baseStory} Guided by ${character.deity}, ${character.name} relies on ${trait.toLowerCase()} instincts and chases ${goal.toLowerCase()} while guarding a secret: ${secret.toLowerCase()}.`;
 }
 
 function buildPersonality() {
@@ -222,12 +227,11 @@ function generateCharacter(level = 1): QuickCharacter {
     }
   }
 
-  // Create random image URL using their basic info as seed
-  const seedId =
-    `${identity.race}-${identity.characterClass}-${Date.now()}`.replace(
-      /[^a-zA-Z0-9-]/g,
-      "",
-    );
+  const isFemale = gender === "Female";
+  const maxPortraits = isFemale ? 5 : 7;
+  const portraitNum = Math.floor(Math.random() * maxPortraits) + 1;
+  const prefix = isFemale ? "female" : "male";
+  const imageUrl = `/images/character-portraits/${prefix}-portrait-${portraitNum}.png`;
 
   const character: QuickCharacter = {
     name: `${identity.race} ${identity.characterClass}`,
@@ -243,7 +247,7 @@ function generateCharacter(level = 1): QuickCharacter {
     subclass: level >= 2 ? identity.subclass : "None",
     background,
     alignment,
-    imageUrl: `https://picsum.photos/seed/${seedId}/400/400`,
+    imageUrl,
     abilities,
     skills: defaults.skills ?? [],
     savingThrows: defaults.savingThrows ?? [],
@@ -322,20 +326,32 @@ export function QuickCharacterGenerator() {
   };
 
   const handleLevelChange = (newLevel: number) => {
+    if (newLevel === level) return;
     setLevel(newLevel);
-    // Regenerate or update current character
     setCharacter(prev => {
-      const identity = {
-        race: prev.race,
-        characterClass: prev.characterClass,
-        subrace: prev.subrace,
-        subclass: prev.subclass,
-      };
+      const updated = { ...prev };
+      const classRule = getClassRule(updated.characterClass);
+      const primaryStats = classRule?.abilityPriority.slice(0, 2) || [];
       
-      // If switching to level 1, remove subclass
-      // If switching to level 2, ensure subclass is present and boost stats
-      // For simplicity, let's just regenerate for now to ensure all defaults match the level
-      return generateCharacter(newLevel);
+      if (newLevel === 2 && prev.meta.level === 1) {
+        updated.meta = { ...prev.meta, level: 2, xp: 300 };
+        updated.abilities = { ...prev.abilities };
+        for (const stat in updated.abilities) {
+          const key = stat as AbilityScore;
+          updated.abilities[key] += primaryStats.includes(key) ? 2 : 1;
+        }
+        const subclasses = CLASSES_AND_SUBCLASSES[updated.characterClass as keyof typeof CLASSES_AND_SUBCLASSES];
+        updated.subclass = subclasses && subclasses.length > 0 ? chooseRandom(subclasses) : "None";
+      } else if (newLevel === 1 && prev.meta.level === 2) {
+        updated.meta = { ...prev.meta, level: 1, xp: 0 };
+        updated.abilities = { ...prev.abilities };
+        for (const stat in updated.abilities) {
+          const key = stat as AbilityScore;
+          updated.abilities[key] -= primaryStats.includes(key) ? 2 : 1;
+        }
+        updated.subclass = "None";
+      }
+      return updated;
     });
   };
 
@@ -416,12 +432,26 @@ export function QuickCharacterGenerator() {
 
       <Card className="bg-[#111827] border-[#D4AF37]/20">
         <CardHeader className="border-b border-white/10 flex flex-col md:flex-row gap-6 md:items-center">
-          {/* biome-ignore lint/performance/noImgElement: External character portrait preview */}
-          <img
-            src={character.imageUrl}
-            alt={displayName}
-            className="w-24 h-24 rounded-full object-cover border-2 border-[#D4AF37]/50 shadow-lg shadow-[#D4AF37]/20"
-          />
+          <div className="relative group w-24 h-24 shrink-0">
+            {/* biome-ignore lint/performance/noImgElement: External character portrait preview */}
+            <img
+              src={character.imageUrl}
+              alt={displayName}
+              className="w-24 h-24 rounded-full object-cover border-2 border-[#D4AF37]/50 shadow-lg shadow-[#D4AF37]/20"
+            />
+            <button
+              type="button"
+              disabled
+              className="absolute inset-0 bg-black/60 rounded-full flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-not-allowed border-2 border-dashed border-[#D4AF37]/50"
+            >
+              <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider text-center px-1 leading-tight">
+                Add Your Own<br/>Image
+              </span>
+              <span className="text-[8px] text-white/70 uppercase tracking-widest mt-1">
+                (Coming Soon)
+              </span>
+            </button>
+          </div>
           <div>
             <CardTitle className="font-['Cinzel'] text-2xl text-[#F9FAFB]">
               {displayName}

@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
+import { constructMetadata, pageMetadata } from "@/../config/seo";
 
-export const metadata: Metadata = {
-  title: "Character Sheet | Dice & Codex",
-  description: "View and manage your hero's attributes, skills, and equipment.",
-};
+
+export const metadata: Metadata = constructMetadata(pageMetadata.charactersSheet);
 
 export default function CharacterSheetLayout({
   children,

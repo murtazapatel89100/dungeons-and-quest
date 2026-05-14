@@ -3,45 +3,13 @@ import "./globals.css";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 
-import siteConfig from "../../config/site.json";
+import { constructMetadata, defaultSEO } from "../../config/seo";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
+  ...constructMetadata(),
   title: {
-    default: "Dice & Codex",
-    template: `%s | Dice & Codex`,
-  },
-  description: siteConfig.description,
-  keywords: [
-    "D&D",
-    "Dungeons and Dragons",
-    "TTRPG",
-    "Tabletop",
-    "RPG",
-    "5e",
-    "Character Builder",
-    "Dice Roller",
-    "Dungeon Master",
-    "Player Handbook",
-    "Dice & Codex",
-  ],
-  authors: [{ name: "Arcane Scroll Team" }],
-  creator: "Arcane Scroll",
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: siteConfig.url,
-    title: "Dice & Codex",
-    description: siteConfig.description,
-    siteName: "Dice & Codex",
-    images: [
-      {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Dice & Codex - The Ultimate TTRPG Companion",
-      },
-    ],
+    default: defaultSEO.title,
+    template: `%s | ${defaultSEO.title}`,
   },
 };
 
@@ -61,12 +29,12 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "WebSite",
-              name: siteConfig.name,
-              url: siteConfig.url,
-              description: siteConfig.description,
+              name: defaultSEO.title,
+              url: defaultSEO.url,
+              description: defaultSEO.description,
               potentialAction: {
                 "@type": "SearchAction",
-                target: `${siteConfig.url}/search?q={search_term_string}`,
+                target: `${defaultSEO.url}/search?q={search_term_string}`,
                 "query-input": "required name=search_term_string",
               },
             }),
