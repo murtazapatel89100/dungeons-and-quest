@@ -1,8 +1,8 @@
 "use client";
-import { Dice5, UserPlus, Gift, Type } from "lucide-react";
+import { Dice5, Gift, Type, UserPlus } from "lucide-react";
 import { motion } from "motion/react";
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 import { DiceRollerModal } from "./DiceRollerModal";
 
 const TOOLS = [

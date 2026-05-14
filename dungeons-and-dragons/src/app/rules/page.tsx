@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
+import { constructMetadata, pageMetadata } from "@/../config/seo";
 import { CombatAdvanced } from "@/components/rules/CombatAdvanced";
 import { ConditionsGrid } from "@/components/rules/ConditionsGrid";
 import { CoreMechanics } from "@/components/rules/CoreMechanics";
 import { EnvironmentRules } from "@/components/rules/EnvironmentRules";
 import { RulesHero } from "@/components/rules/RulesHero";
-import { constructMetadata, pageMetadata } from "@/../config/seo";
-
 
 export const metadata: Metadata = constructMetadata(pageMetadata.rules);
 

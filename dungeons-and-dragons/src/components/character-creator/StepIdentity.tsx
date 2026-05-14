@@ -1,5 +1,6 @@
 "use client";
 
+import { ImageIcon, UploadIcon } from "lucide-react";
 import { useMemo } from "react";
 import {
   Dialog,
@@ -19,7 +20,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ImageIcon, UploadIcon } from "lucide-react";
 import {
   ALIGNMENTS,
   BACKGROUNDS,
@@ -34,13 +34,31 @@ export function StepIdentity() {
   const { state, updateNestedState, updateState } = useCharacter();
 
   // Combine deity arrays
-  const allDeities = useMemo(() => {
-    return [
-      ...DEITIES.Good.map((d) => ({ name: d, align: "Good" })),
-      ...DEITIES.Neutral.map((d) => ({ name: d, align: "Neutral" })),
-      ...DEITIES.Evil.map((d) => ({ name: d, align: "Evil" })),
-    ];
-  }, []);
+  const filteredDeities = useMemo(() => {
+    const alignment = state.identity.alignment || "True Neutral";
+
+    let allowed: { name: string; align: string }[] = [];
+
+    if (alignment.includes("Good")) {
+      allowed = [
+        ...DEITIES.Good.map((d) => ({ name: d, align: "Good" })),
+        ...DEITIES.Neutral.map((d) => ({ name: d, align: "Neutral" })),
+      ];
+    } else if (alignment.includes("Evil")) {
+      allowed = [
+        ...DEITIES.Evil.map((d) => ({ name: d, align: "Evil" })),
+        ...DEITIES.Neutral.map((d) => ({ name: d, align: "Neutral" })),
+      ];
+    } else {
+      // Neutral alignments
+      allowed = [
+        ...DEITIES.Neutral.map((d) => ({ name: d, align: "Neutral" })),
+        ...DEITIES.Good.map((d) => ({ name: d, align: "Good" })),
+      ];
+    }
+
+    return allowed;
+  }, [state.identity.alignment]);
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -114,15 +132,21 @@ export function StepIdentity() {
                   ) : (
                     <>
                       <ImageIcon className="w-8 h-8 mb-2 group-hover:scale-110 transition-transform duration-300" />
-                      <span className="text-sm font-medium">Choose Portrait</span>
-                      <span className="text-xs opacity-75 mt-1 text-white/50">Select from library</span>
+                      <span className="text-sm font-medium">
+                        Choose Portrait
+                      </span>
+                      <span className="text-xs opacity-75 mt-1 text-white/50">
+                        Select from library
+                      </span>
                     </>
                   )}
                 </button>
               </DialogTrigger>
               <DialogContent className="bg-slate-900 border-indigo-500/30 text-white max-w-3xl">
                 <DialogHeader>
-                  <DialogTitle className="text-2xl font-['Cinzel'] text-indigo-300">Choose a Portrait</DialogTitle>
+                  <DialogTitle className="text-2xl font-['Cinzel'] text-indigo-300">
+                    Choose a Portrait
+                  </DialogTitle>
                   <DialogDescription className="text-indigo-200/70">
                     Select a portrait for your character from our gallery.
                   </DialogDescription>
@@ -130,15 +154,28 @@ export function StepIdentity() {
                 <ScrollArea className="h-[60vh] mt-4 pr-4">
                   <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 pb-4">
                     {[
-                      ...Array.from({ length: 7 }, (_, i) => `/images/character-portraits/male-portrait-${i + 1}.png`),
-                      ...Array.from({ length: 5 }, (_, i) => `/images/character-portraits/female-portrait-${i + 1}.png`)
+                      ...Array.from(
+                        { length: 7 },
+                        (_, i) =>
+                          `/images/character-portraits/male-portrait-${i + 1}.png`,
+                      ),
+                      ...Array.from(
+                        { length: 5 },
+                        (_, i) =>
+                          `/images/character-portraits/female-portrait-${i + 1}.png`,
+                      ),
                     ].map((portraitPath, i) => {
-                      const isSelected = state.identity.imageUrl === portraitPath;
+                      const isSelected =
+                        state.identity.imageUrl === portraitPath;
                       return (
                         <button
                           key={portraitPath}
                           type="button"
-                          onClick={() => updateNestedState("identity", { imageUrl: portraitPath })}
+                          onClick={() =>
+                            updateNestedState("identity", {
+                              imageUrl: portraitPath,
+                            })
+                          }
                           className={`relative aspect-[3/4] rounded-lg overflow-hidden border-2 transition-all duration-200 ${
                             isSelected
                               ? "border-indigo-500 ring-2 ring-indigo-500/50 shadow-lg shadow-indigo-500/20"
@@ -163,7 +200,12 @@ export function StepIdentity() {
                                   xmlns="http://www.w3.org/2000/svg"
                                   aria-hidden="true"
                                 >
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M5 13l4 4L19 7"
+                                  />
                                 </svg>
                               </div>
                             </div>
@@ -298,7 +340,7 @@ export function StepIdentity() {
             </SelectTrigger>
             <SelectContent className="bg-slate-900 border-white/10 text-white max-h-75">
               <SelectItem value="none">None / Agnostic</SelectItem>
-              {allDeities.map((d) => (
+              {filteredDeities.map((d) => (
                 <SelectItem key={d.name} value={d.name}>
                   {d.name}{" "}
                   <span className="opacity-50 text-xs ml-2">({d.align})</span>

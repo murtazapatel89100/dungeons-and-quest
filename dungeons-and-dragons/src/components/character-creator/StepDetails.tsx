@@ -58,11 +58,24 @@ export function StepDetails() {
     const alignment = state.identity?.alignment || "True Neutral";
 
     return getAlignmentBackstories(alignment, race, charClass, bg);
-  }, [state.race, state.characterClass, state.background, state.identity?.alignment]);
+  }, [
+    state.race,
+    state.characterClass,
+    state.background,
+    state.identity?.alignment,
+  ]);
 
   const selectBackstory = (story: string) => {
     updateNestedState("personality", { backstory: story });
   };
+
+  const recommendedIndex = useMemo(() => {
+    const charClass = state.characterClass || "hero";
+    if (["Paladin", "Cleric", "Monk"].includes(charClass)) return 0;
+    if (["Warlock", "Rogue", "Blood Hunter"].includes(charClass)) return 2;
+    if (["Druid", "Ranger", "Barbarian"].includes(charClass)) return 4;
+    return 0;
+  }, [state.characterClass]);
 
   const renderSection = (
     title: string,

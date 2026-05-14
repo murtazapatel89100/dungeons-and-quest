@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
+import { constructMetadata, pageMetadata } from "@/../config/seo";
 import { DiceRoller } from "@/components/tools/DiceRoller";
 import { LootGenerator } from "@/components/tools/LootGenerator";
 import { NameGenerator } from "@/components/tools/NameGenerator";
 import { ToolsHero } from "@/components/tools/ToolsHero";
-import { constructMetadata, pageMetadata } from "@/../config/seo";
-
 
 export const metadata: Metadata = constructMetadata(pageMetadata.tools);
 

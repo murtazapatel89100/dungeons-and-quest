@@ -1,5 +1,5 @@
 "use client";
-import { BookOpen, FileText, UserPlus, Wand2, Compass } from "lucide-react";
+import { BookOpen, Compass, FileText, UserPlus, Wand2 } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { CharacterWizard } from "@/components/character-creator/CharacterWizard";
 import { constructMetadata, pageMetadata } from "@/../config/seo";
+import { CharacterWizard } from "@/components/character-creator/CharacterWizard";
 
-
-export const metadata: Metadata = constructMetadata(pageMetadata.charactersCustom);
+export const metadata: Metadata = constructMetadata(
+  pageMetadata.charactersCustom,
+);
 
 export default function CustomCharactersPage() {
   return (

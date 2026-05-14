@@ -7,7 +7,13 @@ import { toolsData } from "@/lib/data/toolsData";
 
 type LootRarity = "common" | "uncommon" | "rare" | "epic";
 
-function LootChest({ isOpen, isOpening }: { isOpen: boolean; isOpening: boolean }) {
+function LootChest({
+  isOpen,
+  isOpening,
+}: {
+  isOpen: boolean;
+  isOpening: boolean;
+}) {
   return (
     <div className="relative w-48 h-48 flex items-center justify-center">
       {/* Glow Effect */}
@@ -24,10 +30,14 @@ function LootChest({ isOpen, isOpening }: { isOpen: boolean; isOpening: boolean 
       <motion.svg
         viewBox="0 0 100 100"
         className="w-full h-full relative z-10 drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)]"
-        animate={isOpening ? {
-          rotate: [0, -2, 2, -2, 2, 0],
-          x: [0, -1, 1, -1, 1, 0],
-        } : { rotate: 0, x: 0 }}
+        animate={
+          isOpening
+            ? {
+                rotate: [0, -2, 2, -2, 2, 0],
+                x: [0, -1, 1, -1, 1, 0],
+              }
+            : { rotate: 0, x: 0 }
+        }
         transition={{ duration: 0.5, repeat: isOpening ? Infinity : 0 }}
       >
         {/* Chest Base */}
@@ -41,7 +51,7 @@ function LootChest({ isOpen, isOpening }: { isOpen: boolean; isOpening: boolean 
         <path d="M15 55 L85 55 L85 60 L15 60 Z" fill="#F59E0B" />
         <path d="M25 60 L30 60 L30 90 L25 90 Z" fill="#D97706" />
         <path d="M70 60 L75 60 L75 90 L70 90 Z" fill="#D97706" />
-        
+
         {/* Chest Lid Group */}
         <motion.g
           animate={{
@@ -61,9 +71,18 @@ function LootChest({ isOpen, isOpening }: { isOpen: boolean; isOpening: boolean 
           <path d="M15 50 L85 50 L85 55 L15 55 Z" fill="#F59E0B" />
           <path d="M25 32 L30 32 L30 50 L25 50 Z" fill="#D97706" />
           <path d="M70 32 L75 32 L75 50 L70 50 Z" fill="#D97706" />
-          
+
           {/* Lock */}
-          <rect x="45" y="48" width="10" height="12" rx="2" fill="#FBBF24" stroke="#B45309" strokeWidth="1" />
+          <rect
+            x="45"
+            y="48"
+            width="10"
+            height="12"
+            rx="2"
+            fill="#FBBF24"
+            stroke="#B45309"
+            strokeWidth="1"
+          />
           <circle cx="50" cy="54" r="2" fill="#78350F" />
         </motion.g>
 
@@ -81,7 +100,13 @@ function LootChest({ isOpen, isOpening }: { isOpen: boolean; isOpening: boolean 
                   <stop offset="100%" stopColor="#FBBF24" stopOpacity="0" />
                 </radialGradient>
               </defs>
-              <ellipse cx="50" cy="50" rx="30" ry="15" fill="url(#treasureGlow)" />
+              <ellipse
+                cx="50"
+                cy="50"
+                rx="30"
+                ry="15"
+                fill="url(#treasureGlow)"
+              />
             </motion.g>
           )}
         </AnimatePresence>
@@ -176,11 +201,18 @@ export function LootGenerator() {
               disabled={isOpening}
               className="relative group cursor-pointer focus:outline-hidden"
             >
-              <LootChest isOpen={!!generatedLoot || isOpening} isOpening={isOpening} />
-              
+              <LootChest
+                isOpen={!!generatedLoot || isOpening}
+                isOpening={isOpening}
+              />
+
               <div className="mt-4 text-center">
                 <span className="font-['Cinzel'] text-[#F59E0B] font-bold tracking-[0.2em] uppercase text-sm group-hover:text-[#FBBF24] transition-colors">
-                  {isOpening ? "Opening..." : generatedLoot ? "Loot Found!" : "Unlock Chest"}
+                  {isOpening
+                    ? "Opening..."
+                    : generatedLoot
+                      ? "Loot Found!"
+                      : "Unlock Chest"}
                 </span>
               </div>
             </button>
@@ -209,7 +241,7 @@ export function LootGenerator() {
                   </p>
                 </motion.div>
               ) : (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   className="flex flex-col items-center gap-4 text-[#4B5563]"
@@ -219,7 +251,9 @@ export function LootGenerator() {
                     <Gem className="w-5 h-5" />
                     <div className="w-12 md:w-20 h-[1px] bg-gradient-to-l from-transparent to-[#F9FAFB]" />
                   </div>
-                  <p className="italic text-sm tracking-wide font-['Cinzel']">The ancient hoard awaits...</p>
+                  <p className="italic text-sm tracking-wide font-['Cinzel']">
+                    The ancient hoard awaits...
+                  </p>
                 </motion.div>
               )}
             </AnimatePresence>

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { PreGeneratedCharacters } from "@/components/character-creator/PreGeneratedCharacters";
 import { constructMetadata, pageMetadata } from "@/../config/seo";
+import { PreGeneratedCharacters } from "@/components/character-creator/PreGeneratedCharacters";
 
-
-export const metadata: Metadata = constructMetadata(pageMetadata.charactersPregen);
+export const metadata: Metadata = constructMetadata(
+  pageMetadata.charactersPregen,
+);
 
 export default function PregeneratedCharactersPage() {
   return (

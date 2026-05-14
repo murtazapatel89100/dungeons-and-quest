@@ -1,8 +1,7 @@
+import { Handshake, Mail, MessageSquare } from "lucide-react";
 import type { Metadata } from "next";
-import { Mail, MessageSquare, Handshake } from "lucide-react";
-import contactConfig from "../../../config/contact.json";
 import { constructMetadata, pageMetadata } from "@/../config/seo";
-
+import contactConfig from "../../../config/contact.json";
 
 export const metadata: Metadata = constructMetadata(pageMetadata.contact);
 

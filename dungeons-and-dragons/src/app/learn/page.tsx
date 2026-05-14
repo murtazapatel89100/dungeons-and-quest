@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { constructMetadata, pageMetadata } from "@/../config/seo";
 import { CampaignStructure } from "@/components/learn/CampaignStructure";
 import { CharacterCreation } from "@/components/learn/CharacterCreation";
 import { CombatBasics } from "@/components/learn/CombatBasics";
@@ -10,8 +11,6 @@ import { IntroSection } from "@/components/learn/IntroSection";
 import { JourneyNavigator } from "@/components/learn/JourneyNavigator";
 import { Roleplaying } from "@/components/learn/Roleplaying";
 import { Spellcasting } from "@/components/learn/Spellcasting";
-import { constructMetadata, pageMetadata } from "@/../config/seo";
-
 
 export const metadata: Metadata = constructMetadata(pageMetadata.learn);
 

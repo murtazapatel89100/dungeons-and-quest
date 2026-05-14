@@ -1,12 +1,17 @@
 "use client";
 
-import { CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  AlertTriangle,
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { validateCharacter } from "@/lib/character-validation";
 import { CharacterProvider, useCharacter } from "./CharacterStateContext";
-import { GeneratorControls } from "./GeneratorControls";
 import { StepAbilities } from "./StepAbilities";
 import { StepDetails } from "./StepDetails";
 import { StepEquipment } from "./StepEquipment";
@@ -26,9 +31,14 @@ function WizardContent() {
   const router = useRouter();
   const { state } = useCharacter();
 
-  const CurrentStepComponent = STEPS[currentStepIndex].component;
+  const currentStep = STEPS[currentStepIndex];
+  const CurrentStepComponent = currentStep.component;
   const isFirstStep = currentStepIndex === 0;
   const isLastStep = currentStepIndex === STEPS.length - 1;
+  const allWarnings = useMemo(() => validateCharacter(state), [state]);
+  const stepWarnings = isFirstStep
+    ? []
+    : allWarnings.filter((w) => w.step === currentStep.id);
 
   const handleNext = () => {
     if (!isLastStep) {
@@ -56,9 +66,6 @@ function WizardContent() {
             Forge your destiny and shape your legend.
           </p>
         </div>
-
-        {/* Generator Controls */}
-        <GeneratorControls />
       </div>
 
       {/* Progress Indicator */}
@@ -108,6 +115,25 @@ function WizardContent() {
           })}
         </div>
       </div>
+
+      {/* Warnings Display */}
+      {stepWarnings.length > 0 && (
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <AlertTriangle className="w-5 h-5 text-amber-500" />
+            <h3 className="font-semibold text-amber-500">
+              Character Builder Recommendations
+            </h3>
+          </div>
+          <ul className="list-disc list-inside space-y-1 pl-7">
+            {stepWarnings.map((warning) => (
+              <li key={warning.message} className="text-sm text-amber-200/80">
+                {warning.message}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       {/* Step Content Area */}
       <div className="flex-1 bg-card/60 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden relative min-h-125">

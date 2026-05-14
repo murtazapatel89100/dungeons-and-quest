@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { QuickCharacterGenerator } from "@/components/character-creator/QuickCharacterGenerator";
 import { constructMetadata, pageMetadata } from "@/../config/seo";
+import { QuickCharacterGenerator } from "@/components/character-creator/QuickCharacterGenerator";
 
-
-export const metadata: Metadata = constructMetadata(pageMetadata.charactersQuick);
+export const metadata: Metadata = constructMetadata(
+  pageMetadata.charactersQuick,
+);
 
 export default function QuickCharactersPage() {
   return (

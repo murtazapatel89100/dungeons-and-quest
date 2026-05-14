@@ -247,6 +247,7 @@ export function StepEquipment() {
               if (category === "Cantrips") numericLevel = 0;
 
               if (Number.isNaN(numericLevel)) return null;
+              if (numericLevel > (state.meta?.level || 1)) return null;
 
               return (
                 <div key={category} className="space-y-3">

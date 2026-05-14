@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { CharactersHero } from "@/components/character-creator/CharactersHero";
 import { constructMetadata, pageMetadata } from "@/../config/seo";
+import { CharactersHero } from "@/components/character-creator/CharactersHero";
 
 import {
   Card,

@@ -1,6 +1,7 @@
 "use client";
 
 import { Calculator, Dice5 } from "lucide-react";
+import { useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,7 @@ import {
   getAvailableSkills,
 } from "@/lib/character-rules";
 import type { AbilityStat, SkillName } from "@/lib/character-types";
+import { validateCharacter } from "@/lib/character-validation";
 import { useCharacter } from "./CharacterStateContext";
 
 const _STAT_NAMES: Record<AbilityStat, string> = {
@@ -23,6 +25,7 @@ const _STAT_NAMES: Record<AbilityStat, string> = {
 
 export function StepAbilities() {
   const { state, updateNestedState, updateState } = useCharacter();
+  const warnings = useMemo(() => validateCharacter(state), [state]);
 
   const getModifier = (score: number) => {
     const mod = Math.floor((score - 10) / 2);
@@ -107,13 +110,22 @@ export function StepAbilities() {
             const stat = statRaw as AbilityStat;
             const score = state.abilities[stat] || 10;
             const modifier = getModifier(score);
+            const hasWarning = warnings.some(
+              (w) => w.step === "abilities" && w.field === stat,
+            );
 
             return (
               <div
                 key={stat}
-                className="bg-black/40 border border-white/5 rounded-lg p-4 flex flex-col items-center justify-center text-center group hover:border-emerald-500/30 transition-colors"
+                className={`bg-black/40 border rounded-lg p-4 flex flex-col items-center justify-center text-center group transition-colors ${
+                  hasWarning
+                    ? "border-red-500 shadow-[0_0_10px_rgba(239,68,68,0.2)]"
+                    : "border-white/5 hover:border-emerald-500/30"
+                }`}
               >
-                <span className="text-emerald-400 font-bold tracking-widest text-sm mb-2">
+                <span
+                  className={`${hasWarning ? "text-red-500" : "text-emerald-400"} font-bold tracking-widest text-sm mb-2 transition-colors`}
+                >
                   {stat}
                 </span>
                 <Input
@@ -125,9 +137,11 @@ export function StepAbilities() {
                     const val = parseInt(e.target.value, 10) || 3;
                     updateNestedState("abilities", { [stat]: val });
                   }}
-                  className="w-16 text-center text-2xl font-['Cinzel'] bg-transparent border-0 ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-white !p-0"
+                  className={`w-16 text-center text-2xl font-['Cinzel'] bg-transparent border-0 ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 !p-0 transition-colors ${hasWarning ? "text-red-500" : "text-white"}`}
                 />
-                <div className="mt-2 text-xs font-semibold px-2 py-1 bg-white/10 rounded text-muted-foreground group-hover:bg-emerald-500/20 group-hover:text-emerald-200 transition-colors">
+                <div
+                  className={`mt-2 text-xs font-semibold px-2 py-1 rounded transition-colors ${hasWarning ? "bg-red-500/10 text-red-500" : "bg-white/10 text-muted-foreground group-hover:bg-emerald-500/20 group-hover:text-emerald-200"}`}
+                >
                   {modifier} Mod
                 </div>
               </div>
@@ -154,6 +168,7 @@ export function StepAbilities() {
             return (
               <label
                 key={skill}
+                htmlFor={`skill-${skill}`}
                 className={`flex items-center space-x-3 p-2 rounded-lg transition-colors border-none text-left w-full ${
                   isAvailable
                     ? isProficient
@@ -169,9 +184,7 @@ export function StepAbilities() {
                   onCheckedChange={() => toggleSkill(skill)}
                   className={`border-white/20 ${isProficient ? "bg-indigo-500 border-indigo-500 text-white" : ""}`}
                 />
-                <span className="text-indigo-100 flex-1">
-                  {skill}
-                </span>
+                <span className="text-indigo-100 flex-1">{skill}</span>
                 {!isAvailable && (
                   <span className="text-[0.65rem] uppercase tracking-wide text-white/40">
                     Unavailable

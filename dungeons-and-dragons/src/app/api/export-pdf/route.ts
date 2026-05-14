@@ -35,7 +35,7 @@ export async function POST(req: Request) {
 
     await page.evaluate(() => {
       // Inject printing styles
-      const style = document.createElement('style');
+      const style = document.createElement("style");
       style.textContent = `
         header, footer, nav, 
         button, 
