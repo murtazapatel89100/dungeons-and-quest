@@ -124,30 +124,30 @@ export default function CharacterSheetPage() {
           >
             <ChevronLeft className="w-5 h-5 mr-1" /> Back
           </Button>
-          <Button 
+          <Button
             className="bg-indigo-600 hover:bg-indigo-500 text-white"
             onClick={async () => {
               try {
-                const res = await fetch('/api/export-pdf', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(character)
+                const res = await fetch("/api/export-pdf", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(character),
                 });
-                
-                if (!res.ok) throw new Error('Failed to generate PDF');
-                
+
+                if (!res.ok) throw new Error("Failed to generate PDF");
+
                 const blob = await res.blob();
                 const url = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
+                const a = document.createElement("a");
                 a.href = url;
-                a.download = `${character.identity.name || 'character'}-sheet.pdf`;
+                a.download = `${character.identity.name || "character"}-sheet.pdf`;
                 document.body.appendChild(a);
                 a.click();
                 a.remove();
                 window.URL.revokeObjectURL(url);
               } catch (error) {
-                console.error('PDF export error:', error);
-                alert('Failed to generate PDF. Please try again.');
+                console.error("PDF export error:", error);
+                alert("Failed to generate PDF. Please try again.");
               }
             }}
           >
@@ -181,12 +181,17 @@ export default function CharacterSheetPage() {
             </h1>
             <div className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-1 text-indigo-300 font-medium">
               <span className="flex items-center gap-1.5 uppercase text-xs tracking-widest">
-                <Sparkles className="w-3 h-3" /> {character.race} {character.characterClass}
+                <Sparkles className="w-3 h-3" /> {character.race}{" "}
+                {character.characterClass}
               </span>
               <span className="hidden sm:inline text-white/20">•</span>
-              <span className="uppercase text-xs tracking-widest">{character.background}</span>
+              <span className="uppercase text-xs tracking-widest">
+                {character.background}
+              </span>
               <span className="hidden sm:inline text-white/20">•</span>
-              <span className="uppercase text-xs tracking-widest">{character.identity.alignment}</span>
+              <span className="uppercase text-xs tracking-widest">
+                {character.identity.alignment}
+              </span>
             </div>
           </div>
         </div>
@@ -545,11 +550,61 @@ export default function CharacterSheetPage() {
 
                     <div>
                       <h3 className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-3 bg-white/5 p-2 rounded">
+                        Combat Actions
+                      </h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {(character.combatActions || [])
+                          .filter(
+                            (a) =>
+                              a.type === "Action" &&
+                              a.name !== "Attack" &&
+                              a.name !== "Cast Spell",
+                          )
+                          .map((action) => (
+                            <div
+                              key={action.name}
+                              className="bg-black/40 border border-white/5 p-3 rounded-lg hover:bg-white/5 transition-colors"
+                            >
+                              <p className="font-bold text-white text-sm">
+                                {action.name}
+                              </p>
+                              <p className="text-[10px] text-slate-400 mt-1">
+                                {action.description}
+                              </p>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 className="text-xs font-bold text-indigo-400 uppercase tracking-widest mb-3 bg-white/5 p-2 rounded">
                         Bonus Actions
                       </h3>
-                      <p className="text-sm text-slate-400 px-2 italic">
-                        No bonus actions available.
-                      </p>
+                      {(character.combatActions || []).filter(
+                        (a) => a.type === "Bonus Action",
+                      ).length > 0 ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          {(character.combatActions || [])
+                            .filter((a) => a.type === "Bonus Action")
+                            .map((action) => (
+                              <div
+                                key={action.name}
+                                className="bg-black/40 border border-white/5 p-3 rounded-lg hover:bg-white/5 transition-colors"
+                              >
+                                <p className="font-bold text-white text-sm">
+                                  {action.name}
+                                </p>
+                                <p className="text-[10px] text-slate-400 mt-1">
+                                  {action.description}
+                                </p>
+                              </div>
+                            ))}
+                        </div>
+                      ) : (
+                        <p className="text-sm text-slate-400 px-2 italic">
+                          No bonus actions available.
+                        </p>
+                      )}
                     </div>
 
                     <div>
