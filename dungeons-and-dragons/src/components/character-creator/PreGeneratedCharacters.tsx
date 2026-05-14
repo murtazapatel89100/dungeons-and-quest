@@ -1,6 +1,6 @@
 "use client";
 
-import { Eye, FileText } from "lucide-react";
+import { AlertTriangle, Eye, FileText } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -26,9 +26,11 @@ import {
 import {
   type Alignment,
   type CharacterState,
+  type CombatAction,
   INITIAL_CHARACTER_STATE,
   type SkillName,
 } from "@/lib/character-types";
+import { validateCharacter } from "@/lib/character-validation";
 
 interface PreGeneratedCharacter {
   id: string;
@@ -63,6 +65,7 @@ type DetailedPreGeneratedCharacter = PreGeneratedCharacter & {
   savingThrows: AbilityScore[];
   feats: string[];
   features: string[];
+  combatActions: CombatAction[];
   languages: string[];
   loadout: {
     armor: string[];
@@ -368,7 +371,12 @@ function generateDetailedCharacter(
     "the Storm Seeker",
   ]);
 
-  const backstories = getAlignmentBackstories(character.alignment, character.race, character.characterClass, character.background);
+  const backstories = getAlignmentBackstories(
+    character.alignment,
+    character.race,
+    character.characterClass,
+    character.background,
+  );
   const generatedBackstory = pickRandom(backstories);
 
   return {
@@ -382,6 +390,7 @@ function generateDetailedCharacter(
     savingThrows: defaults.savingThrows ?? [],
     feats,
     features: defaults.features ?? [],
+    combatActions: defaults.combatActions ?? [],
     languages: defaults.languages ?? ["Common"],
     loadout: {
       armor: defaults.armor ?? [],
@@ -441,34 +450,83 @@ function DetailChipList({
   );
 }
 
+function buildStateToSave(
+  levelAdjusted: DetailedPreGeneratedCharacter,
+): CharacterState {
+  return {
+    ...INITIAL_CHARACTER_STATE,
+    identity: {
+      name: levelAdjusted.name,
+      gender: levelAdjusted.gender,
+      age: levelAdjusted.age,
+      height: levelAdjusted.height,
+      weight: levelAdjusted.weight,
+      alignment: levelAdjusted.alignment as Alignment,
+      deity: levelAdjusted.deity,
+      title: levelAdjusted.title,
+      imageUrl: `/images/character-portraits/pregen/${levelAdjusted.id}.png`,
+    },
+    race: levelAdjusted.race,
+    subrace: levelAdjusted.subrace,
+    characterClass: levelAdjusted.characterClass,
+    subclass: levelAdjusted.subclass,
+    background: levelAdjusted.background,
+    abilities: levelAdjusted.abilities,
+    skills: levelAdjusted.skills as SkillName[],
+    savingThrows: levelAdjusted.savingThrows,
+    feats: levelAdjusted.feats,
+    features: levelAdjusted.features,
+    combatActions: levelAdjusted.combatActions,
+    languages: levelAdjusted.languages,
+    proficiencies: {
+      armor: levelAdjusted.loadout.armor,
+      weapons: levelAdjusted.loadout.weapons,
+      tools: levelAdjusted.loadout.tools,
+    },
+    weapons: levelAdjusted.weapons,
+    armor: levelAdjusted.armorList,
+    equipment: levelAdjusted.equipment,
+    tools: levelAdjusted.tools,
+    currency: levelAdjusted.currency,
+    spells: { 0: levelAdjusted.spellsKnown },
+    personality: {
+      ...levelAdjusted.personality,
+      backstory: levelAdjusted.backstory,
+    },
+    meta: levelAdjusted.meta,
+  };
+}
+
 export function PreGeneratedCharacters() {
   const router = useRouter();
   const [selectedCharacterId, setSelectedCharacterId] = useState<string>(
     PREGENERATED_CHARACTERS[0].id,
   );
-  const [characterLevels, setCharacterLevels] = useState<Record<string, number>>(
-    Object.fromEntries(PREGENERATED_CHARACTERS.map(c => [c.id, 1]))
-  );
+  const [characterLevels, setCharacterLevels] = useState<
+    Record<string, number>
+  >(Object.fromEntries(PREGENERATED_CHARACTERS.map((c) => [c.id, 1])));
 
   const detailedCharacters = useMemo(
     () => PREGENERATED_CHARACTERS.map(generateDetailedCharacter),
     [],
   );
 
-  const getLevelAdjustedCharacter = (baseChar: DetailedPreGeneratedCharacter) => {
+  const getLevelAdjustedCharacter = (
+    baseChar: DetailedPreGeneratedCharacter,
+  ) => {
     const level = characterLevels[baseChar.id] || 1;
     if (level === 1) {
       return {
         ...baseChar,
         subclass: "None",
-        meta: { ...baseChar.meta, level: 1, xp: 0 }
+        meta: { ...baseChar.meta, level: 1, xp: 0 },
       };
     }
 
     // Level 2 adjustments
     const classRule = getClassRule(baseChar.characterClass);
     const primaryStats = classRule?.abilityPriority.slice(0, 2) || [];
-    
+
     const adjustedAbilities = { ...baseChar.abilities };
     for (const stat in adjustedAbilities) {
       const key = stat as AbilityScore;
@@ -479,14 +537,16 @@ export function PreGeneratedCharacters() {
       ...baseChar,
       abilities: adjustedAbilities,
       meta: { ...baseChar.meta, level: 2, xp: 300 },
-      hitPoints: baseChar.hitPoints + 8 + Math.floor((adjustedAbilities.CON - 10) / 2) // Rough level 2 HP
+      hitPoints:
+        baseChar.hitPoints + 8 + Math.floor((adjustedAbilities.CON - 10) / 2), // Rough level 2 HP
     };
   };
 
-  const selectedCharacter =
-    getLevelAdjustedCharacter(detailedCharacters.find(
+  const selectedCharacter = getLevelAdjustedCharacter(
+    detailedCharacters.find(
       (character) => character.id === selectedCharacterId,
-    ) ?? detailedCharacters[0]);
+    ) ?? detailedCharacters[0],
+  );
 
   const abilityModifier = (value: number) => {
     const mod = Math.floor((value - 10) / 2);
@@ -495,47 +555,7 @@ export function PreGeneratedCharacters() {
 
   const handleViewSheet = (character: DetailedPreGeneratedCharacter) => {
     const levelAdjusted = getLevelAdjustedCharacter(character);
-    const stateToSave: CharacterState = {
-      ...INITIAL_CHARACTER_STATE,
-      identity: {
-        name: levelAdjusted.name,
-        gender: levelAdjusted.gender,
-        age: levelAdjusted.age,
-        height: levelAdjusted.height,
-        weight: levelAdjusted.weight,
-        alignment: levelAdjusted.alignment as Alignment,
-        deity: levelAdjusted.deity,
-        title: levelAdjusted.title,
-        imageUrl: `https://picsum.photos/seed/${levelAdjusted.id}/400/400`,
-      },
-      race: levelAdjusted.race,
-      subrace: levelAdjusted.subrace,
-      characterClass: levelAdjusted.characterClass,
-      subclass: levelAdjusted.subclass,
-      background: levelAdjusted.background,
-      abilities: levelAdjusted.abilities,
-      skills: levelAdjusted.skills as SkillName[],
-      savingThrows: levelAdjusted.savingThrows,
-      feats: levelAdjusted.feats,
-      features: levelAdjusted.features,
-      languages: levelAdjusted.languages,
-      proficiencies: {
-        armor: levelAdjusted.loadout.armor,
-        weapons: levelAdjusted.loadout.weapons,
-        tools: levelAdjusted.loadout.tools,
-      },
-      weapons: levelAdjusted.weapons,
-      armor: levelAdjusted.armorList,
-      equipment: levelAdjusted.equipment,
-      tools: levelAdjusted.tools,
-      currency: levelAdjusted.currency,
-      spells: { 0: levelAdjusted.spellsKnown },
-      personality: {
-        ...levelAdjusted.personality,
-        backstory: levelAdjusted.backstory,
-      },
-      meta: levelAdjusted.meta,
-    };
+    const stateToSave = buildStateToSave(levelAdjusted);
     localStorage.setItem("dnd_character_sheet", JSON.stringify(stateToSave));
     router.push("/characters/sheet");
   };
@@ -560,7 +580,9 @@ export function PreGeneratedCharacters() {
           const character = getLevelAdjustedCharacter(baseCharacter);
           const isSelected = selectedCharacterId === character.id;
           const currentLevel = characterLevels[character.id] || 1;
-          
+          const characterState = buildStateToSave(character);
+          const warnings = validateCharacter(characterState);
+
           const featureChips = character.features
             .slice(0, 3)
             .reduce<Array<{ key: string; label: string }>>((chips, feature) => {
@@ -594,7 +616,7 @@ export function PreGeneratedCharacters() {
               <div className="w-full h-40 bg-linear-to-br from-[#D4AF37]/10 to-[#9CA3AF]/5 border-b border-white/10 flex items-center justify-center relative overflow-hidden">
                 {/* biome-ignore lint/performance/noImgElement: External seed-based images */}
                 <img
-                  src={`https://picsum.photos/seed/${character.id}/400/400`}
+                  src={`/images/character-portraits/pregen/${character.id}.png`}
                   alt={character.name}
                   className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-overlay"
                 />
@@ -620,9 +642,12 @@ export function PreGeneratedCharacters() {
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setCharacterLevels(prev => ({ ...prev, [character.id]: 1 }));
+                        setCharacterLevels((prev) => ({
+                          ...prev,
+                          [character.id]: 1,
+                        }));
                       }}
-                      className={`px-2 py-1 text-[10px] font-bold rounded border ${currentLevel === 1 ? 'bg-[#D4AF37] text-[#0B0F1A] border-[#D4AF37]' : 'bg-black/40 text-[#9CA3AF] border-white/10'}`}
+                      className={`px-2 py-1 text-[10px] font-bold rounded border ${currentLevel === 1 ? "bg-[#D4AF37] text-[#0B0F1A] border-[#D4AF37]" : "bg-black/40 text-[#9CA3AF] border-white/10"}`}
                     >
                       L1
                     </button>
@@ -630,9 +655,12 @@ export function PreGeneratedCharacters() {
                       type="button"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setCharacterLevels(prev => ({ ...prev, [character.id]: 2 }));
+                        setCharacterLevels((prev) => ({
+                          ...prev,
+                          [character.id]: 2,
+                        }));
                       }}
-                      className={`px-2 py-1 text-[10px] font-bold rounded border ${currentLevel === 2 ? 'bg-[#D4AF37] text-[#0B0F1A] border-[#D4AF37]' : 'bg-black/40 text-[#9CA3AF] border-white/10'}`}
+                      className={`px-2 py-1 text-[10px] font-bold rounded border ${currentLevel === 2 ? "bg-[#D4AF37] text-[#0B0F1A] border-[#D4AF37]" : "bg-black/40 text-[#9CA3AF] border-white/10"}`}
                     >
                       L2
                     </button>
@@ -642,7 +670,10 @@ export function PreGeneratedCharacters() {
               <CardContent className="space-y-4">
                 <div>
                   <p className="text-sm font-semibold text-[#F9FAFB]">
-                    {character.characterClass} {character.subclass !== "None" ? `(${character.subclass})` : ""}
+                    {character.characterClass}{" "}
+                    {character.subclass !== "None"
+                      ? `(${character.subclass})`
+                      : ""}
                   </p>
                   <p className="text-xs text-[#9CA3AF]">
                     {character.archetype}
@@ -666,7 +697,8 @@ export function PreGeneratedCharacters() {
                       Stats (L{currentLevel})
                     </p>
                     <p className="mt-1 text-[#D4AF37]">
-                      STR {character.abilities.STR}, DEX {character.abilities.DEX}...
+                      STR {character.abilities.STR}, DEX{" "}
+                      {character.abilities.DEX}...
                     </p>
                   </div>
                   <div className="rounded-md border border-white/10 bg-black/20 px-3 py-2">
@@ -720,10 +752,31 @@ export function PreGeneratedCharacters() {
                       </DialogHeader>
 
                       <div className="space-y-6 text-[#E5E7EB]">
+                        {warnings.length > 0 && (
+                          <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
+                            <div className="flex items-center gap-2 mb-2">
+                              <AlertTriangle className="w-5 h-5 text-amber-500" />
+                              <h3 className="font-semibold text-amber-500">
+                                Character Build Recommendations
+                              </h3>
+                            </div>
+                            <ul className="list-disc list-inside space-y-1 pl-7">
+                              {warnings.map((warning) => (
+                                <li
+                                  key={warning.message}
+                                  className="text-sm text-amber-200/80"
+                                >
+                                  {warning.message}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+
                         <div className="bg-white/5 border border-white/10 rounded-lg p-4 flex flex-col sm:flex-row gap-6 items-center sm:items-start">
                           {/* biome-ignore lint/performance/noImgElement: External seed-based images */}
                           <img
-                            src={`https://picsum.photos/seed/${character.id}/400/400`}
+                            src={`/images/character-portraits/pregen/${character.id}.png`}
                             alt={character.name}
                             className="w-32 h-32 rounded-full object-cover border-2 border-[#D4AF37]/50 shadow-lg shadow-[#D4AF37]/20"
                           />
@@ -902,6 +955,58 @@ export function PreGeneratedCharacters() {
                                   }
                                   tone="indigo"
                                 />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="bg-white/5 border border-white/10 rounded-lg p-4">
+                          <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-3">
+                            Combat Actions & Bonus Actions
+                          </h3>
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <p className="text-[#9CA3AF] uppercase tracking-wide text-xs mb-2">
+                                Actions
+                              </p>
+                              <div className="space-y-2">
+                                {character.combatActions
+                                  .filter((a) => a.type === "Action")
+                                  .map((action) => (
+                                    <div
+                                      key={action.name}
+                                      className="p-3 rounded bg-black/20 border border-white/5"
+                                    >
+                                      <p className="text-xs font-bold text-[#D4AF37]">
+                                        {action.name}
+                                      </p>
+                                      <p className="text-[10px] text-[#9CA3AF]">
+                                        {action.description}
+                                      </p>
+                                    </div>
+                                  ))}
+                              </div>
+                            </div>
+                            <div>
+                              <p className="text-[#9CA3AF] uppercase tracking-wide text-xs mb-2">
+                                Bonus Actions
+                              </p>
+                              <div className="space-y-2">
+                                {character.combatActions
+                                  .filter((a) => a.type === "Bonus Action")
+                                  .map((action) => (
+                                    <div
+                                      key={action.name}
+                                      className="p-3 rounded bg-black/20 border border-white/5"
+                                    >
+                                      <p className="text-xs font-bold text-indigo-300">
+                                        {action.name}
+                                      </p>
+                                      <p className="text-[10px] text-[#9CA3AF]">
+                                        {action.description}
+                                      </p>
+                                    </div>
+                                  ))}
                               </div>
                             </div>
                           </div>

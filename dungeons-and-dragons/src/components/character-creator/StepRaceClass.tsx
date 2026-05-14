@@ -49,6 +49,7 @@ export function StepRaceClass() {
                   subrace: "",
                   ...buildCharacterDefaults({
                     race: val,
+                    subrace: "",
                     characterClass: state.characterClass,
                     background: state.background,
                   }),
@@ -73,7 +74,17 @@ export function StepRaceClass() {
               <Label className="text-indigo-200">Subrace / Type</Label>
               <Select
                 value={state.subrace}
-                onValueChange={(val) => updateState({ subrace: val })}
+                onValueChange={(val) => {
+                  updateState({
+                    subrace: val,
+                    ...buildCharacterDefaults({
+                      race: state.race,
+                      subrace: val,
+                      characterClass: state.characterClass,
+                      background: state.background,
+                    }),
+                  });
+                }}
               >
                 <SelectTrigger className="bg-black/40 border-white/10 text-white">
                   <SelectValue placeholder="Select Subrace" />
@@ -109,6 +120,7 @@ export function StepRaceClass() {
                   subclass: "",
                   ...buildCharacterDefaults({
                     race: state.race,
+                    subrace: state.subrace,
                     characterClass: val,
                     background: state.background,
                   }),

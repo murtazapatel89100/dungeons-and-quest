@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText, Wand2 } from "lucide-react";
+import { AlertTriangle, FileText, Wand2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { type ChangeEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -27,9 +27,11 @@ import {
 import {
   type Alignment,
   type CharacterState,
+  type CombatAction,
   INITIAL_CHARACTER_STATE,
   type SkillName,
 } from "@/lib/character-types";
+import { validateCharacter } from "@/lib/character-validation";
 
 type AbilityScore = "STR" | "DEX" | "CON" | "INT" | "WIS" | "CHA";
 
@@ -53,6 +55,7 @@ type QuickCharacter = {
   savingThrows: AbilityScore[];
   feats: string[];
   features: string[];
+  combatActions: CombatAction[];
   languages: string[];
   proficiencies: {
     armor: string[];
@@ -157,8 +160,13 @@ function buildBackstory(character: QuickCharacter) {
   const trait = chooseRandom(character.personality.traits);
   const goal = chooseRandom(character.personality.goals);
   const secret = chooseRandom(character.personality.secrets);
-  
-  const backstories = getAlignmentBackstories(character.alignment, character.race, character.characterClass, character.background);
+
+  const backstories = getAlignmentBackstories(
+    character.alignment,
+    character.race,
+    character.characterClass,
+    character.background,
+  );
   const baseStory = chooseRandom(backstories);
 
   return `${baseStory} Guided by ${character.deity}, ${character.name} relies on ${trait.toLowerCase()} instincts and chases ${goal.toLowerCase()} while guarding a secret: ${secret.toLowerCase()}.`;
@@ -211,8 +219,10 @@ function generateCharacter(level = 1): QuickCharacter {
   const personality = buildPersonality();
   const metaLevel = level;
 
-  const abilities = { ...(defaults.abilities ?? INITIAL_CHARACTER_STATE.abilities) };
-  
+  const abilities = {
+    ...(defaults.abilities ?? INITIAL_CHARACTER_STATE.abilities),
+  };
+
   // Stat boost for level 2: ensure minimum values
   if (level >= 2) {
     for (const stat in abilities) {
@@ -253,6 +263,7 @@ function generateCharacter(level = 1): QuickCharacter {
     savingThrows: defaults.savingThrows ?? [],
     feats,
     features: defaults.features ?? [],
+    combatActions: defaults.combatActions ?? [],
     languages: defaults.languages ?? ["Common"],
     proficiencies: defaults.proficiencies ?? {
       armor: [],
@@ -308,6 +319,50 @@ function DetailChipList({
   );
 }
 
+function buildStateToSave(
+  character: QuickCharacter,
+  finalName: string,
+): CharacterState {
+  return {
+    ...INITIAL_CHARACTER_STATE,
+    identity: {
+      name: finalName,
+      gender: character.gender,
+      age: character.age,
+      height: character.height,
+      weight: character.weight,
+      alignment: character.alignment as Alignment,
+      deity: character.deity,
+      title: character.title,
+      imageUrl: character.imageUrl,
+    },
+    race: character.race,
+    subrace: character.subrace,
+    characterClass: character.characterClass,
+    subclass: character.subclass,
+    background: character.background,
+    abilities: character.abilities,
+    skills: character.skills as SkillName[],
+    savingThrows: character.savingThrows,
+    feats: character.feats,
+    features: character.features,
+    combatActions: character.combatActions,
+    languages: character.languages,
+    proficiencies: character.proficiencies,
+    weapons: character.weapons,
+    armor: character.armor,
+    equipment: character.equipment,
+    tools: character.tools,
+    currency: character.currency,
+    spells: { 0: character.spells },
+    personality: {
+      ...character.personality,
+      backstory: character.backstory,
+    },
+    meta: character.meta,
+  };
+}
+
 export function QuickCharacterGenerator() {
   const router = useRouter();
   const [level, setLevel] = useState<number>(1);
@@ -328,11 +383,11 @@ export function QuickCharacterGenerator() {
   const handleLevelChange = (newLevel: number) => {
     if (newLevel === level) return;
     setLevel(newLevel);
-    setCharacter(prev => {
+    setCharacter((prev) => {
       const updated = { ...prev };
       const classRule = getClassRule(updated.characterClass);
       const primaryStats = classRule?.abilityPriority.slice(0, 2) || [];
-      
+
       if (newLevel === 2 && prev.meta.level === 1) {
         updated.meta = { ...prev.meta, level: 2, xp: 300 };
         updated.abilities = { ...prev.abilities };
@@ -340,8 +395,14 @@ export function QuickCharacterGenerator() {
           const key = stat as AbilityScore;
           updated.abilities[key] += primaryStats.includes(key) ? 2 : 1;
         }
-        const subclasses = CLASSES_AND_SUBCLASSES[updated.characterClass as keyof typeof CLASSES_AND_SUBCLASSES];
-        updated.subclass = subclasses && subclasses.length > 0 ? chooseRandom(subclasses) : "None";
+        const subclasses =
+          CLASSES_AND_SUBCLASSES[
+            updated.characterClass as keyof typeof CLASSES_AND_SUBCLASSES
+          ];
+        updated.subclass =
+          subclasses && subclasses.length > 0
+            ? chooseRandom(subclasses)
+            : "None";
       } else if (newLevel === 1 && prev.meta.level === 2) {
         updated.meta = { ...prev.meta, level: 1, xp: 0 };
         updated.abilities = { ...prev.abilities };
@@ -355,53 +416,21 @@ export function QuickCharacterGenerator() {
     });
   };
 
-  const handleViewSheet = () => {
-    const finalName = name.trim() || character.name;
+  const displayName = name.trim() || character.name;
 
-    const stateToSave: CharacterState = {
-      ...INITIAL_CHARACTER_STATE,
-      identity: {
-        name: finalName,
-        gender: character.gender,
-        age: character.age,
-        height: character.height,
-        weight: character.weight,
-        alignment: character.alignment as Alignment,
-        deity: character.deity,
-        title: character.title,
-        imageUrl: character.imageUrl,
-      },
-      race: character.race,
-      subrace: character.subrace,
-      characterClass: character.characterClass,
-      subclass: character.subclass,
-      background: character.background,
-      abilities: character.abilities,
-      skills: character.skills as SkillName[],
-      savingThrows: character.savingThrows,
-      feats: character.feats,
-      features: character.features,
-      languages: character.languages,
-      proficiencies: character.proficiencies,
-      weapons: character.weapons,
-      armor: character.armor,
-      equipment: character.equipment,
-      tools: character.tools,
-      currency: character.currency,
-      spells: { 0: character.spells },
-      personality: {
-        ...character.personality,
-        backstory: character.backstory,
-      },
-      meta: character.meta,
-    };
+  const handleViewSheet = () => {
+    const stateToSave = buildStateToSave(character, displayName);
     localStorage.setItem("dnd_character_sheet", JSON.stringify(stateToSave));
     router.push("/characters/sheet");
   };
 
-  const displayName = name.trim() || character.name;
   const conModifier = Math.floor((character.abilities.CON - 10) / 2);
-  const hitPoints = Math.max(1, (character.meta.level === 2 ? 16 : 8) + conModifier);
+  const hitPoints = Math.max(
+    1,
+    (character.meta.level === 2 ? 16 : 8) + conModifier,
+  );
+  const characterState = buildStateToSave(character, displayName);
+  const warnings = validateCharacter(characterState);
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
@@ -418,13 +447,13 @@ export function QuickCharacterGenerator() {
       <div className="flex justify-center gap-4 mb-6">
         <Button
           onClick={() => handleLevelChange(1)}
-          className={`${level === 1 ? 'bg-[#D4AF37] text-[#0B0F1A]' : 'bg-white/5 text-white border-white/10'} font-bold border`}
+          className={`${level === 1 ? "bg-[#D4AF37] text-[#0B0F1A]" : "bg-white/5 text-white border-white/10"} font-bold border`}
         >
           Level 1
         </Button>
         <Button
           onClick={() => handleLevelChange(2)}
-          className={`${level === 2 ? 'bg-[#D4AF37] text-[#0B0F1A]' : 'bg-white/5 text-white border-white/10'} font-bold border`}
+          className={`${level === 2 ? "bg-[#D4AF37] text-[#0B0F1A]" : "bg-white/5 text-white border-white/10"} font-bold border`}
         >
           Level 2
         </Button>
@@ -445,7 +474,9 @@ export function QuickCharacterGenerator() {
               className="absolute inset-0 bg-black/60 rounded-full flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-not-allowed border-2 border-dashed border-[#D4AF37]/50"
             >
               <span className="text-[10px] font-bold text-[#D4AF37] uppercase tracking-wider text-center px-1 leading-tight">
-                Add Your Own<br/>Image
+                Add Your Own
+                <br />
+                Image
               </span>
               <span className="text-[8px] text-white/70 uppercase tracking-widest mt-1">
                 (Coming Soon)
@@ -462,6 +493,27 @@ export function QuickCharacterGenerator() {
           </div>
         </CardHeader>
         <CardContent className="space-y-8 text-[#E5E7EB] pt-6">
+          {warnings.length > 0 && (
+            <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <AlertTriangle className="w-5 h-5 text-amber-500" />
+                <h3 className="font-semibold text-amber-500">
+                  Character Build Recommendations
+                </h3>
+              </div>
+              <ul className="list-disc list-inside space-y-1 pl-7">
+                {warnings.map((warning) => (
+                  <li
+                    key={warning.message}
+                    className="text-sm text-amber-200/80"
+                  >
+                    {warning.message}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <div className="bg-white/5 border border-white/10 rounded-xl p-6">
             <Label className="text-indigo-200 mb-3 block font-semibold">
               Character Name
@@ -619,6 +671,58 @@ export function QuickCharacterGenerator() {
                     Class / Racial Features
                   </p>
                   <DetailChipList items={character.features} tone="slate" />
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+              <h3 className="font-['Cinzel'] text-lg text-[#F9FAFB] mb-4 font-bold">
+                Combat Actions & Bonus Actions
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-[#9CA3AF] uppercase tracking-wide text-xs mb-3">
+                    Actions
+                  </p>
+                  <div className="space-y-2 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                    {character.combatActions
+                      .filter((a) => a.type === "Action")
+                      .map((action) => (
+                        <div
+                          key={action.name}
+                          className="p-3 rounded-lg bg-black/20 border border-white/5"
+                        >
+                          <p className="text-sm font-bold text-[#D4AF37]">
+                            {action.name}
+                          </p>
+                          <p className="text-xs text-[#9CA3AF]">
+                            {action.description}
+                          </p>
+                        </div>
+                      ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-[#9CA3AF] uppercase tracking-wide text-xs mb-3">
+                    Bonus Actions
+                  </p>
+                  <div className="space-y-2 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                    {character.combatActions
+                      .filter((a) => a.type === "Bonus Action")
+                      .map((action) => (
+                        <div
+                          key={action.name}
+                          className="p-3 rounded-lg bg-black/20 border border-white/5"
+                        >
+                          <p className="text-sm font-bold text-indigo-300">
+                            {action.name}
+                          </p>
+                          <p className="text-xs text-[#9CA3AF]">
+                            {action.description}
+                          </p>
+                        </div>
+                      ))}
+                  </div>
                 </div>
               </div>
             </div>
