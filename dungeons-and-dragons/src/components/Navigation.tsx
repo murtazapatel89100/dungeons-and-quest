@@ -77,20 +77,31 @@ export function Navigation() {
         </button>
       </div>
 
-      {/* Mobile Nav */}
-      {mobileMenuOpen && (
-        <div className="absolute top-full left-0 w-full bg-[#0B0F1A]/95 backdrop-blur-md border-b border-[#D4AF37]/20 shadow-xl py-6 px-6 flex flex-col gap-6 md:hidden z-40">
-          {navLinks.map((link) => (
-            <Link
-              key={link.path}
-              href={link.path}
-              className="font-['Cinzel'] uppercase text-lg tracking-wider text-[#9CA3AF] hover:text-[#D4AF37] transition-colors border-b border-[#9CA3AF]/10 pb-3"
-            >
-              {link.name}
-            </Link>
-          ))}
-        </div>
-      )}
+      {/* Mobile Nav Overlay */}
+      <div
+        className={`absolute top-0 left-0 w-full h-screen bg-black/60 backdrop-blur-sm transition-opacity duration-300 md:hidden -z-10 ${
+          mobileMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        }`}
+        onClick={() => setMobileMenuOpen(false)}
+      />
+
+      {/* Mobile Nav Drawer */}
+      <div
+        className={`absolute top-0 right-0 h-screen w-64 sm:w-80 bg-[#0B0F1A]/95 backdrop-blur-md border-l border-[#D4AF37]/20 shadow-2xl py-24 px-6 flex flex-col gap-6 md:hidden z-40 transform transition-transform duration-300 ease-in-out ${
+          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        {navLinks.map((link) => (
+          <Link
+            key={link.path}
+            href={link.path}
+            className="font-['Cinzel'] uppercase text-lg tracking-wider text-[#9CA3AF] hover:text-[#D4AF37] transition-colors border-b border-[#9CA3AF]/10 pb-3"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            {link.name}
+          </Link>
+        ))}
+      </div>
     </header>
   );
 }
