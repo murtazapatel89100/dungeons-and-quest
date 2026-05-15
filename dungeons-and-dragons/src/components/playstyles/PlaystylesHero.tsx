@@ -51,7 +51,7 @@ export function PlaystylesHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
-          className="text-base md:text-2xl text-[#D1D5DB] max-w-3xl mx-auto mb-10 md:mb-12 font-light leading-relaxed"
+          className="text-base md:text-2xl text-[#D1D5DB] max-w-3xl mx-auto mb-10 md:mb-12 font-bold leading-relaxed"
         >
           From tabletop storytelling to cinematic RPGs, discover the path that
           fits your style. The world of Dungeons & Dragons is vast—how will you

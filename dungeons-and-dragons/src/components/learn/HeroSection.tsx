@@ -2,6 +2,7 @@
 
 import { BookOpen } from "lucide-react";
 import { motion } from "motion/react";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export function HeroSection() {
@@ -11,15 +12,17 @@ export function HeroSection() {
   return (
     <section className="relative w-full h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Background Image with Overlay */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: "url('/images/homepage/banner/hero-adventure.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F1A]/80 via-[#0B0F1A]/60 to-[#0B0F1A] z-10" />
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/homepage/banner/hero-adventure.png"
+          alt="Hero Adventure Background"
+          fill
+          priority
+          className="object-cover object-center"
+          quality={10}
+        />
+
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-[#0B0F1A]/80 via-[#0B0F1A]/60 to-[#0B0F1A]" />
       </div>
 
       <div className="absolute inset-0 z-10 pointer-events-none overflow-hidden">
@@ -77,7 +80,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
-          className="text-base md:text-2xl text-[#9CA3AF] max-w-2xl mx-auto mb-10 font-light"
+          className="text-base md:text-2xl font-bold text-[#9CA3AF] max-w-2xl mx-auto mb-10"
         >
           From your first dice roll to your first campaign. Step into a realm of
           infinite imagination and collaborative storytelling.

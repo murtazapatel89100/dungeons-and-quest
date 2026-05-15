@@ -47,7 +47,7 @@ export function RulesHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
-          className="text-base md:text-2xl text-[#9CA3AF] max-w-2xl mx-auto mb-10 font-light"
+          className="text-base md:text-2xl text-[#9CA3AF] max-w-2xl mx-auto mb-10 font-bold"
         >
           A reference guide to the core mechanics, conditions, and environmental
           rules that govern the world.

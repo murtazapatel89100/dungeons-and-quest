@@ -103,7 +103,7 @@ export function HeroCarousel() {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="font-sans text-base md:text-xl lg:text-2xl text-[#9CA3AF] max-w-2xl mb-12 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] px-2"
+              className="font-sans text-base font-bold md:text-xl lg:text-2xl text-[#9CA3AF] max-w-2xl mb-12 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] px-2"
             >
               {SLIDES[currentIndex].subtitle}
             </motion.p>

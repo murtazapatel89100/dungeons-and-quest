@@ -47,7 +47,7 @@ export function ToolsHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
-          className="text-base md:text-2xl text-[#9CA3AF] max-w-2xl mx-auto mb-10 font-light"
+          className="text-base md:text-2xl text-[#9CA3AF] max-w-2xl mx-auto mb-10 font-bold"
         >
           Generators, dice rollers, and interactive utilities to run your
           campaigns smoothly.
