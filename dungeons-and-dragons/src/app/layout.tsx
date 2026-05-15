@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
+
+import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
-
 import { constructMetadata, defaultSEO } from "../../config/seo";
 
 export const metadata: Metadata = {
@@ -56,6 +57,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
