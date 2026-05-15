@@ -43,6 +43,7 @@ function WizardContent() {
   const handleNext = () => {
     if (!isLastStep) {
       setCurrentStepIndex((prev) => prev + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       // Complete character
       localStorage.setItem("dnd_character_sheet", JSON.stringify(state));
@@ -51,7 +52,10 @@ function WizardContent() {
   };
 
   const handleBack = () => {
-    if (!isFirstStep) setCurrentStepIndex((prev) => prev - 1);
+    if (!isFirstStep) {
+      setCurrentStepIndex((prev) => prev - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   return (
@@ -59,17 +63,17 @@ function WizardContent() {
       {/* Header and Controls */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-6 bg-card/40 backdrop-blur-md p-6 rounded-2xl border border-white/5 shadow-2xl">
         <div>
-          <h1 className="text-4xl font-black font-['Cinzel'] tracking-wider text-transparent bg-clip-text bg-linear-to-r from-neutral-100 to-neutral-400 mb-2">
+          <h1 className="text-2xl md:text-4xl font-black font-heading tracking-wider text-transparent bg-clip-text bg-linear-to-r from-neutral-100 to-neutral-400 mb-2">
             Chronicles of the Hero
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-sm md:text-base">
             Forge your destiny and shape your legend.
           </p>
         </div>
       </div>
 
       {/* Progress Indicator */}
-      <div className="relative">
+      <div className="relative px-2">
         <div className="absolute top-1/2 left-0 w-full h-0.5 bg-white/5 -translate-y-1/2 rounded-full" />
         <div
           className="absolute top-1/2 left-0 h-0.5 bg-indigo-500/50 -translate-y-1/2 rounded-full transition-all duration-500 ease-in-out"
@@ -85,10 +89,10 @@ function WizardContent() {
             return (
               <div
                 key={step.id}
-                className="flex flex-col items-center gap-2 relative z-10 w-24"
+                className="flex flex-col items-center gap-2 relative z-10"
               >
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 backdrop-blur-sm
+                  className={`w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center border-2 transition-all duration-300 backdrop-blur-sm
                     ${
                       isCompleted
                         ? "bg-indigo-500/20 border-indigo-500 text-indigo-400"
@@ -98,15 +102,15 @@ function WizardContent() {
                     }`}
                 >
                   {isCompleted ? (
-                    <CheckCircle2 className="w-5 h-5" />
+                    <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5" />
                   ) : (
-                    <span className="text-sm font-semibold font-['Cinzel']">
+                    <span className="text-xs md:text-sm font-semibold font-heading">
                       {index + 1}
                     </span>
                   )}
                 </div>
                 <span
-                  className={`text-xs font-medium text-center ${isCurrent ? "text-white" : "text-muted-foreground"}`}
+                  className={`hidden sm:block text-[10px] md:text-xs font-medium text-center ${isCurrent ? "text-white" : "text-muted-foreground"}`}
                 >
                   {step.title}
                 </span>
@@ -154,21 +158,21 @@ function WizardContent() {
       </div>
 
       {/* Footer Navigation */}
-      <div className="flex justify-between items-center py-4">
+      <div className="flex flex-row justify-between items-center py-4 gap-4">
         <Button
           variant="outline"
           onClick={handleBack}
           disabled={isFirstStep}
-          className="border-white/10 bg-black/40 hover:bg-white/10 hover:text-white shrink-0"
+          className="flex-1 sm:flex-none border-white/10 bg-black/40 hover:bg-white/10 hover:text-white shrink-0"
         >
           <ChevronLeft className="w-4 h-4 mr-2" /> Back
         </Button>
 
         <Button
           onClick={handleNext}
-          className="bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-900/50 shrink-0 px-8"
+          className="flex-1 sm:flex-none bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-900/50 shrink-0 px-4 md:px-8"
         >
-          {isLastStep ? "Complete Character" : "Next Step"}{" "}
+          {isLastStep ? "Complete" : "Next Step"}{" "}
           <ChevronRight className="w-4 h-4 ml-2" />
         </Button>
       </div>

@@ -10,7 +10,7 @@ export function CoreMechanics() {
   return (
     <section className="relative w-full py-16">
       <div className="text-center mb-16">
-        <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4">
+        <h2 className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4">
           Core <span className="text-[#3B82F6]">Mechanics</span>
         </h2>
         <p className="text-[#9CA3AF] max-w-2xl mx-auto">
@@ -32,7 +32,7 @@ export function CoreMechanics() {
             <div className="p-3 bg-[#3B82F6]/20 rounded-lg border border-[#3B82F6]/30">
               <Scale className="w-8 h-8 text-[#60A5FA]" />
             </div>
-            <h3 className="font-['Cinzel'] text-3xl text-[#F9FAFB]">
+            <h3 className="font-heading md:text-3xl text-2xl text-[#F9FAFB]">
               {advantage.title}
             </h3>
           </div>
@@ -64,7 +64,7 @@ export function CoreMechanics() {
             <div className="p-3 bg-[#F59E0B]/20 rounded-lg border border-[#F59E0B]/30">
               <Target className="w-8 h-8 text-[#FBBF24]" />
             </div>
-            <h3 className="font-['Cinzel'] text-3xl text-[#F9FAFB]">
+            <h3 className="font-heading md:text-3xl text-2xl text-[#F9FAFB]">
               {dc.title}
             </h3>
           </div>
@@ -75,7 +75,7 @@ export function CoreMechanics() {
 
           <div className="bg-[#0B0F1A] rounded-xl border border-[#1F2937] overflow-hidden relative z-10">
             <table className="w-full text-sm text-left">
-              <thead className="bg-[#1F2937]/50 text-[#F9FAFB] font-['Cinzel'] uppercase">
+              <thead className="bg-[#1F2937]/50 text-[#F9FAFB] font-heading uppercase">
                 <tr>
                   <th className="px-6 py-4 font-semibold">Task Difficulty</th>
                   <th className="px-6 py-4 font-semibold text-right">

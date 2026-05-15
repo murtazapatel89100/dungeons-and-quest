@@ -92,7 +92,7 @@ export function GeneratorControls() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] bg-slate-950 border-white/10 text-white">
         <DialogHeader>
-          <DialogTitle className="text-xl font-['Cinzel'] tracking-wide border-b border-white/10 pb-4">
+          <DialogTitle className="text-xl font-heading tracking-wide border-b border-white/10 pb-4">
             Generator Controls
           </DialogTitle>
         </DialogHeader>

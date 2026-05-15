@@ -106,7 +106,7 @@ export function StepDetails() {
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 h-full flex flex-col">
       <div className="border-b border-white/10 pb-4 shrink-0">
-        <h2 className="text-2xl font-['Cinzel'] font-bold text-white mb-2">
+        <h2 className="text-2xl md:text-4xl font-heading font-bold text-white mb-2">
           Persona & Backstory
         </h2>
         <p className="text-muted-foreground">
@@ -118,7 +118,7 @@ export function StepDetails() {
         {/* Backstory Section - spanning full width */}
         <div className="space-y-4 md:col-span-2 bg-black/20 p-4 rounded-xl border border-indigo-500/20">
           <div className="flex justify-between items-center mb-1">
-            <Label className="text-indigo-200 text-lg flex items-center gap-2">
+            <Label className="text-indigo-200 text-base md:text-lg flex items-center gap-2">
               <BookOpen className="w-5 h-5 text-indigo-400" /> Backstory
             </Label>
           </div>

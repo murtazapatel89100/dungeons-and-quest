@@ -19,7 +19,7 @@ export function ComparisonTable() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4"
+            className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4"
           >
             Compare <span className="text-[#D4AF37]">Experiences</span>
           </motion.h2>
@@ -45,19 +45,19 @@ export function ComparisonTable() {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="bg-[#1F2937]/50 border-b border-[#374151]">
-                <th className="p-6 font-['Cinzel'] text-[#D4AF37] text-lg font-bold">
+                <th className="p-6 font-heading text-[#D4AF37] text-base md:text-lg font-bold">
                   Experience
                 </th>
-                <th className="p-6 font-['Cinzel'] text-[#F9FAFB] text-sm uppercase tracking-wider">
+                <th className="p-6 font-heading text-[#F9FAFB] text-sm uppercase tracking-wider">
                   Social Level
                 </th>
-                <th className="p-6 font-['Cinzel'] text-[#F9FAFB] text-sm uppercase tracking-wider">
+                <th className="p-6 font-heading text-[#F9FAFB] text-sm uppercase tracking-wider">
                   Combat Focus
                 </th>
-                <th className="p-6 font-['Cinzel'] text-[#F9FAFB] text-sm uppercase tracking-wider">
+                <th className="p-6 font-heading text-[#F9FAFB] text-sm uppercase tracking-wider">
                   Roleplay Focus
                 </th>
-                <th className="p-6 font-['Cinzel'] text-[#F9FAFB] text-sm uppercase tracking-wider">
+                <th className="p-6 font-heading text-[#F9FAFB] text-sm uppercase tracking-wider">
                   Beginner Friendly
                 </th>
               </tr>
@@ -68,7 +68,7 @@ export function ComparisonTable() {
                   key={stat.id}
                   className="hover:bg-[#1F2937]/30 transition-colors duration-300 group"
                 >
-                  <td className="p-6 font-['Cinzel'] text-[#F9FAFB] font-bold group-hover:text-[#D4AF37] transition-colors">
+                  <td className="p-6 font-heading text-[#F9FAFB] font-bold group-hover:text-[#D4AF37] transition-colors">
                     {stat.name}
                   </td>
                   <td className={`p-6 ${scoreColors[stat.social]}`}>

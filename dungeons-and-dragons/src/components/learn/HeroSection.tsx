@@ -65,7 +65,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-          className="font-['Cinzel'] text-5xl md:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-[#F9FAFB] to-[#9CA3AF] drop-shadow-lg mb-6 leading-tight"
+          className="font-accent text-2xl md:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-[#F9FAFB] to-[#9CA3AF] drop-shadow-lg mb-6 leading-tight"
         >
           Learn the World of <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4AF37] via-[#FBBF24] to-[#D4AF37]">
@@ -77,7 +77,7 @@ export function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
-          className="text-xl md:text-2xl text-[#9CA3AF] max-w-2xl mx-auto mb-10 font-light"
+          className="text-base md:text-2xl text-[#9CA3AF] max-w-2xl mx-auto mb-10 font-light"
         >
           From your first dice roll to your first campaign. Step into a realm of
           infinite imagination and collaborative storytelling.

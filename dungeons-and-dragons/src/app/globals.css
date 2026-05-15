@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
@@ -82,6 +81,10 @@
 }
 
 @theme inline {
+  --font-sans: var(--font-rajdhani), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-heading: var(--font-cinzel), serif;
+  --font-accent: var(--font-medieval-sharp), cursive;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);

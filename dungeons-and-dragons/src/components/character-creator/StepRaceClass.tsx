@@ -30,7 +30,7 @@ export function StepRaceClass() {
       <div className="bg-white/5 border border-white/10 rounded-xl p-6 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
-        <h3 className="text-xl font-['Cinzel'] font-bold text-white mb-4">
+        <h3 className="text-xl font-heading font-bold text-white mb-4">
           Race & Ancestry
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
@@ -101,7 +101,7 @@ export function StepRaceClass() {
       <div className="bg-white/5 border border-white/10 rounded-xl p-6 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-rose-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
 
-        <h3 className="text-xl font-['Cinzel'] font-bold text-white mb-4">
+        <h3 className="text-xl font-heading font-bold text-white mb-4">
           Class & Profession
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">

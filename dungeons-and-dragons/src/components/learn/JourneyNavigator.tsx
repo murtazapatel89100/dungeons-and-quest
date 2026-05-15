@@ -53,10 +53,10 @@ export function JourneyNavigator() {
   return (
     <section className="relative w-full py-16">
       <div className="text-center mb-12">
-        <h2 className="font-['Cinzel'] text-3xl md:text-4xl text-[#D4AF37] mb-4">
+        <h2 className="font-heading text-2xl md:text-4xl text-[#D4AF37] mb-4">
           Your Journey Begins
         </h2>
-        <p className="text-[#9CA3AF] font-['Inter'] max-w-2xl mx-auto">
+        <p className="text-[#9CA3AF] font-sans max-w-2xl mx-auto">
           Follow the path to master the rules and concepts of Dungeons &
           Dragons.
         </p>
@@ -96,7 +96,7 @@ export function JourneyNavigator() {
                 <div className="absolute inset-0 rounded-full bg-[#D4AF37]/0 group-hover:bg-[#D4AF37]/10 blur-md transition-all duration-300" />
                 <Icon className="w-8 h-8 text-[#9CA3AF] group-hover:text-[#D4AF37] transition-colors duration-300 z-10" />
               </div>
-              <h3 className="text-center font-['Cinzel'] text-sm md:text-base text-[#9CA3AF] group-hover:text-[#F9FAFB] transition-colors duration-300">
+              <h3 className="text-center font-heading text-sm md:text-base text-[#9CA3AF] group-hover:text-[#F9FAFB] transition-colors duration-300">
                 {chapter.title}
               </h3>
             </motion.div>

@@ -48,12 +48,12 @@ export function HowItWorks() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-['Cinzel'] text-3xl md:text-5xl text-[#F9FAFB] uppercase tracking-widest mb-4"
+            className="font-heading text-3xl md:text-5xl text-[#F9FAFB] uppercase tracking-widest mb-4"
           >
             The Hero's Journey
           </motion.h2>
           <div className="w-32 h-1 bg-gradient-to-r from-transparent via-[#6D28D9] to-transparent mx-auto opacity-70"></div>
-          <p className="font-['Inter'] text-[#9CA3AF] mt-6 max-w-xl mx-auto">
+          <p className="font-sans text-[#9CA3AF] mt-6 max-w-xl mx-auto">
             Embark on your quest in four legendary steps.
           </p>
         </div>
@@ -75,7 +75,7 @@ export function HowItWorks() {
               <div className="relative mb-6">
                 <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#D4AF37] to-[#6D28D9] blur-md opacity-30 group-hover:opacity-60 transition-opacity duration-500" />
                 <div className="w-24 h-24 rounded-full border-2 border-[#D4AF37]/50 bg-[#0B0F1A] flex items-center justify-center relative shadow-[0_0_15px_rgba(212,175,55,0.2)] group-hover:border-[#D4AF37] group-hover:scale-110 transition-all duration-300">
-                  <span className="absolute -top-3 bg-[#111827] px-2 font-['Cinzel'] text-[#D4AF37] font-bold text-sm border border-[#D4AF37]/50 rounded-sm">
+                  <span className="absolute -top-3 bg-[#111827] px-2 font-heading text-[#D4AF37] font-bold text-sm border border-[#D4AF37]/50 rounded-sm">
                     {step.num}
                   </span>
                   <step.icon className="w-10 h-10 text-[#F9FAFB] group-hover:text-[#D4AF37] transition-colors" />
@@ -84,10 +84,10 @@ export function HowItWorks() {
 
               {/* Text Content */}
               <div className="text-center px-4">
-                <h3 className="font-['Cinzel'] text-xl font-bold text-[#F9FAFB] uppercase tracking-wider mb-3 group-hover:text-[#D4AF37] transition-colors">
+                <h3 className="font-heading text-xl font-bold text-[#F9FAFB] uppercase tracking-wider mb-3 group-hover:text-[#D4AF37] transition-colors">
                   {step.title}
                 </h3>
-                <p className="font-['Inter'] text-[#9CA3AF] text-sm leading-relaxed">
+                <p className="font-sans text-[#9CA3AF] text-sm leading-relaxed">
                   {step.desc}
                 </p>
               </div>

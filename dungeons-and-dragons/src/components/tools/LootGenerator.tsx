@@ -181,7 +181,7 @@ export function LootGenerator() {
   return (
     <section className="relative w-full py-16">
       <div className="text-center mb-12 px-4">
-        <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4 flex items-center justify-center gap-4">
+        <h2 className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4 flex items-center justify-center gap-4">
           <Gem className="w-10 h-10 text-[#F59E0B]" />
           Loot <span className="text-[#F59E0B]">Generator</span>
         </h2>
@@ -207,7 +207,7 @@ export function LootGenerator() {
               />
 
               <div className="mt-4 text-center">
-                <span className="font-['Cinzel'] text-[#F59E0B] font-bold tracking-[0.2em] uppercase text-sm group-hover:text-[#FBBF24] transition-colors">
+                <span className="font-heading text-[#F59E0B] font-bold tracking-[0.2em] uppercase text-sm group-hover:text-[#FBBF24] transition-colors">
                   {isOpening
                     ? "Opening..."
                     : generatedLoot
@@ -232,7 +232,7 @@ export function LootGenerator() {
                   <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase mb-2 opacity-80">
                     {generatedLoot.rarity} {generatedLoot.item.type}
                   </span>
-                  <h3 className="font-['Cinzel'] text-2xl md:text-3xl font-bold mb-3 text-[#F9FAFB]">
+                  <h3 className="font-heading text-2xl md:text-3xl font-bold mb-3 text-[#F9FAFB]">
                     {generatedLoot.item.name}
                   </h3>
                   <div className="w-12 h-[1px] bg-[#F59E0B]/30 mb-4" />
@@ -251,7 +251,7 @@ export function LootGenerator() {
                     <Gem className="w-5 h-5" />
                     <div className="w-12 md:w-20 h-[1px] bg-gradient-to-l from-transparent to-[#F9FAFB]" />
                   </div>
-                  <p className="italic text-sm tracking-wide font-['Cinzel']">
+                  <p className="italic text-sm tracking-wide font-heading">
                     The ancient hoard awaits...
                   </p>
                 </motion.div>

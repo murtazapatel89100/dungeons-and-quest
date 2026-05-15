@@ -79,7 +79,7 @@ export function CharacterCreation() {
   return (
     <section className="relative w-full py-16">
       <div className="text-center mb-12">
-        <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4">
+        <h2 className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4">
           Forging Your <span className="text-[#D4AF37]">Hero</span>
         </h2>
         <p className="text-[#9CA3AF] max-w-2xl mx-auto">
@@ -95,7 +95,7 @@ export function CharacterCreation() {
             <button
               type="button"
               onClick={() => handleTabChange("races")}
-              className={`p-3 rounded-lg text-left font-['Cinzel'] transition-all ${
+              className={`p-3 rounded-lg text-left font-heading transition-all ${
                 activeTab === "races"
                   ? "bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/50"
                   : "text-[#9CA3AF] hover:bg-[#1F2937] border border-transparent"
@@ -106,7 +106,7 @@ export function CharacterCreation() {
             <button
               type="button"
               onClick={() => handleTabChange("classes")}
-              className={`p-3 rounded-lg text-left font-['Cinzel'] transition-all ${
+              className={`p-3 rounded-lg text-left font-heading transition-all ${
                 activeTab === "classes"
                   ? "bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/50"
                   : "text-[#9CA3AF] hover:bg-[#1F2937] border border-transparent"
@@ -117,7 +117,7 @@ export function CharacterCreation() {
             <button
               type="button"
               onClick={() => handleTabChange("abilities")}
-              className={`p-3 rounded-lg text-left font-['Cinzel'] transition-all ${
+              className={`p-3 rounded-lg text-left font-heading transition-all ${
                 activeTab === "abilities"
                   ? "bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/50"
                   : "text-[#9CA3AF] hover:bg-[#1F2937] border border-transparent"
@@ -195,7 +195,7 @@ export function CharacterCreation() {
                       {getIcon(learnData.races[selectedItem].icon)}
                     </div>
                     <div>
-                      <h3 className="font-['Cinzel'] text-3xl text-[#F9FAFB]">
+                      <h3 className="font-heading text-3xl text-[#F9FAFB]">
                         {learnData.races[selectedItem].name}
                       </h3>
                       <p className="text-[#9CA3AF] italic">
@@ -203,13 +203,13 @@ export function CharacterCreation() {
                       </p>
                     </div>
                   </div>
-                  <p className="text-[#E5E7EB] text-lg leading-relaxed">
+                  <p className="text-[#E5E7EB] text-base md:text-lg leading-relaxed">
                     {learnData.races[selectedItem].description}
                   </p>
 
                   <div className="bg-[#0B0F1A] border border-[#1F2937] p-6 rounded-lg relative overflow-hidden">
                     <div className="absolute top-0 left-0 w-1 h-full bg-[#D4AF37]" />
-                    <h4 className="font-['Cinzel'] text-xl mb-4 text-[#D4AF37]">
+                    <h4 className="font-heading text-xl mb-4 text-[#D4AF37]">
                       Racial Traits
                     </h4>
                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-[#9CA3AF]">
@@ -234,7 +234,7 @@ export function CharacterCreation() {
                       {getIcon(learnData.classes[selectedItem].icon)}
                     </div>
                     <div>
-                      <h3 className="font-['Cinzel'] text-3xl text-[#F9FAFB]">
+                      <h3 className="font-heading text-3xl text-[#F9FAFB]">
                         {learnData.classes[selectedItem].name}
                       </h3>
                       <p className="text-[#9CA3AF] italic">
@@ -265,13 +265,13 @@ export function CharacterCreation() {
                     </span>
                   </div>
 
-                  <p className="text-[#E5E7EB] text-lg leading-relaxed">
+                  <p className="text-[#E5E7EB] text-base md:text-lg leading-relaxed">
                     {learnData.classes[selectedItem].description}
                   </p>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="bg-[#0B0F1A] border border-[#1F2937] p-5 rounded-lg border-t-2 border-t-green-500/50">
-                      <h4 className="font-['Cinzel'] text-lg mb-3 text-green-400">
+                      <h4 className="font-heading text-lg mb-3 text-green-400">
                         Strengths
                       </h4>
                       <ul className="space-y-2 text-[#9CA3AF]">
@@ -286,7 +286,7 @@ export function CharacterCreation() {
                       </ul>
                     </div>
                     <div className="bg-[#0B0F1A] border border-[#1F2937] p-5 rounded-lg border-t-2 border-t-red-500/50">
-                      <h4 className="font-['Cinzel'] text-lg mb-3 text-red-400">
+                      <h4 className="font-heading text-lg mb-3 text-red-400">
                         Weaknesses
                       </h4>
                       <ul className="space-y-2 text-[#9CA3AF]">
@@ -317,10 +317,10 @@ export function CharacterCreation() {
                             <AbIcon className="w-16 h-16 text-[#D4AF37] mx-auto" />
                           );
                         })()}
-                        <h3 className="font-['Cinzel'] text-4xl text-[#F9FAFB]">
+                        <h3 className="font-heading text-4xl text-[#F9FAFB]">
                           {abilities[selectedItem].name}
                         </h3>
-                        <p className="text-[#9CA3AF] text-lg max-w-xs mx-auto">
+                        <p className="text-base md:text-lg text-[#9CA3AF] max-w-xs mx-auto">
                           {abilities[selectedItem].desc}
                         </p>
                       </div>

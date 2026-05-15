@@ -126,7 +126,7 @@ export function PathQuiz() {
           >
             <Sparkles className="w-8 h-8 text-[#D4AF37]" />
           </motion.div>
-          <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4">
+          <h2 className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4">
             Consult the <span className="text-[#D4AF37]">Oracle</span>
           </h2>
           <p className="text-[#9CA3AF]">
@@ -162,7 +162,7 @@ export function PathQuiz() {
                 <span className="text-[#D4AF37] text-sm font-bold tracking-widest uppercase mb-4 block">
                   Question {currentStep + 1} of {questions.length}
                 </span>
-                <h3 className="text-2xl md:text-3xl font-['Cinzel'] text-[#F9FAFB] mb-8 leading-tight">
+                <h3 className="text-2xl md:text-3xl font-heading text-[#F9FAFB] mb-8 leading-tight">
                   {questions[currentStep].question}
                 </h3>
 
@@ -192,7 +192,7 @@ export function PathQuiz() {
                 <h3 className="text-[#9CA3AF] text-lg mb-2 uppercase tracking-widest">
                   The Oracle Decrees:
                 </h3>
-                <h4 className="font-['Cinzel'] text-4xl md:text-5xl text-[#F9FAFB] mb-8">
+                <h4 className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-8">
                   {getTopResult()}
                 </h4>
 

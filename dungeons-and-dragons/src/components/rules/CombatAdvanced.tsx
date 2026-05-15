@@ -10,7 +10,7 @@ export function CombatAdvanced() {
   return (
     <section className="relative w-full py-16">
       <div className="text-center mb-16">
-        <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4">
+        <h2 className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4">
           Advanced <span className="text-[#DC2626]">Combat</span>
         </h2>
         <p className="text-[#9CA3AF] max-w-2xl mx-auto">
@@ -37,7 +37,7 @@ export function CombatAdvanced() {
                 <div className="absolute top-0 right-0 w-24 h-24 bg-[#DC2626]/5 rounded-full blur-xl -mr-8 -mt-8 group-hover:bg-[#DC2626]/10 transition-colors" />
                 <div className="flex items-center gap-3 mb-2 relative z-10">
                   <Icon className="w-6 h-6 text-[#DC2626]" />
-                  <h3 className="font-['Cinzel'] text-2xl text-[#F9FAFB]">
+                  <h3 className="font-heading text-2xl text-[#F9FAFB]">
                     {section.title}
                   </h3>
                 </div>

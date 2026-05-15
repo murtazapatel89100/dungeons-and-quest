@@ -39,7 +39,7 @@ export function ConditionsGrid() {
   return (
     <section className="relative w-full py-16">
       <div className="text-center mb-16">
-        <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4">
+        <h2 className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4">
           Status <span className="text-[#EC4899]">Conditions</span>
         </h2>
         <p className="text-[#9CA3AF] max-w-2xl mx-auto">
@@ -49,7 +49,7 @@ export function ConditionsGrid() {
         </p>
       </div>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
+      <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 items-start">
         {rulesData.conditions.map((condition, idx) => {
           const isActive = activeConditionId === condition.id;
 
@@ -90,7 +90,7 @@ export function ConditionsGrid() {
                   >
                     {getConditionIcon(condition.icon)}
                   </div>
-                  <h3 className="font-['Cinzel'] text-xl text-[#F9FAFB]">
+                  <h3 className="font-heading text-xl text-[#F9FAFB]">
                     {condition.name}
                   </h3>
                 </div>

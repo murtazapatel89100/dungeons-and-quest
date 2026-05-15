@@ -32,16 +32,16 @@ export function DiceSystem() {
       <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
         {/* Left side: Explanation */}
         <div className="flex-1 space-y-6">
-          <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB]">
+          <h2 className="font-heading text-2xl md:text-4xl text-[#F9FAFB]">
             The <span className="text-[#D4AF37]">d20</span> System
           </h2>
-          <p className="text-[#9CA3AF] text-lg">
+          <p className="text-[#9CA3AF] text-base md:text-lg">
             Almost every action in Dungeons & Dragons is resolved using a
             twenty-sided die, known as a{" "}
             <strong className="text-[#F9FAFB]">d20</strong>.
           </p>
           <div className="bg-[#111827] border border-[#1F2937] p-6 rounded-lg border-l-4 border-l-[#D4AF37]">
-            <h3 className="font-['Cinzel'] text-xl mb-2">How it works:</h3>
+            <h3 className="font-heading text-xl mb-2">How it works:</h3>
             <ol className="list-decimal list-inside space-y-2 text-[#9CA3AF]">
               <li>Roll a d20.</li>
               <li>Add any relevant modifiers (like your Strength score).</li>
@@ -62,7 +62,7 @@ export function DiceSystem() {
           {/* Ambient Glow */}
           <div className="absolute inset-0 bg-gradient-to-tr from-[#D4AF37]/5 to-[#6D28D9]/5 pointer-events-none" />
 
-          <h3 className="font-['Cinzel'] text-xl text-[#F9FAFB] mb-4 relative z-10 flex items-center gap-2">
+          <h3 className="font-heading text-xl text-[#F9FAFB] mb-4 relative z-10 flex items-center gap-2">
             <Dices className="text-[#D4AF37]" />
             Test Your Fate
           </h3>
@@ -118,7 +118,7 @@ export function DiceSystem() {
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="font-['Cinzel'] text-2xl font-bold text-[#D4AF37]"
+                className="font-heading text-2xl font-bold text-[#D4AF37]"
               >
                 {result === 20
                   ? "CRITICAL!"
@@ -135,7 +135,7 @@ export function DiceSystem() {
               type="button"
               onClick={() => rollDice(20)}
               disabled={isRolling}
-              className="px-6 py-2 bg-[#D4AF37]/10 border border-[#D4AF37]/50 text-[#D4AF37] rounded hover:bg-[#D4AF37]/20 transition-colors font-['Cinzel'] tracking-wider disabled:opacity-50"
+              className="px-6 py-2 bg-[#D4AF37]/10 border border-[#D4AF37]/50 text-[#D4AF37] rounded hover:bg-[#D4AF37]/20 transition-colors font-heading tracking-wider disabled:opacity-50"
             >
               Roll d20
             </button>
@@ -143,7 +143,7 @@ export function DiceSystem() {
               type="button"
               onClick={() => rollDice(6)}
               disabled={isRolling}
-              className="px-6 py-2 bg-[#1F2937] border border-[#374151] text-[#9CA3AF] rounded hover:border-[#9CA3AF] transition-colors font-['Cinzel'] disabled:opacity-50"
+              className="px-6 py-2 bg-[#1F2937] border border-[#374151] text-[#9CA3AF] rounded hover:border-[#9CA3AF] transition-colors font-heading disabled:opacity-50"
             >
               Roll d6
             </button>

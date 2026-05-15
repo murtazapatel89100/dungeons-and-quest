@@ -7,7 +7,7 @@ export function CampaignStructure() {
   return (
     <section className="relative w-full py-16">
       <div className="text-center mb-16">
-        <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4">
+        <h2 className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4">
           The <span className="text-[#10B981]">Adventure</span> Structure
         </h2>
         <p className="text-[#9CA3AF] max-w-2xl mx-auto">
@@ -33,7 +33,7 @@ export function CampaignStructure() {
                 <MapIcon className="w-8 h-8 text-[#10B981]" />
               </div>
               <div>
-                <h3 className="font-['Cinzel'] text-2xl text-[#F9FAFB] mb-2">
+                <h3 className="font-heading text-2xl text-[#F9FAFB] mb-2">
                   The Campaign
                 </h3>
                 <p className="text-[#9CA3AF]">
@@ -58,7 +58,7 @@ export function CampaignStructure() {
                 <Clock className="w-8 h-8 text-[#3B82F6]" />
               </div>
               <div>
-                <h3 className="font-['Cinzel'] text-xl text-[#F9FAFB] mb-2">
+                <h3 className="font-heading text-xl text-[#F9FAFB] mb-2">
                   The Session
                 </h3>
                 <p className="text-[#9CA3AF] text-sm">
@@ -80,7 +80,7 @@ export function CampaignStructure() {
             >
               <div className="flex items-center gap-3 mb-4">
                 <Target className="w-6 h-6 text-[#8B5CF6]" />
-                <h3 className="font-['Cinzel'] text-xl text-[#F9FAFB]">
+                <h3 className="font-heading text-xl text-[#F9FAFB]">
                   Quests
                 </h3>
               </div>
@@ -98,7 +98,7 @@ export function CampaignStructure() {
             >
               <div className="flex items-center gap-3 mb-4">
                 <Users className="w-6 h-6 text-[#EC4899]" />
-                <h3 className="font-['Cinzel'] text-xl text-[#F9FAFB]">NPCs</h3>
+                <h3 className="font-heading text-xl text-[#F9FAFB]">NPCs</h3>
               </div>
               <p className="text-[#9CA3AF] text-sm">
                 Non-Player Characters. The merchants, kings, villains, and

@@ -25,7 +25,7 @@ export function Glossary() {
   return (
     <section className="relative w-full py-16">
       <div className="text-center mb-12">
-        <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4">
+        <h2 className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4">
           Arcane <span className="text-[#FBBF24]">Glossary</span>
         </h2>
         <p className="text-[#9CA3AF] max-w-2xl mx-auto">
@@ -44,7 +44,7 @@ export function Glossary() {
               placeholder="Search terms..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#0B0F1A] border border-[#374151] rounded-lg py-3 pl-12 pr-4 text-[#F9FAFB] focus:outline-none focus:border-[#FBBF24] transition-colors font-['Inter']"
+              className="w-full bg-[#0B0F1A] border border-[#374151] rounded-lg py-3 pl-12 pr-4 text-[#F9FAFB] focus:outline-none focus:border-[#FBBF24] transition-colors font-sans"
             />
           </div>
 
@@ -90,7 +90,7 @@ export function Glossary() {
                   className="bg-[#0B0F1A] border border-[#1F2937] p-5 rounded-xl hover:border-[#FBBF24]/50 transition-colors"
                 >
                   <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-['Cinzel'] text-xl text-[#F9FAFB]">
+                    <h4 className="font-heading text-xl text-[#F9FAFB]">
                       {item.term}
                     </h4>
                     <span className="text-xs px-2 py-1 bg-[#111827] border border-[#374151] rounded text-[#9CA3AF]">

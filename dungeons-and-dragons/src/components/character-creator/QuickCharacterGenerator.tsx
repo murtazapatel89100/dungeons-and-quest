@@ -368,7 +368,7 @@ export function QuickCharacterGenerator() {
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       <div className="text-center mb-8">
-        <h1 className="font-['Cinzel'] text-4xl md:text-5xl uppercase tracking-widest text-transparent bg-clip-text bg-linear-to-r from-[#D4AF37] to-[#E6C76A] mb-2">
+        <h1 className="font-heading text-2xl md:text-4xl uppercase tracking-widest text-transparent bg-clip-text bg-linear-to-r from-[#D4AF37] to-[#E6C76A] mb-2">
           Swift Hero Generator
         </h1>
         <p className="text-[#9CA3AF]">
@@ -402,7 +402,7 @@ export function QuickCharacterGenerator() {
             </button>
           </div>
           <div>
-            <CardTitle className="font-['Cinzel'] text-2xl text-[#F9FAFB]">
+            <CardTitle className="font-heading text-2xl text-[#F9FAFB]">
               {displayName}
             </CardTitle>
             <p className="text-sm text-[#D4AF37] mt-1">
@@ -440,7 +440,7 @@ export function QuickCharacterGenerator() {
               value={name}
               onChange={handleNameChange}
               placeholder="Enter a name for your hero..."
-              className="bg-black/40 border-white/10 text-white placeholder:text-white/30 text-lg"
+              className="bg-black/40 border-white/10 text-white placeholder:text-white/30 text-base md:text-lg"
             />
             <p className="text-xs text-[#9CA3AF] mt-2">
               Leave blank to keep the generated name and title.
@@ -449,7 +449,7 @@ export function QuickCharacterGenerator() {
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-              <h3 className="font-['Cinzel'] text-lg text-[#F9FAFB] mb-4 font-bold">
+              <h3 className="font-heading text-lg text-[#F9FAFB] mb-4 font-bold">
                 Core Identity
               </h3>
               <div className="space-y-3 text-sm">
@@ -476,7 +476,7 @@ export function QuickCharacterGenerator() {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-6 lg:col-span-2">
-              <h3 className="font-['Cinzel'] text-lg text-[#F9FAFB] mb-4 font-bold">
+              <h3 className="font-heading text-lg text-[#F9FAFB] mb-4 font-bold">
                 Race, Class & Background
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -484,7 +484,7 @@ export function QuickCharacterGenerator() {
                   <p className="text-xs text-[#9CA3AF] uppercase tracking-wide">
                     Race
                   </p>
-                  <p className="text-lg font-semibold text-[#D4AF37]">
+                  <p className="text-base md:text-lg font-semibold text-[#D4AF37]">
                     {character.race}
                   </p>
                 </div>
@@ -492,7 +492,7 @@ export function QuickCharacterGenerator() {
                   <p className="text-xs text-[#9CA3AF] uppercase tracking-wide">
                     Subrace / Type
                   </p>
-                  <p className="text-lg font-semibold text-[#D4AF37]">
+                  <p className="text-base md:text-lg font-semibold text-[#D4AF37]">
                     {character.subrace}
                   </p>
                 </div>
@@ -500,7 +500,7 @@ export function QuickCharacterGenerator() {
                   <p className="text-xs text-[#9CA3AF] uppercase tracking-wide">
                     Class
                   </p>
-                  <p className="text-lg font-semibold text-[#D4AF37]">
+                  <p className="text-base md:text-lg font-semibold text-[#D4AF37]">
                     {character.characterClass}
                   </p>
                 </div>
@@ -508,7 +508,7 @@ export function QuickCharacterGenerator() {
                   <p className="text-xs text-[#9CA3AF] uppercase tracking-wide">
                     Alignment
                   </p>
-                  <p className="text-lg font-semibold text-[#D4AF37]">
+                  <p className="text-base md:text-lg font-semibold text-[#D4AF37]">
                     {character.alignment}
                   </p>
                 </div>
@@ -517,7 +517,7 @@ export function QuickCharacterGenerator() {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-            <h3 className="font-['Cinzel'] text-lg text-[#F9FAFB] mb-4 font-bold">
+            <h3 className="font-heading text-lg text-[#F9FAFB] mb-4 font-bold">
               Ability Scores
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -546,7 +546,7 @@ export function QuickCharacterGenerator() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-              <h3 className="font-['Cinzel'] text-lg text-[#F9FAFB] mb-4 font-bold">
+              <h3 className="font-heading text-lg text-[#F9FAFB] mb-4 font-bold">
                 Skills, Saves & Feats
               </h3>
               <div className="space-y-5 text-sm">
@@ -586,7 +586,7 @@ export function QuickCharacterGenerator() {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-              <h3 className="font-['Cinzel'] text-lg text-[#F9FAFB] mb-4 font-bold">
+              <h3 className="font-heading text-lg text-[#F9FAFB] mb-4 font-bold">
                 Combat Actions & Bonus Actions
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -638,7 +638,7 @@ export function QuickCharacterGenerator() {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-              <h3 className="font-['Cinzel'] text-lg text-[#F9FAFB] mb-4 font-bold">
+              <h3 className="font-heading text-lg text-[#F9FAFB] mb-4 font-bold">
                 Languages & Proficiencies
               </h3>
               <div className="space-y-5 text-sm">
@@ -693,7 +693,7 @@ export function QuickCharacterGenerator() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-              <h3 className="font-['Cinzel'] text-lg text-[#F9FAFB] mb-4 font-bold">
+              <h3 className="font-heading text-lg text-[#F9FAFB] mb-4 font-bold">
                 Weapons, Armor & Gear
               </h3>
               <div className="space-y-5 text-sm">
@@ -737,7 +737,7 @@ export function QuickCharacterGenerator() {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-              <h3 className="font-['Cinzel'] text-lg text-[#F9FAFB] mb-4 font-bold">
+              <h3 className="font-heading text-lg text-[#F9FAFB] mb-4 font-bold">
                 Spellbook & Resources
               </h3>
               <div className="space-y-5 text-sm">
@@ -759,7 +759,7 @@ export function QuickCharacterGenerator() {
                     <p className="text-xs text-[#9CA3AF] uppercase tracking-wide">
                       Hit Dice
                     </p>
-                    <p className="text-lg font-semibold text-[#D4AF37]">
+                    <p className="text-base md:text-lg font-semibold text-[#D4AF37]">
                       {character.meta.hitDice}
                     </p>
                   </div>
@@ -767,7 +767,7 @@ export function QuickCharacterGenerator() {
                     <p className="text-xs text-[#9CA3AF] uppercase tracking-wide">
                       Hit Points
                     </p>
-                    <p className="text-lg font-semibold text-[#D4AF37]">
+                    <p className="text-base md:text-lg font-semibold text-[#D4AF37]">
                       {hitPoints}
                     </p>
                   </div>
@@ -775,7 +775,7 @@ export function QuickCharacterGenerator() {
                     <p className="text-xs text-[#9CA3AF] uppercase tracking-wide">
                       Prof. Bonus
                     </p>
-                    <p className="text-lg font-semibold text-[#D4AF37]">
+                    <p className="text-base md:text-lg font-semibold text-[#D4AF37]">
                       +2
                     </p>
                   </div>
@@ -817,7 +817,7 @@ export function QuickCharacterGenerator() {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-            <h3 className="font-['Cinzel'] text-lg text-[#F9FAFB] mb-4 font-bold">
+            <h3 className="font-heading text-lg text-[#F9FAFB] mb-4 font-bold">
               Persona & Backstory
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">

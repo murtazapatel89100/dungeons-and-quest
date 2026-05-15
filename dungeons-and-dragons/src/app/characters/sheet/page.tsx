@@ -67,7 +67,7 @@ export default function CharacterSheetPage() {
   if (!character) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0a0a0c]">
-        <div className="text-white text-xl animate-pulse font-['Cinzel'] flex items-center gap-3">
+        <div className="text-white text-xl animate-pulse font-heading flex items-center gap-3">
           <Sparkles className="w-6 h-6 text-indigo-500" /> Summoning your
           hero...
         </div>
@@ -200,7 +200,7 @@ export default function CharacterSheetPage() {
           </div>
 
           <div className="flex-1 text-center sm:text-left space-y-2">
-            <h1 className="text-3xl sm:text-5xl font-black text-white font-['Cinzel'] tracking-tight drop-shadow-sm">
+            <h1 className="text-3xl sm:text-5xl font-black text-white font-heading tracking-tight drop-shadow-sm">
               {character.identity.name || "Unnamed Hero"}
             </h1>
             <div className="flex flex-wrap justify-center sm:justify-start gap-x-4 gap-y-1 text-indigo-300 font-medium">
@@ -486,7 +486,7 @@ export default function CharacterSheetPage() {
             <div className="flex-1 bg-[#1a1d24]/90 border border-white/5 rounded-xl p-6 shadow-xl min-h-[500px]">
               {activeTab === "actions" && (
                 <div className="space-y-6 animate-in fade-in duration-300">
-                  <h2 className="text-lg font-bold text-white mb-4 font-['Cinzel'] border-b border-white/10 pb-2">
+                  <h2 className="text-lg font-bold text-white mb-4 font-heading border-b border-white/10 pb-2">
                     Actions in Combat
                   </h2>
 
@@ -697,7 +697,7 @@ export default function CharacterSheetPage() {
 
               {activeTab === "spells" && (
                 <div className="space-y-6 animate-in fade-in duration-300">
-                  <h2 className="text-lg font-bold text-white mb-4 font-['Cinzel'] border-b border-white/10 pb-2 flex justify-between items-center">
+                  <h2 className="text-lg font-bold text-white mb-4 font-heading border-b border-white/10 pb-2 flex justify-between items-center">
                     <span>Spellbook</span>
                     <span className="text-xs font-sans font-normal text-slate-400 bg-black/50 px-2 py-1 rounded">
                       Spell Attack: +
@@ -752,7 +752,7 @@ export default function CharacterSheetPage() {
                   ) : (
                     <div className="py-12 text-center flex flex-col items-center justify-center opacity-50">
                       <Sparkles className="w-12 h-12 mb-4 text-slate-500" />
-                      <p className="text-lg text-slate-400">
+                      <p className="text-base md:text-lg text-slate-400">
                         This character knows no spells.
                       </p>
                     </div>
@@ -763,7 +763,7 @@ export default function CharacterSheetPage() {
               {activeTab === "inventory" && (
                 <div className="space-y-6 animate-in fade-in duration-300">
                   <div className="flex justify-between items-end border-b border-white/10 pb-2 mb-4">
-                    <h2 className="text-lg font-bold text-white font-['Cinzel']">
+                    <h2 className="text-lg font-bold text-white font-heading">
                       Inventory
                     </h2>
 
@@ -854,7 +854,7 @@ export default function CharacterSheetPage() {
 
               {activeTab === "features" && (
                 <div className="space-y-6 animate-in fade-in duration-300">
-                  <h2 className="text-lg font-bold text-white mb-4 font-['Cinzel'] border-b border-white/10 pb-2">
+                  <h2 className="text-lg font-bold text-white mb-4 font-heading border-b border-white/10 pb-2">
                     Features & Traits
                   </h2>
 
@@ -886,7 +886,7 @@ export default function CharacterSheetPage() {
 
               {activeTab === "background" && (
                 <div className="space-y-6 animate-in fade-in duration-300 h-full flex flex-col">
-                  <h2 className="text-lg font-bold text-white mb-4 font-['Cinzel'] border-b border-white/10 pb-2">
+                  <h2 className="text-lg font-bold text-white mb-4 font-heading border-b border-white/10 pb-2">
                     Character Details
                   </h2>
 

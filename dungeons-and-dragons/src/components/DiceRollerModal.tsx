@@ -60,10 +60,10 @@ export function DiceRollerModal({ isOpen, onClose }: DiceRollerModalProps) {
             </button>
 
             <div className="text-center mb-4 relative z-10 w-full">
-              <h2 className="font-['Cinzel'] text-2xl md:text-3xl text-[#F9FAFB] uppercase tracking-widest mb-2">
+              <h2 className="font-heading text-2xl md:text-3xl text-[#F9FAFB] uppercase tracking-widest mb-2">
                 Test Your Fate
               </h2>
-              <p className="font-['Inter'] text-[#9CA3AF] text-sm">
+              <p className="font-sans text-[#9CA3AF] text-sm">
                 Target Critical: 20
               </p>
             </div>
@@ -101,7 +101,7 @@ export function DiceRollerModal({ isOpen, onClose }: DiceRollerModalProps) {
                   <motion.div
                     initial={{ opacity: 0, scale: 0.5, y: 10 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
-                    className="font-['Cinzel'] text-3xl md:text-4xl font-bold text-[#D4AF37] drop-shadow-[0_0_15px_rgba(0,0,0,1)] text-center bg-[#111827]/80 px-6 py-2 rounded-sm backdrop-blur-md border border-[#D4AF37]/30"
+                    className="font-heading text-3xl md:text-4xl font-bold text-[#D4AF37] drop-shadow-[0_0_15px_rgba(0,0,0,1)] text-center bg-[#111827]/80 px-6 py-2 rounded-sm backdrop-blur-md border border-[#D4AF37]/30"
                   >
                     {result === 20
                       ? "Critical Success!"
@@ -114,9 +114,9 @@ export function DiceRollerModal({ isOpen, onClose }: DiceRollerModalProps) {
                   <motion.div
                     animate={{ opacity: [0.5, 1, 0.5] }}
                     transition={{ repeat: Infinity, duration: 0.5 }}
-                    className="font-['Cinzel'] text-xl text-[#9CA3AF] tracking-widest uppercase bg-[#111827]/80 px-6 py-2 rounded-sm backdrop-blur-md"
-                  >
-                    Casting...
+                    className="font-heading text-base md:text-xl text-[#9CA3AF] tracking-widest uppercase bg-[#111827]/80 px-6 py-2 rounded-sm backdrop-blur-md"
+                    >
+                    Click a die to roll
                   </motion.div>
                 )}
               </div>
@@ -127,7 +127,7 @@ export function DiceRollerModal({ isOpen, onClose }: DiceRollerModalProps) {
                 type="button"
                 onClick={rollDice}
                 disabled={rolling}
-                className="px-8 py-3 bg-[#0B0F1A] border border-[#D4AF37]/50 text-[#D4AF37] font-['Cinzel'] uppercase tracking-widest text-sm font-semibold transition-all duration-300 hover:bg-[#D4AF37]/10 hover:shadow-[0_0_15px_rgba(212,175,55,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-8 py-3 bg-[#0B0F1A] border border-[#D4AF37]/50 text-[#D4AF37] font-heading uppercase tracking-widest text-sm font-semibold transition-all duration-300 hover:bg-[#D4AF37]/10 hover:shadow-[0_0_15px_rgba(212,175,55,0.3)] disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {rolling ? "Rolling..." : "Roll Again"}
               </button>

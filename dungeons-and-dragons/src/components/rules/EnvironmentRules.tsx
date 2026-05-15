@@ -14,7 +14,7 @@ export function EnvironmentRules() {
   return (
     <section className="relative w-full py-16">
       <div className="text-center mb-12">
-        <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4">
+        <h2 className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4">
           The <span className="text-[#10B981]">Environment</span>
         </h2>
         <p className="text-[#9CA3AF] max-w-2xl mx-auto">
@@ -29,7 +29,7 @@ export function EnvironmentRules() {
           <button
             type="button"
             onClick={() => setActiveTab("resting")}
-            className={`p-4 rounded-xl text-left font-['Cinzel'] transition-all flex items-center gap-3 ${
+            className={`p-4 rounded-xl text-left font-heading transition-all flex items-center gap-3 ${
               activeTab === "resting"
                 ? "bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/50 shadow-[0_0_15px_rgba(16,185,129,0.1)]"
                 : "text-[#9CA3AF] hover:bg-[#1F2937] border border-transparent"
@@ -40,7 +40,7 @@ export function EnvironmentRules() {
           <button
             type="button"
             onClick={() => setActiveTab("vision")}
-            className={`p-4 rounded-xl text-left font-['Cinzel'] transition-all flex items-center gap-3 ${
+            className={`p-4 rounded-xl text-left font-heading transition-all flex items-center gap-3 ${
               activeTab === "vision"
                 ? "bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/50 shadow-[0_0_15px_rgba(16,185,129,0.1)]"
                 : "text-[#9CA3AF] hover:bg-[#1F2937] border border-transparent"
@@ -51,7 +51,7 @@ export function EnvironmentRules() {
           <button
             type="button"
             onClick={() => setActiveTab("hazards")}
-            className={`p-4 rounded-xl text-left font-['Cinzel'] transition-all flex items-center gap-3 ${
+            className={`p-4 rounded-xl text-left font-heading transition-all flex items-center gap-3 ${
               activeTab === "hazards"
                 ? "bg-[#10B981]/10 text-[#10B981] border border-[#10B981]/50 shadow-[0_0_15px_rgba(16,185,129,0.1)]"
                 : "text-[#9CA3AF] hover:bg-[#1F2937] border border-transparent"
@@ -74,7 +74,7 @@ export function EnvironmentRules() {
             >
               {activeTab === "resting" && (
                 <div>
-                  <h3 className="font-['Cinzel'] text-3xl text-[#F9FAFB] mb-4">
+                  <h3 className="font-heading text-3xl text-[#F9FAFB] mb-4">
                     {resting.title}
                   </h3>
                   <p className="text-[#9CA3AF] mb-8 leading-relaxed max-w-2xl">
@@ -87,7 +87,7 @@ export function EnvironmentRules() {
                         key={rest.name}
                         className="bg-[#0B0F1A] border border-[#1F2937] p-6 rounded-xl border-t-2 border-t-[#10B981]"
                       >
-                        <h4 className="font-['Cinzel'] text-xl text-[#F9FAFB] mb-2">
+                        <h4 className="font-heading text-xl text-[#F9FAFB] mb-2">
                           {rest.name}
                         </h4>
                         <span className="inline-block px-2 py-1 bg-[#111827] border border-[#374151] rounded text-xs text-[#10B981] mb-4">
@@ -104,7 +104,7 @@ export function EnvironmentRules() {
 
               {activeTab === "vision" && (
                 <div>
-                  <h3 className="font-['Cinzel'] text-3xl text-[#F9FAFB] mb-4">
+                  <h3 className="font-heading text-3xl text-[#F9FAFB] mb-4">
                     {vision.title}
                   </h3>
                   <p className="text-[#9CA3AF] mb-8 leading-relaxed max-w-2xl">
@@ -133,7 +133,7 @@ export function EnvironmentRules() {
 
               {activeTab === "hazards" && (
                 <div>
-                  <h3 className="font-['Cinzel'] text-3xl text-[#F9FAFB] mb-4">
+                  <h3 className="font-heading text-3xl text-[#F9FAFB] mb-4">
                     {hazards.title}
                   </h3>
                   <p className="text-[#9CA3AF] mb-8 leading-relaxed max-w-2xl">
@@ -146,7 +146,7 @@ export function EnvironmentRules() {
                         key={hazard.name}
                         className="bg-[#0B0F1A] border border-[#1F2937] p-6 rounded-xl group hover:border-[#F59E0B]/50 transition-colors"
                       >
-                        <h4 className="font-['Cinzel'] text-xl text-[#F59E0B] mb-3 group-hover:drop-shadow-[0_0_8px_rgba(245,158,11,0.5)] transition-all">
+                        <h4 className="font-heading text-xl text-[#F59E0B] mb-3 group-hover:drop-shadow-[0_0_8px_rgba(245,158,11,0.5)] transition-all">
                           {hazard.name}
                         </h4>
                         <p className="text-[#D1D5DB] text-sm leading-relaxed">

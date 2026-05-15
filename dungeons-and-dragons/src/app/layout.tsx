@@ -1,10 +1,31 @@
 import type { Metadata } from "next";
+import { Cinzel, Rajdhani, MedievalSharp } from "next/font/google";
 import "./globals.css";
 
 import { Analytics } from "@vercel/analytics/react";
 import { Footer } from "@/components/Footer";
 import { Navigation } from "@/components/Navigation";
 import { constructMetadata, defaultSEO } from "../../config/seo";
+
+const cinzel = Cinzel({
+  subsets: ["latin"],
+  variable: "--font-cinzel",
+  display: "swap",
+});
+
+const rajdhani = Rajdhani({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-rajdhani",
+  display: "swap",
+});
+
+const medievalSharp = MedievalSharp({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-medieval-sharp",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   ...constructMetadata(),
@@ -20,8 +41,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark" style={{ colorScheme: "dark" }}>
-      <body className="min-h-screen bg-[#0B0F1A] text-[#F9FAFB] font-['Inter'] flex flex-col relative overflow-x-hidden">
+    <html lang="en" className={`dark ${cinzel.variable} ${rajdhani.variable} ${medievalSharp.variable}`} style={{ colorScheme: "dark" }}>
+      <body className={`${rajdhani.className} min-h-screen bg-[#0B0F1A] text-[#F9FAFB] flex flex-col relative overflow-x-hidden`}>
         {/* Structured Data for SEO */}
         <script
           type="application/ld+json"

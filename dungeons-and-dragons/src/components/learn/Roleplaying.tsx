@@ -41,7 +41,7 @@ export function Roleplaying() {
   return (
     <section className="relative w-full py-16">
       <div className="text-center mb-16">
-        <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4">
+        <h2 className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4">
           The Art of <span className="text-[#3B82F6]">Roleplaying</span>
         </h2>
         <p className="text-[#9CA3AF] max-w-2xl mx-auto">
@@ -53,7 +53,7 @@ export function Roleplaying() {
       <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8 mb-12">
         <div className="bg-[#111827] border border-[#1F2937] p-8 rounded-xl shadow-lg relative">
           <Drama className="absolute top-4 right-4 w-12 h-12 text-[#1F2937]/50" />
-          <h3 className="font-['Cinzel'] text-2xl text-[#F9FAFB] mb-4">
+          <h3 className="font-heading text-2xl text-[#F9FAFB] mb-4">
             Speaking in Character
           </h3>
           <p className="text-[#9CA3AF] leading-relaxed mb-4">
@@ -80,7 +80,7 @@ export function Roleplaying() {
 
         <div className="bg-[#111827] border border-[#1F2937] p-8 rounded-xl shadow-lg relative">
           <Theater className="absolute top-4 right-4 w-12 h-12 text-[#1F2937]/50" />
-          <h3 className="font-['Cinzel'] text-2xl text-[#F9FAFB] mb-4">
+          <h3 className="font-heading text-2xl text-[#F9FAFB] mb-4">
             Character Motivation
           </h3>
           <p className="text-[#9CA3AF] leading-relaxed">
@@ -106,7 +106,7 @@ export function Roleplaying() {
         {/* Decorative elements */}
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 pointer-events-none" />
 
-        <h3 className="font-['Cinzel'] text-2xl text-[#F9FAFB] mb-6 flex items-center gap-3">
+        <h3 className="font-heading text-2xl text-[#F9FAFB] mb-6 flex items-center gap-3">
           <MessageSquare className="text-[#D4AF37]" />
           Interactive Scenario
         </h3>
@@ -115,7 +115,7 @@ export function Roleplaying() {
           <span className="absolute -top-3 left-6 bg-[#0B0F1A] px-2 text-xs text-[#9CA3AF] font-bold tracking-widest uppercase">
             The Dungeon Master
           </span>
-          <p className="text-[#F9FAFB] text-lg font-serif italic">
+          <p className="text-[#F9FAFB] text-base md:text-lg font-serif italic">
             "You enter a dusty shop. Behind the counter, a suspicious merchant
             with a scarred eye eyes you nervously. 'Got some rare goods, I do.
             No refunds,' he mutters."
@@ -132,7 +132,7 @@ export function Roleplaying() {
               type="button"
               key={action.label}
               onClick={() => setSelectedAction(action.id)}
-              className={`p-3 rounded border bg-[#111827] transition-all duration-300 font-['Cinzel'] ${
+              className={`p-3 rounded border bg-[#111827] transition-all duration-300 font-heading ${
                 selectedAction === action.id
                   ? "border-[#D4AF37] text-[#D4AF37] bg-[#D4AF37]/10 scale-105"
                   : `border-[#374151] text-[#9CA3AF] ${action.color}`
@@ -153,7 +153,7 @@ export function Roleplaying() {
                 exit={{ opacity: 0, y: -10 }}
                 className="p-4 bg-[#1F2937]/50 rounded-lg border border-[#374151] text-[#D1D5DB]"
               >
-                <strong className="text-[#D4AF37] font-['Cinzel']">
+                <strong className="text-[#D4AF37] font-heading">
                   Outcome:{" "}
                 </strong>
                 {actions.find((a) => a.id === selectedAction)?.result}

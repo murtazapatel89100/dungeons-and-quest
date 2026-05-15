@@ -15,7 +15,7 @@ export function RecommendationsAndResources() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4"
+              className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4"
             >
               Beginner <span className="text-[#D4AF37]">Recommendations</span>
             </motion.h2>
@@ -28,7 +28,7 @@ export function RecommendationsAndResources() {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-[#111827] border border-[#1F2937] p-8 rounded-2xl relative">
               <div className="absolute -top-4 -left-4 w-12 h-12 bg-[#2563EB]/20 rounded-full blur-xl" />
-              <h3 className="font-['Cinzel'] text-2xl text-[#2563EB] mb-4">
+              <h3 className="font-heading text-2xl text-[#2563EB] mb-4">
                 For Video Game Players
               </h3>
               <p className="text-[#D1D5DB] mb-6">
@@ -49,7 +49,7 @@ export function RecommendationsAndResources() {
 
             <div className="bg-[#111827] border border-[#1F2937] p-8 rounded-2xl relative">
               <div className="absolute -top-4 -left-4 w-12 h-12 bg-[#D4AF37]/20 rounded-full blur-xl" />
-              <h3 className="font-['Cinzel'] text-2xl text-[#D4AF37] mb-4">
+              <h3 className="font-heading text-2xl text-[#D4AF37] mb-4">
                 For Storytelling Lovers
               </h3>
               <p className="text-[#D1D5DB] mb-6">
@@ -70,7 +70,7 @@ export function RecommendationsAndResources() {
 
             <div className="bg-[#111827] border border-[#1F2937] p-8 rounded-2xl relative">
               <div className="absolute -top-4 -left-4 w-12 h-12 bg-[#DC2626]/20 rounded-full blur-xl" />
-              <h3 className="font-['Cinzel'] text-2xl text-[#DC2626] mb-4">
+              <h3 className="font-heading text-2xl text-[#DC2626] mb-4">
                 For Strategy Players
               </h3>
               <p className="text-[#D1D5DB] mb-6">
@@ -98,7 +98,7 @@ export function RecommendationsAndResources() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4"
+              className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4"
             >
               Dive <span className="text-[#D4AF37]">Deeper</span>
             </motion.h2>
@@ -125,7 +125,7 @@ export function RecommendationsAndResources() {
                 >
                   <div className="bg-[#111827] p-6 border-b border-[#1F2937] flex items-center gap-3">
                     <Icon className="w-6 h-6 text-[#D4AF37]" />
-                    <h3 className="font-['Cinzel'] text-xl text-[#F9FAFB]">
+                    <h3 className="font-heading text-xl text-[#F9FAFB]">
                       {resourceGroup.category}
                     </h3>
                   </div>

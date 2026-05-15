@@ -5,7 +5,7 @@ import { motion } from "motion/react";
 
 export function ToolsHero() {
   return (
-    <section className="relative w-full h-[60vh] flex items-center justify-center overflow-hidden">
+    <section className="relative w-full h-[70vh] flex items-center justify-center overflow-hidden">
       {/* Background Image with Overlay */}
       <div
         className="absolute inset-0 z-0"
@@ -25,9 +25,9 @@ export function ToolsHero() {
           transition={{ duration: 1, ease: "easeOut" }}
           className="flex justify-center mb-6"
         >
-          <div className="p-4 rounded-full bg-[#111827]/80 border border-[#F59E0B]/30 shadow-[0_0_40px_rgba(245,158,11,0.15)] relative">
+          <div className="p-3 md:p-4 rounded-full bg-[#111827]/80 border border-[#F59E0B]/30 shadow-[0_0_40px_rgba(245,158,11,0.15)] relative">
             <div className="absolute inset-0 bg-[#F59E0B]/20 rounded-full blur-md animate-pulse" />
-            <Hammer className="w-12 h-12 text-[#F59E0B] relative z-10" />
+            <Hammer className="w-8 h-8 md:w-12 md:h-12 text-[#F59E0B] relative z-10" />
           </div>
         </motion.div>
 
@@ -35,7 +35,7 @@ export function ToolsHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
-          className="font-['Cinzel'] text-5xl md:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-[#F9FAFB] to-[#9CA3AF] drop-shadow-lg mb-6 leading-tight"
+          className="font-accent text-2xl md:text-7xl lg:text-8xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-[#F9FAFB] to-[#9CA3AF] drop-shadow-lg mb-6 leading-tight"
         >
           The Artificer's <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F59E0B] via-[#FBBF24] to-[#F59E0B]">
@@ -47,7 +47,7 @@ export function ToolsHero() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut", delay: 0.4 }}
-          className="text-xl md:text-2xl text-[#9CA3AF] max-w-2xl mx-auto mb-10 font-light"
+          className="text-base md:text-2xl text-[#9CA3AF] max-w-2xl mx-auto mb-10 font-light"
         >
           Generators, dice rollers, and interactive utilities to run your
           campaigns smoothly.

@@ -30,7 +30,7 @@ export function ExperienceCards() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-['Cinzel'] text-4xl md:text-5xl text-[#F9FAFB] mb-6"
+            className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-6"
           >
             The Realms of <span className="text-[#D4AF37]">Play</span>
           </motion.h2>
@@ -39,7 +39,7 @@ export function ExperienceCards() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-[#9CA3AF] text-xl max-w-2xl mx-auto"
+            className="text-base md:text-xl text-[#9CA3AF] max-w-2xl mx-auto"
           >
             Select a path below to discover how it shapes your adventure.
           </motion.p>
@@ -79,7 +79,7 @@ export function ExperienceCards() {
                       />
                     </div>
                     <div>
-                      <h3 className="font-['Cinzel'] text-2xl text-[#F9FAFB] group-hover:text-white transition-colors">
+                      <h3 className="font-heading text-2xl text-[#F9FAFB] group-hover:text-white transition-colors">
                         {exp.title}
                       </h3>
                       <p

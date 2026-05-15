@@ -63,7 +63,7 @@ export function StepIdentity() {
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <div className="mb-6 border-b border-white/10 pb-4">
-        <h2 className="text-2xl font-['Cinzel'] font-bold text-white mb-2">
+        <h2 className="text-2xl md:text-4xl font-heading font-bold text-white mb-2">
           Hero Identity
         </h2>
         <p className="text-muted-foreground">
@@ -144,7 +144,7 @@ export function StepIdentity() {
               </DialogTrigger>
               <DialogContent className="bg-slate-900 border-indigo-500/30 text-white max-w-3xl">
                 <DialogHeader>
-                  <DialogTitle className="text-2xl font-['Cinzel'] text-indigo-300">
+                  <DialogTitle className="text-2xl font-heading text-indigo-300">
                     Choose a Portrait
                   </DialogTitle>
                   <DialogDescription className="text-indigo-200/70">

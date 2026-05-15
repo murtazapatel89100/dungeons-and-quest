@@ -455,7 +455,7 @@ export function PreGeneratedCharacters() {
   return (
     <div className="max-w-7xl mx-auto space-y-8">
       <div className="text-center mb-8">
-        <h1 className="font-['Cinzel'] text-4xl md:text-5xl uppercase tracking-widest text-transparent bg-clip-text bg-linear-to-r from-[#D4AF37] to-[#E6C76A] mb-2">
+        <h1 className="font-heading text-2xl md:text-4xl uppercase tracking-widest text-transparent bg-clip-text bg-linear-to-r from-[#D4AF37] to-[#E6C76A] mb-2">
           Legendary Starter Roster
         </h1>
         <p className="text-[#9CA3AF] max-w-2xl mx-auto">
@@ -511,7 +511,7 @@ export function PreGeneratedCharacters() {
                   className="absolute inset-0 w-full h-full object-cover opacity-50 mix-blend-overlay"
                 />
                 <div className="text-center relative z-10 drop-shadow-md">
-                  <p className="text-[#D4AF37] text-2xl font-['Cinzel'] font-black mt-2 tracking-wider">
+                  <p className="text-[#D4AF37] text-base md:text-2xl font-heading font-black mt-2 tracking-wider">
                     {character.name.split(" ")[0]}
                   </p>
                 </div>
@@ -519,7 +519,7 @@ export function PreGeneratedCharacters() {
 
               <CardHeader className="pb-3">
                 <div>
-                  <CardTitle className="font-['Cinzel'] text-xl text-[#F9FAFB]">
+                  <CardTitle className="font-heading text-xl text-[#F9FAFB]">
                     {character.name}
                   </CardTitle>
                   <p className="text-xs text-[#D4AF37] font-semibold mt-1">
@@ -603,7 +603,7 @@ export function PreGeneratedCharacters() {
                     </DialogTrigger>
                     <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-[#111827] border-[#D4AF37]/20">
                       <DialogHeader>
-                        <DialogTitle className="font-['Cinzel'] text-2xl text-[#D4AF37]">
+                        <DialogTitle className="font-heading text-2xl text-[#D4AF37]">
                           {character.name}
                         </DialogTitle>
                       </DialogHeader>
@@ -639,7 +639,7 @@ export function PreGeneratedCharacters() {
                           />
                           <div className="flex-1 w-full grid grid-cols-2 gap-3 text-sm">
                             <div className="col-span-2 mb-2">
-                              <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-1">
+                              <h3 className="font-heading font-bold text-[#D4AF37] mb-1">
                                 Quick Identity
                               </h3>
                             </div>
@@ -671,7 +671,7 @@ export function PreGeneratedCharacters() {
                         </div>
 
                         <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                          <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-3">
+                          <h3 className="font-heading font-bold text-[#D4AF37] mb-3">
                             Identity
                           </h3>
                           <div className="grid grid-cols-2 gap-3 text-sm">
@@ -698,7 +698,7 @@ export function PreGeneratedCharacters() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                            <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-3">
+                            <h3 className="font-heading font-bold text-[#D4AF37] mb-3">
                               Class & Archetype
                             </h3>
                             <div className="space-y-2 text-sm">
@@ -710,7 +710,7 @@ export function PreGeneratedCharacters() {
                           </div>
 
                           <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                            <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-3">
+                            <h3 className="font-heading font-bold text-[#D4AF37] mb-3">
                               Equipment
                             </h3>
                             <div className="space-y-2 text-sm">
@@ -728,7 +728,7 @@ export function PreGeneratedCharacters() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                            <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-3">
+                            <h3 className="font-heading font-bold text-[#D4AF37] mb-3">
                               Skills & Saving Throws
                             </h3>
                             <div className="space-y-4 text-sm">
@@ -760,7 +760,7 @@ export function PreGeneratedCharacters() {
                           </div>
 
                           <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                            <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-3">
+                            <h3 className="font-heading font-bold text-[#D4AF37] mb-3">
                               Features & Proficiencies
                             </h3>
                             <div className="space-y-4 text-sm">
@@ -812,7 +812,7 @@ export function PreGeneratedCharacters() {
                         </div>
 
                         <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                          <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-3">
+                          <h3 className="font-heading font-bold text-[#D4AF37] mb-3">
                             Combat Actions & Bonus Actions
                           </h3>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -865,7 +865,7 @@ export function PreGeneratedCharacters() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                            <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-3">
+                            <h3 className="font-heading font-bold text-[#D4AF37] mb-3">
                               Weapons, Armor & Gear
                             </h3>
                             <div className="space-y-4 text-sm">
@@ -914,7 +914,7 @@ export function PreGeneratedCharacters() {
                           </div>
 
                           <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                            <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-3">
+                            <h3 className="font-heading font-bold text-[#D4AF37] mb-3">
                               Resources
                             </h3>
                             <div className="grid grid-cols-2 gap-3 text-center text-xs">
@@ -973,7 +973,7 @@ export function PreGeneratedCharacters() {
                         </div>
 
                         <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                          <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-3">
+                          <h3 className="font-heading font-bold text-[#D4AF37] mb-3">
                             Persona
                           </h3>
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
@@ -1051,7 +1051,7 @@ export function PreGeneratedCharacters() {
                         </div>
 
                         <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                          <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-3">
+                          <h3 className="font-heading font-bold text-[#D4AF37] mb-3">
                             Backstory
                           </h3>
                           <p className="text-sm leading-relaxed text-[#E5E7EB]">
@@ -1061,7 +1061,7 @@ export function PreGeneratedCharacters() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                            <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-3">
+                            <h3 className="font-heading font-bold text-[#D4AF37] mb-3">
                               Ability Scores
                             </h3>
                             <div className="grid grid-cols-3 gap-3">
@@ -1074,8 +1074,7 @@ export function PreGeneratedCharacters() {
                                     <p className="text-xs text-[#9CA3AF] uppercase">
                                       {ability}
                                     </p>
-                                    <p className="text-lg font-bold text-[#D4AF37]">
-                                      {value}
+                                    <p className="text-base md:text-lg font-bold text-[#D4AF37]">                                      {value}
                                     </p>
                                     <p className="text-xs text-[#9CA3AF]">
                                       {abilityModifier(value)}
@@ -1087,7 +1086,7 @@ export function PreGeneratedCharacters() {
                           </div>
 
                           <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                            <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-3">
+                            <h3 className="font-heading font-bold text-[#D4AF37] mb-3">
                               Class Snapshot
                             </h3>
                             <div className="space-y-3 text-sm">
@@ -1113,7 +1112,7 @@ export function PreGeneratedCharacters() {
 
                         {character.spellsKnown.length > 0 && (
                           <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                            <h3 className="font-['Cinzel'] font-bold text-[#D4AF37] mb-3">
+                            <h3 className="font-heading font-bold text-[#D4AF37] mb-3">
                               Known Spells & Abilities
                             </h3>
                             <div className="flex flex-wrap gap-2">

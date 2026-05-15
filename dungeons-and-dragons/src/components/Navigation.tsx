@@ -40,10 +40,10 @@ export function Navigation() {
             alt="Dice & Codex"
             width={100}
             height={100}
-            className="w-20 h-20"
+            className="md:w-20 md:h-20 w-10 h-10"
             loading="eager"
           />
-          <span className="font-['Cinzel'] text-xl md:text-4xl font-bold uppercase tracking-widest text-[#F9FAFB] group-hover:text-[#D4AF37] transition-colors duration-300">
+          <span className="font-accent text-lg sm:text-xl md:text-4xl font-bold uppercase tracking-wider md:tracking-widest text-[#F9FAFB] group-hover:text-[#D4AF37] transition-colors duration-300">
             {siteConfig.name}
           </span>
         </Link>
@@ -54,7 +54,7 @@ export function Navigation() {
             <Link
               key={link.path}
               href={link.path}
-              className={`font-['Cinzel'] uppercase text-sm md:text-lg tracking-wider transition-all duration-300 hover:text-[#D4AF37] hover:drop-shadow-[0_0_5px_rgba(212,175,55,0.5)] ${
+              className={`font-heading uppercase text-sm md:text-lg tracking-wider transition-all duration-300 hover:text-[#D4AF37] hover:drop-shadow-[0_0_5px_rgba(212,175,55,0.5)] ${
                 pathname === link.path ? "text-[#D4AF37]" : "text-[#9CA3AF]"
               }`}
             >
@@ -87,7 +87,7 @@ export function Navigation() {
 
       {/* Mobile Nav Drawer */}
       <div
-        className={`absolute top-0 right-0 h-screen w-64 sm:w-80 bg-[#0B0F1A]/95 backdrop-blur-md border-l border-[#D4AF37]/20 shadow-2xl py-24 px-6 flex flex-col gap-6 md:hidden z-40 transform transition-transform duration-300 ease-in-out ${
+        className={`absolute top-0 right-0 h-screen w-64 sm:w-80 bg-[#0B0F1A]/95 backdrop-blur-md border-l border-[#D4AF37]/20 shadow-2xl py-24 px-6 flex flex-col gap-6 md:hidden z-40 transform transition-transform duration-300 ease-in-out overflow-y-auto ${
           mobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -95,7 +95,7 @@ export function Navigation() {
           <Link
             key={link.path}
             href={link.path}
-            className="font-['Cinzel'] uppercase text-lg tracking-wider text-[#9CA3AF] hover:text-[#D4AF37] transition-colors border-b border-[#9CA3AF]/10 pb-3"
+            className="font-heading uppercase text-base tracking-wider text-[#9CA3AF] hover:text-[#D4AF37] transition-colors border-b border-[#9CA3AF]/10 pb-3"
             onClick={() => setMobileMenuOpen(false)}
           >
             {link.name}

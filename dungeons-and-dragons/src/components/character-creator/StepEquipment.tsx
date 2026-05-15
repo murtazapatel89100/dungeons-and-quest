@@ -69,7 +69,7 @@ export function StepEquipment() {
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 h-full flex flex-col">
       <div className="border-b border-white/10 pb-4 shrink-0">
-        <h2 className="text-2xl font-['Cinzel'] font-bold text-white mb-2">
+        <h2 className="text-2xl md:text-4xl font-heading font-bold text-white mb-2">
           Equipment & Magic
         </h2>
         <p className="text-muted-foreground">
@@ -152,7 +152,7 @@ export function StepEquipment() {
           <TabsContent value="armor" className="space-y-6 mt-0">
             {Object.entries(ARMOR).map(([category, items]) => (
               <div key={category} className="space-y-3">
-                <h4 className="text-lg font-semibold text-indigo-300 border-b border-white/5 pb-2">
+                <h4 className="text-base md:text-lg font-semibold text-indigo-300 border-b border-white/5 pb-2">
                   {category} Armor
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -192,7 +192,7 @@ export function StepEquipment() {
 
           <TabsContent value="gear" className="space-y-6 mt-0">
             <div className="space-y-3">
-              <h4 className="text-lg font-semibold text-indigo-300 border-b border-white/5 pb-2">
+              <h4 className="text-base md:text-lg font-semibold text-indigo-300 border-b border-white/5 pb-2">
                 Starting Kits
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

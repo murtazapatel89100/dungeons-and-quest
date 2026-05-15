@@ -23,7 +23,7 @@ export function Footer() {
               className="w-20 h-20"
               loading="eager"
             />
-            <span className="font-['Cinzel'] text-xl md:text-4xl font-bold uppercase tracking-widest text-[#F9FAFB]">
+            <span className="font-accent text-xl md:text-4xl font-bold uppercase tracking-widest text-[#F9FAFB]">
               {siteConfig.name}
             </span>
           </Link>
@@ -33,7 +33,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="font-['Cinzel'] uppercase text-[#D4AF37] tracking-widest text-sm mb-4">
+          <h4 className="font-heading uppercase text-[#D4AF37] tracking-widest text-sm mb-4">
             Resources
           </h4>
           <ul className="flex flex-col gap-3">
@@ -65,7 +65,7 @@ export function Footer() {
         </div>
 
         <div>
-          <h4 className="font-['Cinzel'] uppercase text-[#D4AF37] tracking-widest text-sm mb-4">
+          <h4 className="font-heading uppercase text-[#D4AF37] tracking-widest text-sm mb-4">
             Connect
           </h4>
           <ul className="space-y-2">

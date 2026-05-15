@@ -23,10 +23,10 @@ export function Newsletter() {
           {/* Magical Background Glow */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-to-r from-[#D4AF37]/10 to-[#6D28D9]/10 blur-[100px] pointer-events-none group-hover:opacity-100 opacity-50 transition-opacity duration-500" />
 
-          <h2 className="font-['Cinzel'] text-3xl text-[#F9FAFB] uppercase tracking-widest mb-4 relative z-10">
+          <h2 className="font-heading text-3xl text-[#F9FAFB] uppercase tracking-widest mb-4 relative z-10">
             Join the Adventurer's Guild
           </h2>
-          <p className="font-['Inter'] text-[#9CA3AF] mb-8 max-w-lg mx-auto relative z-10">
+          <p className="font-sans text-[#9CA3AF] mb-8 max-w-lg mx-auto relative z-10">
             Receive missives from the frontlines, exclusive tools, and updates
             on the latest rulebook additions.
           </p>
@@ -39,14 +39,14 @@ export function Newsletter() {
               <input
                 type="email"
                 placeholder="Enter your email address..."
-                className="w-full bg-[#111827] border border-[#1F2937] text-[#F9FAFB] px-4 py-3 font-['Inter'] focus:outline-none focus:border-[#D4AF37]/50 focus:ring-1 focus:ring-[#D4AF37]/50 transition-all duration-300 placeholder:text-[#9CA3AF]/50"
+                className="w-full bg-[#111827] border border-[#1F2937] text-[#F9FAFB] px-4 py-3 font-sans focus:outline-none focus:border-[#D4AF37]/50 focus:ring-1 focus:ring-[#D4AF37]/50 transition-all duration-300 placeholder:text-[#9CA3AF]/50"
               />
             </div>
             <button
               type="submit"
               className="px-6 py-3 bg-[#111827] border border-[#D4AF37]/50 sm:border-l-0 text-[#D4AF37] hover:bg-[#D4AF37]/10 transition-colors duration-300 flex items-center justify-center gap-2 group/btn"
             >
-              <span className="font-['Cinzel'] uppercase text-sm tracking-wider font-semibold">
+              <span className="font-heading uppercase text-sm tracking-wider font-semibold">
                 Subscribe
               </span>
               <Send className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />

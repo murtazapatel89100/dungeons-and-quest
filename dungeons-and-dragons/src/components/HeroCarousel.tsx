@@ -88,12 +88,12 @@ export function HeroCarousel() {
           <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F1A]/70 via-[#0B0F1A]/50 to-[#0B0F1A]" />
 
           {/* Content */}
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 mt-16">
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 mt-16">
             <motion.h1
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.3, duration: 0.8 }}
-              className="font-['Cinzel'] text-5xl md:text-7xl lg:text-8xl text-[#F9FAFB] uppercase tracking-[0.2em] font-bold mb-6 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]"
+              className="font-heading text-2xl sm:text-4xl md:text-7xl lg:text-8xl text-[#F9FAFB] uppercase tracking-[0.1em] md:tracking-[0.2em] font-bold mb-6 drop-shadow-[0_4px_8px_rgba(0,0,0,0.8)]"
               style={{ textShadow: "0 0 20px rgba(212,175,55,0.3)" }}
             >
               {SLIDES[currentIndex].title}
@@ -103,7 +103,7 @@ export function HeroCarousel() {
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.5, duration: 0.8 }}
-              className="font-['Inter'] text-lg md:text-xl lg:text-2xl text-[#9CA3AF] max-w-2xl mb-12 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+              className="font-sans text-base md:text-xl lg:text-2xl text-[#9CA3AF] max-w-2xl mb-12 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] px-2"
             >
               {SLIDES[currentIndex].subtitle}
             </motion.p>
@@ -117,7 +117,7 @@ export function HeroCarousel() {
               <div className="absolute -inset-1 bg-gradient-to-r from-[#D4AF37] to-[#6D28D9] rounded-sm blur opacity-50 group-hover:opacity-100 transition duration-500" />
               <button
                 type="button"
-                className="relative px-8 py-4 bg-[#111827] border border-[#D4AF37]/50 text-[#D4AF37] font-['Cinzel'] uppercase text-lg tracking-widest font-bold hover:bg-[#D4AF37]/20 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)]"
+                className="relative px-8 py-4 bg-[#111827] border border-[#D4AF37]/50 text-[#D4AF37] font-heading uppercase text-base md:text-lg tracking-widest font-bold hover:bg-[#D4AF37]/20 transition-all duration-300 shadow-[0_0_20px_rgba(212,175,55,0.3)]"
                 onClick={() => router.push(SLIDES[currentIndex].path)}
               >
                 {SLIDES[currentIndex].cta}

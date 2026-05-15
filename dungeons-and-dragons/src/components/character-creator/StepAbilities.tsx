@@ -84,14 +84,14 @@ export function StepAbilities() {
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 relative z-10 gap-4">
           <div>
-            <h3 className="text-xl font-['Cinzel'] font-bold text-white">
+            <h3 className="text-xl font-heading font-bold text-white">
               Ability Scores
             </h3>
             <p className="text-sm text-muted-foreground">
               Define your core physical and mental traits.
             </p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex md:flex-row w-full flex-col gap-2">
             <Button
               variant="outline"
               size="sm"
@@ -142,7 +142,7 @@ export function StepAbilities() {
                     const val = parseInt(e.target.value, 10) || 3;
                     updateNestedState("abilities", { [stat]: val });
                   }}
-                  className={`w-16 text-center text-2xl font-['Cinzel'] bg-transparent border-0 ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 !p-0 transition-colors ${hasWarning ? "text-red-500" : "text-white"}`}
+                  className={`w-16 text-center text-xl md:text-2xl font-heading bg-transparent border-0 ring-0 focus-visible:ring-0 focus-visible:ring-offset-0 !p-0 transition-colors ${hasWarning ? "text-red-500" : "text-white"}`}
                 />
                 <div
                   className={`mt-2 text-xs font-semibold px-2 py-1 rounded transition-colors ${hasWarning ? "bg-red-500/10 text-red-500" : "bg-white/10 text-muted-foreground group-hover:bg-emerald-500/20 group-hover:text-emerald-200"}`}
@@ -157,7 +157,7 @@ export function StepAbilities() {
 
       {/* Skills Section */}
       <div className="bg-white/5 border border-white/10 rounded-xl p-6 relative overflow-hidden">
-        <h3 className="text-xl font-['Cinzel'] font-bold text-white mb-4 relative z-10">
+        <h3 className="text-xl font-heading font-bold text-white mb-4 relative z-10">
           Skill Proficiencies
         </h3>
         <p className="text-sm text-muted-foreground mb-6 relative z-10">

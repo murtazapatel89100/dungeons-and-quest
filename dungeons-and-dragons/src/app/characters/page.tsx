@@ -53,7 +53,7 @@ export default function CharactersPage() {
               className="group h-full overflow-hidden border-[#D4AF37]/20 bg-[#0F172A]/85 shadow-2xl shadow-black/30 transition-transform duration-300 hover:-translate-y-1"
             >
               <CardContent className="relative p-0">
-                <div className="relative h-96 overflow-hidden">
+                <div className="relative h-80 sm:h-96 overflow-hidden">
                   <div
                     className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
                     style={{ backgroundImage: `url(${path.imageUrl})` }}
@@ -61,16 +61,16 @@ export default function CharactersPage() {
                   <div className="absolute inset-0 bg-linear-to-br from-[#D4AF37]/20 via-[#111827]/35 to-[#0B0F1A]/90" />
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.18),transparent_36%),linear-gradient(to_bottom,rgba(15,23,42,0.05),rgba(11,15,26,0.7)_76%,rgba(11,15,26,0.98))]" />
                   <div className="absolute inset-0 border border-white/10" />
-                  <div className="absolute inset-4 rounded-3xl border border-white/15 bg-black/30 p-6 shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
-                    <div className="flex h-full flex-col justify-between gap-6 text-left">
-                      <div className="space-y-3 pt-1">
-                        <p className="text-[0.7rem] font-semibold uppercase tracking-[0.35em] text-[#D4AF37]">
+                  <div className="absolute inset-2 sm:inset-4 rounded-2xl sm:rounded-3xl border border-white/15 bg-black/30 p-4 sm:p-6 shadow-[0_24px_80px_rgba(0,0,0,0.35)]">
+                    <div className="flex h-full flex-col justify-between gap-4 sm:gap-6 text-left">
+                      <div className="space-y-2 sm:space-y-3 pt-1">
+                        <p className="text-[0.6rem] sm:text-[0.7rem] font-semibold uppercase tracking-[0.35em] text-[#D4AF37]">
                           Hero Path
                         </p>
-                        <CardTitle className="min-h-30 max-w-[13ch] font-['Cinzel'] text-3xl leading-tight text-[#F9FAFB]">
+                        <CardTitle className="min-h-24 sm:min-h-30 max-w-[13ch] font-heading text-2xl sm:text-3xl leading-tight text-[#F9FAFB]">
                           {path.title}
                         </CardTitle>
-                        <CardDescription className="max-w-[34ch] text-base leading-6 text-[#E5E7EB]">
+                        <CardDescription className="max-w-[34ch] text-sm sm:text-base leading-snug sm:leading-6 text-[#E5E7EB]">
                           {path.description}
                         </CardDescription>
                       </div>

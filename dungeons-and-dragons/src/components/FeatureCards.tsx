@@ -56,7 +56,7 @@ export function FeatureCards() {
     <section className="py-24 px-6 md:px-12 bg-[#0B0F1A] relative z-20">
       <div className="container mx-auto">
         <div className="text-center mb-16">
-          <h2 className="font-['Cinzel'] text-3xl md:text-5xl text-[#F9FAFB] uppercase tracking-widest mb-4">
+          <h2 className="font-heading text-3xl md:text-5xl text-[#F9FAFB] uppercase tracking-widest mb-4">
             The Grimoire's Knowledge
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto opacity-50"></div>
@@ -90,15 +90,15 @@ export function FeatureCards() {
                   <div className="mb-6 p-4 border border-[#D4AF37]/30 rounded-full bg-[#0B0F1A]/50 backdrop-blur-sm group-hover:scale-110 transition-transform duration-500 shadow-inner">
                     <feature.icon className="w-8 h-8 text-[#D4AF37]" />
                   </div>
-                  <h3 className="font-['Cinzel'] text-lg font-bold text-[#F9FAFB] uppercase tracking-wider mb-4 group-hover:text-[#D4AF37] transition-colors">
+                  <h3 className="font-heading text-lg font-bold text-[#F9FAFB] uppercase tracking-wider mb-4 group-hover:text-[#D4AF37] transition-colors">
                     {feature.title}
                   </h3>
-                  <p className="font-['Inter'] text-[#9CA3AF] text-xs leading-relaxed flex-grow">
+                  <p className="font-sans text-[#9CA3AF] text-xs leading-relaxed flex-grow">
                     {feature.description}
                   </p>
 
                   <div className="mt-6 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="font-['Cinzel'] text-[#D4AF37] text-[10px] uppercase tracking-widest">
+                    <span className="font-heading text-[#D4AF37] text-[10px] uppercase tracking-widest">
                       Explore
                     </span>
                     <div className="w-4 h-[1px] bg-[#D4AF37]" />

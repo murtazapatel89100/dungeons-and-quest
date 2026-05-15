@@ -52,11 +52,11 @@ export function ToolHighlights() {
       <div className="container mx-auto max-w-6xl">
         <div className="flex flex-col md:flex-row items-center justify-between mb-16">
           <div className="text-left mb-8 md:mb-0">
-            <h2 className="font-['Cinzel'] text-3xl md:text-5xl text-[#F9FAFB] uppercase tracking-widest mb-4">
+            <h2 className="font-heading text-3xl md:text-5xl text-[#F9FAFB] uppercase tracking-widest mb-4">
               Arcane Tools
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-[#D4AF37] to-transparent opacity-70"></div>
-            <p className="font-['Inter'] text-[#9CA3AF] mt-6 max-w-xl">
+            <p className="font-sans text-[#9CA3AF] mt-6 max-w-xl">
               Equip yourself with magical artifacts designed to enhance your
               campaign.
             </p>
@@ -65,7 +65,7 @@ export function ToolHighlights() {
           <Link href="/tools">
             <button
               type="button"
-              className="px-6 py-2 border border-[#D4AF37] text-[#D4AF37] font-['Cinzel'] uppercase tracking-wider hover:bg-[#D4AF37]/10 transition-colors duration-300 shadow-[0_0_10px_rgba(212,175,55,0.2)]"
+              className="px-6 py-2 border border-[#D4AF37] text-[#D4AF37] font-heading uppercase tracking-wider hover:bg-[#D4AF37]/10 transition-colors duration-300 shadow-[0_0_10px_rgba(212,175,55,0.2)]"
             >
               View All Tools
             </button>
@@ -102,10 +102,10 @@ export function ToolHighlights() {
                 </div>
 
                 <div className="flex-grow">
-                  <h3 className="font-['Cinzel'] text-xl font-bold text-[#F9FAFB] uppercase tracking-wider mb-2 group-hover:text-[#D4AF37] transition-colors duration-300">
+                  <h3 className="font-heading text-xl font-bold text-[#F9FAFB] uppercase tracking-wider mb-2 group-hover:text-[#D4AF37] transition-colors duration-300">
                     {tool.title}
                   </h3>
-                  <p className="font-['Inter'] text-[#9CA3AF] text-sm leading-relaxed max-w-2xl">
+                  <p className="font-sans text-[#9CA3AF] text-sm leading-relaxed max-w-2xl">
                     {tool.description}
                   </p>
                 </div>
@@ -116,7 +116,7 @@ export function ToolHighlights() {
                   <button
                     type="button"
                     onClick={() => setIsDiceModalOpen(true)}
-                    className="w-full md:w-auto px-8 py-3 bg-[#0B0F1A] border border-[#1F2937] group-hover:border-[#D4AF37] text-[#F9FAFB] group-hover:text-[#D4AF37] font-['Cinzel'] uppercase tracking-widest text-sm font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(212,175,55,0.3)] whitespace-nowrap"
+                    className="w-full md:w-auto px-8 py-3 bg-[#0B0F1A] border border-[#1F2937] group-hover:border-[#D4AF37] text-[#F9FAFB] group-hover:text-[#D4AF37] font-heading uppercase tracking-widest text-sm font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(212,175,55,0.3)] whitespace-nowrap"
                   >
                     {tool.cta}
                   </button>
@@ -124,7 +124,7 @@ export function ToolHighlights() {
                   <Link href={tool.path}>
                     <button
                       type="button"
-                      className="w-full md:w-auto px-8 py-3 bg-[#0B0F1A] border border-[#1F2937] group-hover:border-[#D4AF37] text-[#F9FAFB] group-hover:text-[#D4AF37] font-['Cinzel'] uppercase tracking-widest text-sm font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(212,175,55,0.3)] whitespace-nowrap"
+                      className="w-full md:w-auto px-8 py-3 bg-[#0B0F1A] border border-[#1F2937] group-hover:border-[#D4AF37] text-[#F9FAFB] group-hover:text-[#D4AF37] font-heading uppercase tracking-widest text-sm font-semibold transition-all duration-300 hover:shadow-[0_0_15px_rgba(212,175,55,0.3)] whitespace-nowrap"
                     >
                       {tool.cta}
                     </button>

@@ -43,7 +43,7 @@ export function CombatBasics() {
   return (
     <section className="relative w-full py-16">
       <div className="text-center mb-16">
-        <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4">
+        <h2 className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4">
           The Flow of <span className="text-[#DC2626]">Combat</span>
         </h2>
         <p className="text-[#9CA3AF] max-w-2xl mx-auto">
@@ -104,7 +104,7 @@ export function CombatBasics() {
                     }`}
                   >
                     <h3
-                      className={`font-['Cinzel'] text-xl mb-1 ${isActive ? "text-[#F9FAFB]" : "text-[#9CA3AF] group-hover:text-[#D1D5DB]"}`}
+                      className={`font-heading text-xl mb-1 ${isActive ? "text-[#F9FAFB]" : "text-[#9CA3AF] group-hover:text-[#D1D5DB]"}`}
                     >
                       {step.id}. {step.title}
                     </h3>
@@ -126,10 +126,10 @@ export function CombatBasics() {
           >
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#DC2626]/10 rounded-bl-full blur-xl" />
 
-            <h3 className="font-['Cinzel'] text-3xl text-[#F9FAFB] mb-4 border-b border-[#1F2937] pb-4">
+            <h3 className="font-heading text-3xl text-[#F9FAFB] mb-4 border-b border-[#1F2937] pb-4">
               {combatSteps[activeStep].title}
             </h3>
-            <p className="text-[#9CA3AF] text-lg leading-relaxed min-h-[120px]">
+            <p className="text-[#9CA3AF] text-base md:text-lg leading-relaxed min-h-[120px]">
               {combatSteps[activeStep].desc}
             </p>
 

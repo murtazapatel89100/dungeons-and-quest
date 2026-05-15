@@ -21,7 +21,7 @@ export function Spellcasting() {
   return (
     <section className="relative w-full py-16">
       <div className="text-center mb-16">
-        <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4">
+        <h2 className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4">
           Wielding <span className="text-[#6D28D9]">Magic</span>
         </h2>
         <p className="text-[#9CA3AF] max-w-2xl mx-auto">
@@ -33,7 +33,7 @@ export function Spellcasting() {
       <div className="max-w-6xl mx-auto mb-16 grid md:grid-cols-3 gap-8">
         {/* Magic Concepts */}
         <div className="bg-[#111827] border border-[#1F2937] p-6 rounded-xl border-t-2 border-t-[#6D28D9]">
-          <h3 className="font-['Cinzel'] text-xl text-[#F9FAFB] mb-3">
+          <h3 className="font-heading text-xl text-[#F9FAFB] mb-3">
             Cantrips
           </h3>
           <p className="text-[#9CA3AF] text-sm">
@@ -42,7 +42,7 @@ export function Spellcasting() {
           </p>
         </div>
         <div className="bg-[#111827] border border-[#1F2937] p-6 rounded-xl border-t-2 border-t-[#6D28D9]">
-          <h3 className="font-['Cinzel'] text-xl text-[#F9FAFB] mb-3">
+          <h3 className="font-heading text-xl text-[#F9FAFB] mb-3">
             Spell Slots
           </h3>
           <p className="text-[#9CA3AF] text-sm">
@@ -51,7 +51,7 @@ export function Spellcasting() {
           </p>
         </div>
         <div className="bg-[#111827] border border-[#1F2937] p-6 rounded-xl border-t-2 border-t-[#6D28D9]">
-          <h3 className="font-['Cinzel'] text-xl text-[#F9FAFB] mb-3">
+          <h3 className="font-heading text-xl text-[#F9FAFB] mb-3">
             Concentration
           </h3>
           <p className="text-[#9CA3AF] text-sm">
@@ -61,7 +61,7 @@ export function Spellcasting() {
         </div>
       </div>
 
-      <h3 className="font-['Cinzel'] text-2xl text-center text-[#D4AF37] mb-8">
+      <h3 className="font-heading text-2xl text-center text-[#D4AF37] mb-8">
         Spellbook Showcase
       </h3>
 
@@ -94,7 +94,7 @@ export function Spellcasting() {
                 </div>
               </div>
 
-              <h4 className="font-['Cinzel'] text-2xl text-[#F9FAFB] mb-2 relative z-10">
+              <h4 className="font-heading text-2xl text-[#F9FAFB] mb-2 relative z-10">
                 {spell.name}
               </h4>
 

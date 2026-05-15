@@ -11,7 +11,7 @@ export function IntroSection() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="font-['Cinzel'] text-4xl md:text-5xl text-[#F9FAFB] mb-6"
+          className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-6"
         >
           What is <span className="text-[#D4AF37]">D&D?</span>
         </motion.h2>
@@ -20,7 +20,7 @@ export function IntroSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-lg text-[#9CA3AF] max-w-3xl mx-auto leading-relaxed"
+          className="text-base md:text-lg text-[#9CA3AF] max-w-3xl mx-auto leading-relaxed"
         >
           Dungeons & Dragons is a game of collaborative storytelling. There is
           no board to cross, no single way to win, and no limits to your
@@ -45,7 +45,7 @@ export function IntroSection() {
             <div className="p-3 bg-[#6D28D9]/20 rounded-lg border border-[#6D28D9]/30">
               <Crown className="w-8 h-8 text-[#A78BFA]" />
             </div>
-            <h3 className="font-['Cinzel'] text-2xl text-[#F9FAFB]">
+            <h3 className="font-heading text-2xl text-[#F9FAFB]">
               The Dungeon Master
             </h3>
           </div>
@@ -89,7 +89,7 @@ export function IntroSection() {
             <div className="p-3 bg-[#DC2626]/20 rounded-lg border border-[#DC2626]/30">
               <Users className="w-8 h-8 text-[#F87171]" />
             </div>
-            <h3 className="font-['Cinzel'] text-2xl text-[#F9FAFB]">
+            <h3 className="font-heading text-2xl text-[#F9FAFB]">
               The Players
             </h3>
           </div>

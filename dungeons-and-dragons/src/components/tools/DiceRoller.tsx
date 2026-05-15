@@ -51,7 +51,7 @@ export function DiceRoller() {
   return (
     <section className="relative w-full py-16" id="dice-roller">
       <div className="text-center mb-12">
-        <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4 flex items-center justify-center gap-4">
+        <h2 className="font-heading md:text-4xl text-2xl text-[#F9FAFB] mb-4 flex items-center justify-center gap-4">
           <Dices className="w-10 h-10 text-[#8B5CF6]" />
           Polyhedral <span className="text-[#8B5CF6]">Dice Roller</span>
         </h2>
@@ -106,7 +106,7 @@ export function DiceRoller() {
                 <motion.p
                   initial={{ opacity: 0, y: 5 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-center text-[#A78BFA] font-['Cinzel'] tracking-widest uppercase text-xl font-bold"
+                  className="text-center text-[#A78BFA] font-heading tracking-widest uppercase text-xl font-bold"
                 >
                   Result: {history[0].result}
                 </motion.p>
@@ -132,7 +132,7 @@ export function DiceRoller() {
         {/* History Log */}
         <div className="bg-[#111827] border border-[#1F2937] rounded-2xl flex flex-col overflow-hidden shadow-xl">
           <div className="p-4 border-b border-[#1F2937] flex justify-between items-center bg-[#0B0F1A]/50">
-            <h3 className="font-['Cinzel'] text-[#F9FAFB] font-bold tracking-wider">
+            <h3 className="font-heading text-[#F9FAFB] font-bold tracking-wider">
               Roll History
             </h3>
             <button

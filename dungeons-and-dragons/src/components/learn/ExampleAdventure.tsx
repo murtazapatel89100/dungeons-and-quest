@@ -41,7 +41,7 @@ export function ExampleAdventure() {
   return (
     <section className="relative w-full py-16">
       <div className="text-center mb-16">
-        <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4">
+        <h2 className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4">
           Your First <span className="text-[#EC4899]">Adventure</span>
         </h2>
         <p className="text-[#9CA3AF] max-w-2xl mx-auto">
@@ -58,7 +58,7 @@ export function ExampleAdventure() {
           <div className="flex items-center justify-between mb-8 pb-4 border-b border-[#1F2937]">
             <div className="flex items-center gap-2 text-[#D4AF37]">
               <Sword className="w-6 h-6" />
-              <span className="font-['Cinzel'] font-bold tracking-widest">
+              <span className="font-heading font-bold tracking-widest">
                 The Whispering Cave
               </span>
             </div>
@@ -93,7 +93,7 @@ export function ExampleAdventure() {
                   >
                     <Dices className="w-16 h-16 text-[#D4AF37] mb-4" />
                   </motion.div>
-                  <p className="font-['Cinzel'] text-xl text-[#F9FAFB]">
+                  <p className="font-heading text-base md:text-xl text-[#F9FAFB]">
                     Rolling the bones...
                   </p>
                 </motion.div>
@@ -106,7 +106,7 @@ export function ExampleAdventure() {
                   className="flex flex-col items-center justify-center text-center py-12"
                 >
                   <div
-                    className={`text-6xl font-['Cinzel'] font-bold mb-4 ${diceResult >= 10 ? "text-green-500" : "text-red-500"}`}
+                    className={`text-6xl font-heading font-bold mb-4 ${diceResult >= 10 ? "text-green-500" : "text-red-500"}`}
                   >
                     {diceResult}
                   </div>
@@ -125,7 +125,7 @@ export function ExampleAdventure() {
                   className="space-y-8"
                 >
                   <div className="bg-[#111827] p-6 rounded-lg border-l-4 border-l-[#EC4899]">
-                    <p className="text-[#F9FAFB] text-lg font-serif italic leading-relaxed">
+                    <p className="text-[#F9FAFB] text-base md:text-lg font-serif italic leading-relaxed">
                       "{node.text}"
                     </p>
                   </div>

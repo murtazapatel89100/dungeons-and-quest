@@ -52,7 +52,7 @@ export function NameGenerator() {
   return (
     <section className="relative w-full py-16">
       <div className="text-center mb-12">
-        <h2 className="font-['Cinzel'] text-4xl text-[#F9FAFB] mb-4 flex items-center justify-center gap-4">
+        <h2 className="font-heading text-2xl md:text-4xl text-[#F9FAFB] mb-4 flex items-center justify-center gap-4">
           <ScrollText className="w-10 h-10 text-[#3B82F6]" />
           Name <span className="text-[#3B82F6]">Generator</span>
         </h2>
@@ -68,7 +68,7 @@ export function NameGenerator() {
           <button
             type="button"
             onClick={() => handleTabChange("tavern")}
-            className={`p-4 rounded-xl text-left font-['Cinzel'] transition-all flex items-center gap-3 ${
+            className={`p-4 rounded-xl text-left font-heading transition-all flex items-center gap-3 ${
               activeTab === "tavern"
                 ? "bg-[#3B82F6]/10 text-[#60A5FA] border border-[#3B82F6]/50 shadow-[0_0_15px_rgba(59,130,246,0.1)]"
                 : "text-[#9CA3AF] hover:bg-[#1F2937] border border-transparent"
@@ -79,7 +79,7 @@ export function NameGenerator() {
           <button
             type="button"
             onClick={() => handleTabChange("npc")}
-            className={`p-4 rounded-xl text-left font-['Cinzel'] transition-all flex items-center gap-3 ${
+            className={`p-4 rounded-xl text-left font-heading transition-all flex items-center gap-3 ${
               activeTab === "npc"
                 ? "bg-[#3B82F6]/10 text-[#60A5FA] border border-[#3B82F6]/50 shadow-[0_0_15px_rgba(59,130,246,0.1)]"
                 : "text-[#9CA3AF] hover:bg-[#1F2937] border border-transparent"
@@ -90,7 +90,7 @@ export function NameGenerator() {
           <button
             type="button"
             onClick={() => handleTabChange("town")}
-            className={`p-4 rounded-xl text-left font-['Cinzel'] transition-all flex items-center gap-3 ${
+            className={`p-4 rounded-xl text-left font-heading transition-all flex items-center gap-3 ${
               activeTab === "town"
                 ? "bg-[#3B82F6]/10 text-[#60A5FA] border border-[#3B82F6]/50 shadow-[0_0_15px_rgba(59,130,246,0.1)]"
                 : "text-[#9CA3AF] hover:bg-[#1F2937] border border-transparent"
@@ -106,14 +106,14 @@ export function NameGenerator() {
             <AnimatePresence mode="popLayout">
               {generatedNames.map((name, idx) => (
                 <motion.div
-                  key={`${activeTab}-${name}`}
+                  key={`${activeTab}-${name}-${idx}`}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ delay: idx * 0.05 }}
                   className="bg-[#0B0F1A] border border-[#1F2937] p-4 rounded-lg flex items-center group hover:border-[#3B82F6]/50 transition-colors"
                 >
-                  <span className="text-[#60A5FA] font-['Cinzel'] text-xl tracking-wide">
+                  <span className="text-[#60A5FA] font-heading text-xl tracking-wide">
                     {name}
                   </span>
                 </motion.div>
@@ -125,7 +125,7 @@ export function NameGenerator() {
             <button
               type="button"
               onClick={() => generateNames(activeTab)}
-              className="px-8 py-3 bg-[#3B82F6]/10 text-[#60A5FA] border border-[#3B82F6] rounded font-['Cinzel'] tracking-widest uppercase hover:bg-[#3B82F6] hover:text-[#F9FAFB] transition-all shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_25px_rgba(59,130,246,0.5)]"
+              className="px-8 py-3 bg-[#3B82F6]/10 text-[#60A5FA] border border-[#3B82F6] rounded font-heading tracking-widest uppercase hover:bg-[#3B82F6] hover:text-[#F9FAFB] transition-all shadow-[0_0_15px_rgba(59,130,246,0.2)] hover:shadow-[0_0_25px_rgba(59,130,246,0.5)]"
             >
               Generate More
             </button>
