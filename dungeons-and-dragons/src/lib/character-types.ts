@@ -94,6 +94,7 @@ export interface CharacterState {
   spells: Record<number, string[]>; // level -> list of spells (0 = cantrip)
   personality: PersonalityTraits;
   meta: {
+    level: number;
     inspiration: boolean;
     hitDice: string; // e.g., "1d8"
     proficiencyBonus: number;
@@ -167,6 +168,7 @@ export const INITIAL_CHARACTER_STATE: CharacterState = {
     flaws: [],
   },
   meta: {
+    level: 1,
     inspiration: false,
     hitDice: "1d8",
     proficiencyBonus: 2,

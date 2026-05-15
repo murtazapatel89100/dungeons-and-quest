@@ -649,6 +649,7 @@ export function buildCharacterDefaults({
     tools,
     spells: buildDefaultSpells(characterClass),
     meta: {
+      level: 1,
       inspiration: false,
       hitDice: classRule?.hitDice ?? "1d8",
       proficiencyBonus: 2,

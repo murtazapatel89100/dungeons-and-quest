@@ -95,6 +95,7 @@ type DetailedPreGeneratedCharacter = PreGeneratedCharacter & {
   };
   backstory: string;
   meta: {
+    level: number;
     inspiration: boolean;
     hitDice: string;
     proficiencyBonus: number;
@@ -341,6 +342,7 @@ function generateDetailedCharacter(
     personality,
     backstory: `${character.description} ${generatedBackstory}`,
     meta: {
+      level: 1,
       inspiration: false,
       hitDice: defaults.meta?.hitDice ?? "1d8",
       proficiencyBonus: 2,
